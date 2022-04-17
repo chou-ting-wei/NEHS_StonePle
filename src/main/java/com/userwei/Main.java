@@ -5,12 +5,12 @@ import java.awt.*;
 public class Main{
     public static void main(String[] args){
         // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 CavePanel; 5 Instruction Panel
-        JFrame mainFrame = new JFrame("StonePle (beta 0.1)");
-        JFrame startScreen = new JFrame("StonePle (beta 0.1)");
-        JFrame pauseScreen = new JFrame("StonePle (beta 0.1)");
-        JFrame fieldScreen = new JFrame("StonePle (beta 0.1)");
-        JFrame caveScreen = new JFrame("StonePle (beta 0.1)");
-        JFrame instructionScreen = new JFrame("StonePle (beta 0.1)");
+        JFrame mainFrame = new JFrame("StonePle version 0.1(beta)");
+        JFrame startScreen = new JFrame("StonePle version 0.1(beta)");
+        JFrame pauseScreen = new JFrame("StonePle version 0.1(beta)");
+        JFrame fieldScreen = new JFrame("StonePle version 0.1(beta)");
+        JFrame caveScreen = new JFrame("StonePle version 0.1(beta)");
+        JFrame instructionScreen = new JFrame("StonePle version 0.1(beta)");
 
 
         GamePanel gamePanel = new GamePanel(startScreen, mainFrame, pauseScreen, fieldScreen, caveScreen, instructionScreen);
