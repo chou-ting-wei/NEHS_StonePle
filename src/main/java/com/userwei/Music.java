@@ -1,20 +1,17 @@
 package com.userwei;
 import java.io.*;
+import java.net.URL;
 import javax.sound.sampled.*;
 
 public class Music{
     AudioInputStream audioStream;
-    AudioFormat format;
-    File audioFile;
-    DataLine.Info info;
-    long clipTime;
+    URL url;
     Clip clip;
 
     public Music(String s) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
         // audioFile = new File("src/main/java/tw/userwei/Audio/" + s);
-        InputStream is = this.getClass().getResourceAsStream("Audio/" + s);
-        BufferedInputStream buffer = new BufferedInputStream(is);
-        audioStream = AudioSystem.getAudioInputStream(buffer);
+        url = Music.class.getResource("Audio/" + s); 
+        audioStream = AudioSystem.getAudioInputStream(url);
         this.clip = AudioSystem.getClip();
         clip.open(audioStream);
     }
@@ -27,7 +24,6 @@ public class Music{
     public void stop(){
         try{
             clip.close();
-            // audioStream.close();
         }catch(Exception e){
             e.printStackTrace();
         } 
@@ -35,7 +31,7 @@ public class Music{
 
     public void resetAudioStream(){
         try{
-            audioStream = AudioSystem.getAudioInputStream(audioFile);
+            audioStream = AudioSystem.getAudioInputStream(url);
             this.clip = AudioSystem.getClip();
             clip.open(audioStream);
         }catch(Exception e){
