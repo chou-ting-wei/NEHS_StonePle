@@ -1,12 +1,11 @@
 package com.userwei;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.event.MouseInputListener;
 
 import java.awt.event.*;
 import java.awt.Graphics;
 
-public class CavePanel extends JPanel implements KeyListener, MouseInputListener{
+public class CavePanel extends JPanel implements KeyListener{
     String mapName[][] = {
         {"null", "null", "null", "maze(DR).png", "maze(UD).png", "maze(UR).png"},
         {"null", "maze(DR).png", "maze(UD).png", "maze(ULR).png", "null", "maze(LR).png"},
@@ -152,6 +151,12 @@ public class CavePanel extends JPanel implements KeyListener, MouseInputListener
             System.out.println("Start State:");
             System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start);
             
+            System.out.println("Music State:");
+            for(int i = 0; i < GamePanel.frameSize - 1; i ++){
+                System.out.print(GamePanel.musicSwitched[i] + " ");
+            }
+            System.out.println(GamePanel.musicSwitched[GamePanel.frameSize - 1]);
+
             System.out.println("Character Coordinate:");
             System.out.println(character1.x + " " + character1.y);
         }
@@ -207,41 +212,6 @@ public class CavePanel extends JPanel implements KeyListener, MouseInputListener
 
     @Override
     public void keyReleased(KeyEvent e) {
-        
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
         
     }
 }

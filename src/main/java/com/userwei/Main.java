@@ -1,6 +1,10 @@
 package com.userwei;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main{
     public static void main(String[] args){
@@ -11,7 +15,6 @@ public class Main{
         JFrame fieldScreen = new JFrame("StonePle version 0.1(beta)");
         JFrame caveScreen = new JFrame("StonePle version 0.1(beta)");
         JFrame instructionScreen = new JFrame("StonePle version 0.1(beta)");
-
 
         GamePanel gamePanel = new GamePanel(startScreen, mainFrame, pauseScreen, fieldScreen, caveScreen, instructionScreen);
         StartPanel startPanel = new StartPanel(mainFrame, startScreen);
@@ -60,6 +63,28 @@ public class Main{
         caveScreen.setLocation(loc_x, loc_y);
         caveScreen.setSize(size_x, size_y);
 
+        JButton instructionButton1 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/cross.png")));
+        // Dimension size = button.getPreferredSize();
+        instructionButton1.setBounds(1200, 0, 80, 80);
+        instructionPanel.setLayout(null);
+        instructionButton1.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try{
+                    Music music = new Music("select.wav");
+                    music.playOnce();
+                }catch(Exception e1){
+                    e1.printStackTrace();
+                }
+                InstructionPanel.Start = false;
+                GamePanel.Start = true;
+                GamePanel.switchState(1);
+                mainFrame.setVisible(true);
+                instructionScreen.setVisible(false);
+            }
+        });
+        instructionPanel.add(instructionButton1);
+       
         instructionScreen.getContentPane().add(instructionPanel);
         instructionScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         instructionScreen.setVisible(false);

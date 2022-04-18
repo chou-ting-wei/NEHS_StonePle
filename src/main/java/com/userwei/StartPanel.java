@@ -1,11 +1,10 @@
 package com.userwei;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.event.MouseInputListener;
 import java.awt.event.*;
 import java.awt.Graphics;
 
-public class StartPanel extends JPanel implements KeyListener, MouseInputListener{
+public class StartPanel extends JPanel implements KeyListener{
 
     Font font1, font2;
     Animate animate1;
@@ -57,41 +56,6 @@ public class StartPanel extends JPanel implements KeyListener, MouseInputListene
 
     @Override
     public void keyReleased(KeyEvent e) {
-        
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
         
     }
 }

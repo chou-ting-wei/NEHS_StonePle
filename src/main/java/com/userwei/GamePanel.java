@@ -1,12 +1,11 @@
 package com.userwei;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.event.MouseInputListener;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.awt.Graphics;
 
-public class GamePanel extends JPanel implements KeyListener, MouseInputListener{
+public class GamePanel extends JPanel implements KeyListener{
     // Music
     static ArrayList<String> musicName;
     static ArrayList<Music> music;
@@ -17,7 +16,7 @@ public class GamePanel extends JPanel implements KeyListener, MouseInputListener
 
     // Frame
     static JFrame[] frame;
-    int frameSize = 6;
+    static int frameSize = 6;
     JFrame mainFrame, pauseScreen, fieldScreen, startScreen, caveScreen, instructionScreen;
 
     // Element
@@ -36,13 +35,13 @@ public class GamePanel extends JPanel implements KeyListener, MouseInputListener
         // Music
         musicName = new ArrayList<String>();
         // 0 Start Panel
-        musicName.add("a_Brief_Start.wav");
+        musicName.add("an_Emotional_Day.wav");
         // 1 Main Panel
         musicName.add("Escaping.wav");
         // 2 Pause Panel
         musicName.add("null");
         // 3 Field Panel
-        musicName.add("an_Emotional_Day.wav");
+        musicName.add("a_Brief_Start.wav");
         // 4 CavePanel
         musicName.add("a_Miserable_Melody.wav");
         // 5 Instruction Panel
@@ -114,7 +113,7 @@ public class GamePanel extends JPanel implements KeyListener, MouseInputListener
         thread = new Thread(() -> {
             // ><
             try{
-                Thread.sleep(3000);
+                Thread.sleep(3500);
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -284,6 +283,12 @@ public class GamePanel extends JPanel implements KeyListener, MouseInputListener
             System.out.println("Start State:");
             System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start);
             
+            System.out.println("Music State:");
+            for(int i = 0; i < frameSize - 1; i ++){
+                System.out.print(musicSwitched[i] + " ");
+            }
+            System.out.println(musicSwitched[frameSize - 1]);
+
             System.out.println("Character Coordinate:");
             System.out.println(character1.x + " " + character1.y);
         }
@@ -319,41 +324,6 @@ public class GamePanel extends JPanel implements KeyListener, MouseInputListener
 
     @Override
     public void keyReleased(KeyEvent e) {
-        
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
         
     }
 }
