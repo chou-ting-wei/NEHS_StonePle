@@ -61,7 +61,7 @@ public class PausePanel extends JPanel implements KeyListener{
             System.out.println(GamePanel.musicSwitched[GamePanel.frameSize - 1]);
 
             System.out.println("Start State:");
-            System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start);
+            System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);
         }
 
         // Sudo

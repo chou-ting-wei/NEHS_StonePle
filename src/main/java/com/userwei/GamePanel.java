@@ -16,12 +16,13 @@ public class GamePanel extends JPanel implements KeyListener{
 
     // Frame
     static JFrame[] frame;
-    static int frameSize = 6;
-    JFrame mainFrame, pauseScreen, fieldScreen, startScreen, caveScreen, instructionScreen;
+    static int frameSize = 7;
+    JFrame mainFrame, pauseScreen, fieldScreen, startScreen, caveScreen, instructionScreen, upgradeScreen;
 
     // Element
     Background background1, background2, background3, background4, background5;
     Background background6, background7, background8, background9, background10;
+    Background background11, background12, background13, background14, background15;
     Character character1;
     Icon icon1, icon2, icon3;
     Map map;
@@ -45,6 +46,8 @@ public class GamePanel extends JPanel implements KeyListener{
         // 4 CavePanel
         musicName.add("a_Miserable_Melody.wav");
         // 5 Instruction Panel
+        musicName.add("null");
+        // 6 Update Panel
         musicName.add("null");
 
         music = new ArrayList<Music>();
@@ -85,17 +88,19 @@ public class GamePanel extends JPanel implements KeyListener{
         background10 = new Background(1120, 0, 80, 80, "plant1.png");
 
         icon3 = new Icon(1210, 650, 60, 60, "arrow_up.png");
+        background11 = new Background(1120, 640, 80, 80, "plant1.png");
 
         character1 = new Character(0, 640, 80, 80, 80, 80, "walk.gif");
     }
 
-    GamePanel(JFrame startScreen, JFrame mainFrame, JFrame pauseScreen, JFrame fieldScreen, JFrame caveScreen, JFrame instructionScreen){
+    GamePanel(JFrame startScreen, JFrame mainFrame, JFrame pauseScreen, JFrame fieldScreen, JFrame caveScreen, JFrame instructionScreen, JFrame upgradeScreen){
         this.startScreen = startScreen;
         this.mainFrame = mainFrame;
         this.pauseScreen = pauseScreen;
         this.fieldScreen = fieldScreen;
         this.caveScreen = caveScreen;
         this.instructionScreen = instructionScreen;
+        this.upgradeScreen = upgradeScreen;
 
         frame = new JFrame[frameSize];
         frame[0] = startScreen;
@@ -104,6 +109,7 @@ public class GamePanel extends JPanel implements KeyListener{
         frame[3] = fieldScreen;
         frame[4] = caveScreen;
         frame[5] = instructionScreen;
+        frame[6] = upgradeScreen;
 
         addKeyListener(this);
         setFocusable(true);
@@ -144,13 +150,14 @@ public class GamePanel extends JPanel implements KeyListener{
         background8.draw(g, this);
         background9.draw(g, this);
         background10.draw(g, this);
+        background11.draw(g, this);
         icon1.draw(g, this);
         icon2.draw(g, this);
         icon3.draw(g, this);
         character1.draw(g, this);
     }
 
-    // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 Cave Panel; 5 Instruction Panel
+    // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 Cave Panel; 5 Instruction Panel; 6 Upgrade Panel
     public void update() {
         // exclamation
         if(character1.x == 0 && character1.y == 560 && !InstructionPanel.Start){
@@ -171,8 +178,13 @@ public class GamePanel extends JPanel implements KeyListener{
             mainFrame.setVisible(false);
         }
         // arrow_up
-        if(character1.x == 1200 && character1.y == 640){
+        if(character1.x == 1200 && character1.y == 640 && !UpgradePanel.Start){
+            Start = false;
+            UpgradePanel.Start = true;
+            switchState(5);
             character1.y = 560;
+            upgradeScreen.setVisible(true);
+            mainFrame.setVisible(false);
         }
 	}
 
@@ -205,12 +217,12 @@ public class GamePanel extends JPanel implements KeyListener{
             playMusic();
             return;
         }
-        if(state == 2 || state == 5){
+        if(state == 2 || state == 5 || state == 6){
             lastState = nowState;
             nowState = state;
             return;
         }
-        if(nowState == 2 || nowState == 5){
+        if(nowState == 2 || nowState == 5 || nowState == 6){
             int tmpState = nowState;
             nowState = lastState;
             lastState = tmpState;
@@ -248,6 +260,9 @@ public class GamePanel extends JPanel implements KeyListener{
         if(edgeJudge(x, 0, 2) && edgeJudge(y, 0, 0)){
             return false;
         }
+        if(edgeJudge(x, 14, 14) && edgeJudge(y, 8, 8)){
+            return false;
+        }
         if(edgeJudge(x, 14, 14) && edgeJudge(y, 0, 0)){
             return false;
         }
@@ -265,7 +280,7 @@ public class GamePanel extends JPanel implements KeyListener{
 
     }
 
-    // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 Cave Panel; 5 Instruction Panel
+    // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 Cave Panel; 5 Instruction Panel; 6 Upgrade Panel
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
@@ -281,7 +296,7 @@ public class GamePanel extends JPanel implements KeyListener{
             System.out.println(lastState + " " + nowState);
 
             System.out.println("Start State:");
-            System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start);
+            System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);
             
             System.out.println("Music State:");
             for(int i = 0; i < frameSize - 1; i ++){

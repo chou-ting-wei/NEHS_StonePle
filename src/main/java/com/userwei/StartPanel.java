@@ -50,7 +50,7 @@ public class StartPanel extends JPanel implements KeyListener{
             System.out.println(GamePanel.lastState + " " + GamePanel.nowState);
 
             System.out.println("Start State:");
-            System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start);
+            System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);
         }
     }
 

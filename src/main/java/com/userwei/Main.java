@@ -8,20 +8,22 @@ import java.awt.event.ActionListener;
 
 public class Main{
     public static void main(String[] args){
-        // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 CavePanel; 5 Instruction Panel
+        // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 CavePanel; 5 Instruction Panel; 6 Upgrade Panel
         JFrame mainFrame = new JFrame("StonePle version 0.1(beta)");
         JFrame startScreen = new JFrame("StonePle version 0.1(beta)");
         JFrame pauseScreen = new JFrame("StonePle version 0.1(beta)");
         JFrame fieldScreen = new JFrame("StonePle version 0.1(beta)");
         JFrame caveScreen = new JFrame("StonePle version 0.1(beta)");
         JFrame instructionScreen = new JFrame("StonePle version 0.1(beta)");
+        JFrame upgradeScreen = new JFrame("StonePle version 0.1(beta)");
 
-        GamePanel gamePanel = new GamePanel(startScreen, mainFrame, pauseScreen, fieldScreen, caveScreen, instructionScreen);
+        GamePanel gamePanel = new GamePanel(startScreen, mainFrame, pauseScreen, fieldScreen, caveScreen, instructionScreen, upgradeScreen);
         StartPanel startPanel = new StartPanel(mainFrame, startScreen);
         PausePanel pausePanel = new PausePanel(pauseScreen);
         FieldPanel fieldPanel = new FieldPanel(mainFrame, pauseScreen, fieldScreen, caveScreen);
         CavePanel cavePanel = new CavePanel(mainFrame, pauseScreen, fieldScreen, caveScreen);
         InstructionPanel instructionPanel = new InstructionPanel(mainFrame, instructionScreen);
+        UpgradePanel upgradePanel = new UpgradePanel(mainFrame, upgradeScreen);
 
         int size_x = 1280, size_y = 748;
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -91,5 +93,34 @@ public class Main{
         instructionScreen.setResizable(false);
         instructionScreen.setLocation(loc_x, loc_y);
         instructionScreen.setSize(size_x, size_y);
+
+        JButton upgradeButton1 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/cross.png")));
+        // Dimension size = button.getPreferredSize();
+        upgradeButton1.setBounds(1200, 0, 80, 80);
+        upgradePanel.setLayout(null);
+        upgradeButton1.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try{
+                    Music music = new Music("select.wav");
+                    music.playOnce();
+                }catch(Exception e1){
+                    e1.printStackTrace();
+                }
+                UpgradePanel.Start = false;
+                GamePanel.Start = true;
+                GamePanel.switchState(1);
+                mainFrame.setVisible(true);
+                upgradeScreen.setVisible(false);
+            }
+        });
+        upgradePanel.add(upgradeButton1);
+       
+        upgradeScreen.getContentPane().add(upgradePanel);
+        upgradeScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        upgradeScreen.setVisible(false);
+        upgradeScreen.setResizable(false);
+        upgradeScreen.setLocation(loc_x, loc_y);
+        upgradeScreen.setSize(size_x, size_y);
     }
 }

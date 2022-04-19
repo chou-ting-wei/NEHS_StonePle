@@ -5,7 +5,6 @@ import java.awt.event.*;
 import java.awt.Graphics;
 
 public class InstructionPanel extends JPanel implements KeyListener{
-
     Font font1;
     JFrame mainFrame, instructionScreen;
 
@@ -42,9 +41,9 @@ public class InstructionPanel extends JPanel implements KeyListener{
                 System.out.print(GamePanel.musicSwitched[i] + " ");
             }
             System.out.println(GamePanel.musicSwitched[GamePanel.frameSize - 1]);
-            
+
             System.out.println("Start State:");
-            System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start);
+            System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);
         }
     }
 

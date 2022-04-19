@@ -99,7 +99,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             System.out.println(GamePanel.lastState + " " + GamePanel.nowState);
 
             System.out.println("Start State:");
-            System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start);
+            System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);
             
             System.out.println("Music State:");
             for(int i = 0; i < GamePanel.frameSize - 1; i ++){
