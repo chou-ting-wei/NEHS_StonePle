@@ -60,6 +60,36 @@ public class Main{
             }
         });
 
+        JButton pauseButton1 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/undo.png")));
+        pauseButton1.setBounds(0, 0, 80, 80);
+        pausePanel.setLayout(null);
+        pauseButton1.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try{
+                    Music music = new Music("select.wav");
+                    music.playOnce();
+                }catch(Exception e1){
+                    e1.printStackTrace();
+                }
+                PausePanel.Start = false;
+                if(GamePanel.lastState == 1){
+                    GamePanel.Start = true;
+                }
+                else if(GamePanel.lastState == 3){
+                    FieldPanel.Start = true;
+                }
+                else if(GamePanel.lastState == 4){
+                    CavePanel.Start = true;
+                }
+                JFrame nowFrame = GamePanel.frame[GamePanel.lastState];
+                GamePanel.switchState(GamePanel.lastState);
+                nowFrame.setVisible(true);
+                pauseScreen.setVisible(false);
+            }
+        });
+        pausePanel.add(pauseButton1);
+
         pauseScreen.getContentPane().add(pausePanel);
         pauseScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pauseScreen.setSize(size_x, size_y);

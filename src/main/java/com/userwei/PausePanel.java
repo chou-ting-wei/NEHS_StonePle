@@ -33,22 +33,6 @@ public class PausePanel extends JPanel implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_ESCAPE && Start){
-            Start = false;
-            if(GamePanel.lastState == 1){
-                GamePanel.Start = true;
-            }
-            else if(GamePanel.lastState == 3){
-                FieldPanel.Start = true;
-            }
-            else if(GamePanel.lastState == 4){
-                CavePanel.Start = true;
-            }
-            JFrame nowFrame = GamePanel.frame[GamePanel.lastState];
-            GamePanel.switchState(GamePanel.lastState);
-            nowFrame.setVisible(true);
-            pauseScreen.setVisible(false);
-        }
         if(e.getKeyCode() == KeyEvent.VK_SHIFT){
             System.out.println("-");
             System.out.println("Game State:");
