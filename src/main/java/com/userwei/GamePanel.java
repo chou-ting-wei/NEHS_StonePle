@@ -123,7 +123,7 @@ public class GamePanel extends JPanel implements KeyListener{
             }catch(Exception e){
                 e.printStackTrace();
             }
-
+            
             while(true){
                 playMusic();
 
@@ -294,15 +294,15 @@ public class GamePanel extends JPanel implements KeyListener{
             System.out.println("-");
             System.out.println("Game State:");
             System.out.println(lastState + " " + nowState);
-
-            System.out.println("Start State:");
-            System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);
             
             System.out.println("Music State:");
             for(int i = 0; i < frameSize - 1; i ++){
                 System.out.print(musicSwitched[i] + " ");
             }
             System.out.println(musicSwitched[frameSize - 1]);
+
+            System.out.println("Start State:");
+            System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);
 
             System.out.println("Character Coordinate:");
             System.out.println(character1.x + " " + character1.y);

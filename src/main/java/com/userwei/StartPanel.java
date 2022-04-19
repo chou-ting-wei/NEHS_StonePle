@@ -17,7 +17,7 @@ public class StartPanel extends JPanel implements KeyListener{
         this.startScreen = startScreen;
 
         font1 = new Font(240, 100, 800, 400, "welcome.png");
-        font2 = new Font(1200, 690, 80, 45, "version_number.png");
+        font2 = new Font(1120, 700, 160, 20, "version_number.png");
         animate1 = new Animate(520, 520, 240, 135, "start.gif");
 
         addKeyListener(this);
@@ -48,6 +48,12 @@ public class StartPanel extends JPanel implements KeyListener{
             System.out.println("-");
             System.out.println("Game State:");
             System.out.println(GamePanel.lastState + " " + GamePanel.nowState);
+
+            System.out.println("Music State:");
+            for(int i = 0; i < GamePanel.frameSize - 1; i ++){
+                System.out.print(GamePanel.musicSwitched[i] + " ");
+            }
+            System.out.println(GamePanel.musicSwitched[GamePanel.frameSize - 1]);
 
             System.out.println("Start State:");
             System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);

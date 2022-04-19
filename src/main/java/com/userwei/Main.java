@@ -9,17 +9,18 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 public class Main{
+    static boolean loading;
     public static void main(String[] args){
         // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 CavePanel; 5 Instruction Panel; 6 Upgrade Panel
-        JFrame blankFrame = new JFrame("StonePle version 0.1(beta)");
+        JFrame blankFrame = new JFrame("StonePle version 0.2(beta)");
 
-        JFrame mainFrame = new JFrame("StonePle version 0.1(beta)");
-        JFrame startScreen = new JFrame("StonePle version 0.1(beta)");
-        JFrame pauseScreen = new JFrame("StonePle version 0.1(beta)");
-        JFrame fieldScreen = new JFrame("StonePle version 0.1(beta)");
-        JFrame caveScreen = new JFrame("StonePle version 0.1(beta)");
-        JFrame instructionScreen = new JFrame("StonePle version 0.1(beta)");
-        JFrame upgradeScreen = new JFrame("StonePle version 0.1(beta)");
+        JFrame mainFrame = new JFrame("StonePle version 0.2(beta)");
+        JFrame startScreen = new JFrame("StonePle version 0.2(beta)");
+        JFrame pauseScreen = new JFrame("StonePle version 0.2(beta)");
+        JFrame fieldScreen = new JFrame("StonePle version 0.2(beta)");
+        JFrame caveScreen = new JFrame("StonePle version 0.2(beta)");
+        JFrame instructionScreen = new JFrame("StonePle version 0.2(beta)");
+        JFrame upgradeScreen = new JFrame("StonePle version 0.2(beta)");
 
         GamePanel gamePanel = new GamePanel(startScreen, mainFrame, pauseScreen, fieldScreen, caveScreen, instructionScreen, upgradeScreen);
         StartPanel startPanel = new StartPanel(mainFrame, startScreen);
@@ -226,15 +227,7 @@ public class Main{
             }
         });
 
-        // Panel should be covered
-        mainFrame.setVisible(true);
-        pauseScreen.setVisible(true);
-        fieldScreen.setVisible(true);
-        caveScreen.setVisible(true);
-        instructionScreen.setVisible(true);
-        upgradeScreen.setVisible(true);
-
-        // For Cover Instruction Panel and Upgrade Panel
+        // For Cover Loaded Panel
         blankFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         blankFrame.setSize(size_x, size_y);
         blankFrame.setResizable(false);
@@ -259,12 +252,17 @@ public class Main{
             }
         });
 
+        // Load Panel
+        loading = true;
+        pauseScreen.setVisible(true);
+        instructionScreen.setVisible(true);
+        upgradeScreen.setVisible(true);
+
         startScreen.getContentPane().add(startPanel);
         startScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         startScreen.setSize(size_x, size_y);
         startScreen.setResizable(false);
         startScreen.setLocation(loc_x, loc_y);
-        startScreen.setAlwaysOnTop(true);
         startScreen.setVisible(true);
         startScreen.addComponentListener(new ComponentListener(){
             @Override
@@ -284,5 +282,17 @@ public class Main{
                 
             }
         });
+
+        // Close Loaded Panel
+        try{
+            Thread.sleep(100);
+            pauseScreen.setVisible(false);
+            instructionScreen.setVisible(false);
+            upgradeScreen.setVisible(false);
+            blankFrame.setVisible(false);
+            loading = false;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
