@@ -87,6 +87,7 @@ public class Main{
                 else if(GamePanel.lastState == 4){
                     CavePanel.Start = true;
                 }
+                PausePanel.Start = false;
                 JFrame nowFrame = GamePanel.frame[GamePanel.lastState];
                 GamePanel.switchState(GamePanel.lastState);
                 nowFrame.setVisible(true);
