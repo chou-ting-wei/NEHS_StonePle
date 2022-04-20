@@ -21,7 +21,7 @@ public class CavePanel extends JPanel implements KeyListener{
     int characterInitX = 640, characterInitY = 640;
     Map map;
 
-    JFrame mainFrame, pauseScreen, fieldScreen, caveScreen;
+    JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
     static boolean Start;
 
     void init(){
@@ -41,11 +41,12 @@ public class CavePanel extends JPanel implements KeyListener{
         character1 = new Character(characterInitX, characterInitY, 80, 80, 80, 80, "walk.gif");
     }
 
-    CavePanel(JFrame mainFrame, JFrame pauseScreen, JFrame fieldScreen, JFrame caveScreen){
+    CavePanel(JFrame mainFrame, JFrame pauseScreen, JFrame fieldScreen, JFrame caveScreen, JFrame backpackScreen){
         this.fieldScreen = fieldScreen;
         this.pauseScreen = pauseScreen;
         this.mainFrame = mainFrame;
         this.caveScreen = caveScreen;
+        this.backpackScreen = backpackScreen;
 
         addKeyListener(this);
         setFocusable(true);
@@ -143,6 +144,13 @@ public class CavePanel extends JPanel implements KeyListener{
             pauseScreen.setVisible(true);
             fieldScreen.setVisible(false);
         }
+        if(e.getKeyCode() == KeyEvent.VK_Q){
+            GamePanel.switchState(7);
+            Start = false;
+            BackpackPanel.Start = true;
+            backpackScreen.setVisible(true);
+            mainFrame.setVisible(false);
+        }
         if(e.getKeyCode() == KeyEvent.VK_SHIFT){
             System.out.println("-");
             System.out.println("Game State:");
@@ -160,7 +168,7 @@ public class CavePanel extends JPanel implements KeyListener{
             System.out.println("Character Coordinate:");
             System.out.println(character1.x + " " + character1.y);
         }
-        if(e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_UP){
+        if(e.getKeyCode() == KeyEvent.VK_W){
             if(character1.y >= character1.movY){
                 if(moveJudge(character1.x, character1.y - character1.movY)){
                     character1.y -= character1.movY;
@@ -172,7 +180,7 @@ public class CavePanel extends JPanel implements KeyListener{
                 reset();
             }
         }
-        if(e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN){
+        if(e.getKeyCode() == KeyEvent.VK_S){
             if(character1.y <= mainFrame.getHeight() - character1.width - character1.movY){
                 if(moveJudge(character1.x, character1.y + character1.movY)){
                     character1.y += character1.movY;
@@ -184,7 +192,7 @@ public class CavePanel extends JPanel implements KeyListener{
                 reset();
             }
         }
-        if(e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT){
+        if(e.getKeyCode() == KeyEvent.VK_A){
             if(character1.x >= character1.movX){
                 if(moveJudge(character1.x - character1.movX, character1.y)){
                     character1.x -= character1.movX;
@@ -196,7 +204,7 @@ public class CavePanel extends JPanel implements KeyListener{
                 reset();
             }
         }
-        if(e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT){
+        if(e.getKeyCode() == KeyEvent.VK_D){
             if(character1.x <= mainFrame.getWidth() - character1.width - character1.movX){
                 if(moveJudge(character1.x + character1.movX, character1.y)){
                     character1.x += character1.movX;

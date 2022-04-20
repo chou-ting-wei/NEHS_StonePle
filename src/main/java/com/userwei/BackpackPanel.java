@@ -4,14 +4,14 @@ import javax.swing.JPanel;
 import java.awt.event.*;
 import java.awt.Graphics;
 
-public class UpgradePanel extends JPanel implements KeyListener{
-    JFrame mainFrame, upgradeScreen;
+public class BackpackPanel extends JPanel implements KeyListener{
+    JFrame mainFrame, backpackScreen;
 
     static boolean Start;
 
-    UpgradePanel(JFrame mainFrame, JFrame upgradeScreen){
+    BackpackPanel(JFrame mainFrame, JFrame backpackScreen){
         this.mainFrame = mainFrame;
-        this.upgradeScreen = upgradeScreen;
+        this.backpackScreen = backpackScreen;
 
 
         addKeyListener(this);

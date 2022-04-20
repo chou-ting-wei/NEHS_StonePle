@@ -7,7 +7,6 @@ import java.awt.Graphics;
 public class PausePanel extends JPanel implements KeyListener{
 
     Animate animate1;
-    Font font1;
     JFrame pauseScreen;
     static boolean Start;
 
@@ -15,7 +14,6 @@ public class PausePanel extends JPanel implements KeyListener{
         this.pauseScreen = pauseScreen;
 
         animate1 = new Animate(1136, 639, 144, 81, "paused.gif");
-        font1 = new Font(376, 200, 528, 251, "sudo.png");
 
         addKeyListener(this);
         setFocusable(true);
@@ -23,7 +21,6 @@ public class PausePanel extends JPanel implements KeyListener{
 
     public void paintComponent(Graphics g){
         animate1.draw(g, this);
-        font1.draw(g, this);
     }
 
     @Override
@@ -49,7 +46,7 @@ public class PausePanel extends JPanel implements KeyListener{
         }
 
         // Sudo
-        // StartPanel
+        // Start Panel
         if(e.getKeyCode() == KeyEvent.VK_0 && Start){
             GamePanel.sudo = true;
             Start = false;
@@ -59,7 +56,7 @@ public class PausePanel extends JPanel implements KeyListener{
             nowFrame.setVisible(true);
             pauseScreen.setVisible(false);
         }
-        // GamePanel
+        // Game Panel
         if(e.getKeyCode() == KeyEvent.VK_1 && Start){
             GamePanel.sudo = true;
             Start = false;
@@ -69,7 +66,7 @@ public class PausePanel extends JPanel implements KeyListener{
             nowFrame.setVisible(true);
             pauseScreen.setVisible(false);
         }
-        // FieldPanel
+        // Field Panel
         if(e.getKeyCode() == KeyEvent.VK_3 && Start){
             GamePanel.sudo = true;
             Start = false;
@@ -79,6 +76,7 @@ public class PausePanel extends JPanel implements KeyListener{
             nowFrame.setVisible(true);
             pauseScreen.setVisible(false);
         }
+        // Cave Panel
         if(e.getKeyCode() == KeyEvent.VK_4 && Start){
             GamePanel.sudo = true;
             Start = false;
