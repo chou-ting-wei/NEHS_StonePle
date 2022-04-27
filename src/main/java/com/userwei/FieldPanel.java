@@ -16,15 +16,25 @@ public class FieldPanel extends JPanel implements KeyListener{
     Background allMapBackground[][][];
     int allMapBackgroundCount[][];
 
+    boolean allMapMoveJudge[][][][];
+
     int mapState_i = 1, mapState_j = 5;
     int mapSizeX = 3, mapSizeY = 7;
 
     Character character1;
-    int characterInitX = 640, characterInitY = 320;
+    int characterInitX = 560, characterInitY = 400;
     Map map;
 
     JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
     static boolean Start;
+
+    void addMoveJudge(int mapx, int mapy, int x1, int x2, int y1, int y2){
+        for(int i = x1; i <= x2; i ++){
+            for(int j = y1; j <= y2; j ++){
+                allMapMoveJudge[mapx][mapy][i][j] = true;
+            }
+        }
+    }
 
     void addBackground(int mapx, int mapy, int x, int y, int w, int h, String s){
         int nowMapBackgroundCount = allMapBackgroundCount[mapx][mapy];
@@ -38,6 +48,7 @@ public class FieldPanel extends JPanel implements KeyListener{
         allMap = new Map[mapSizeX][mapSizeY];
         allMapBackground = new Background[mapSizeX][mapSizeY][70];
         allMapBackgroundCount = new int[mapSizeX][mapSizeY];
+        allMapMoveJudge = new boolean[mapSizeX][mapSizeY][16][9];
 
         for(int i = mapSizeX - 1; i >= 0; i --){
             for(int j = 0; j < mapSizeY; j ++){
@@ -45,6 +56,73 @@ public class FieldPanel extends JPanel implements KeyListener{
                 allMap[i][j] = nowMap;
             }
         }
+
+        /*
+        Map Situation
+        0-0 1-0 2-0 3-0 4-0 5-0 6-0
+        0-1 1-1 2-1 3-1 4-1 5-1 6-1
+        0-2 1-2 2-2 3-2 4-2 5-2 6-2
+        */
+
+        // 0-0
+
+        // 0-1
+
+        // 0-2
+
+        // 1-0
+
+        // 1-1 洞穴進入位置
+
+        // 1-2
+
+        // 2-0
+
+        // 2-1
+
+        // 2-2
+
+        // 3-0
+
+        // 3-1
+
+        // 3-2
+
+        // 4-0
+
+        // 4-1
+
+        // 4-2
+
+        // 5-0
+
+        // 5-1 出生位置（家）
+            // house
+            addBackground(1, 5, 400, 160, 240, 240, "house.png");
+            addMoveJudge(1, 5, 5, 7, 2, 4);
+            // stone
+            addBackground(1, 5, 720, 320, 80, 80, "stone.png");
+            addBackground(1, 5, 800, 240, 80, 80, "stone.png");
+            addBackground(1, 5, 960, 240, 80, 80, "stone.png");
+            addBackground(1, 5, 1040, 320, 80, 80, "stone.png");
+
+            for(int i = 2; i <= 6; i ++){
+                addBackground(1, 5, 880, 80 * i, 80, 80, "stone.png");
+            }
+
+            addMoveJudge(1, 5, 9, 9, 4, 4);
+            addMoveJudge(1, 5, 10, 10, 3, 3);
+            addMoveJudge(1, 5, 12, 12, 3, 3);
+            addMoveJudge(1, 5, 13, 13, 4, 4);
+            addMoveJudge(1, 5, 11, 11, 2, 6);
+
+        // 5-2
+
+        // 6-0
+
+        // 6-1
+
+        // 6-2
         
     }
 
@@ -102,8 +180,7 @@ public class FieldPanel extends JPanel implements KeyListener{
     }
 
     boolean moveJudge(int x, int y){
-
-        return true;
+        return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80];
     }
 
     @Override
