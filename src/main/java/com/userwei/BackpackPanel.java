@@ -6,6 +6,7 @@ import java.awt.Graphics;
 
 public class BackpackPanel extends JPanel implements KeyListener{
     JFrame mainFrame, backpackScreen;
+    Font font1;
 
     static boolean Start;
 
@@ -13,13 +14,14 @@ public class BackpackPanel extends JPanel implements KeyListener{
         this.mainFrame = mainFrame;
         this.backpackScreen = backpackScreen;
 
+        font1 = new Font(496, 319, 288, 82, "backpack.png");
 
         addKeyListener(this);
         setFocusable(true);
     }
 
     public void paintComponent(Graphics g){
-        
+        font1.draw(g, this);
     }
 
     @Override

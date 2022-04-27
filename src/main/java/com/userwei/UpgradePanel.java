@@ -6,6 +6,7 @@ import java.awt.Graphics;
 
 public class UpgradePanel extends JPanel implements KeyListener{
     JFrame mainFrame, upgradeScreen;
+    Font font1;
 
     static boolean Start;
 
@@ -13,13 +14,14 @@ public class UpgradePanel extends JPanel implements KeyListener{
         this.mainFrame = mainFrame;
         this.upgradeScreen = upgradeScreen;
 
+        font1 = new Font(500, 319, 280, 82, "upgrade.png");
 
         addKeyListener(this);
         setFocusable(true);
     }
 
     public void paintComponent(Graphics g){
-        
+        font1.draw(g, this);
     }
 
     @Override
