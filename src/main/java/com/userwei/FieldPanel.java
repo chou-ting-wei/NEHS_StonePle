@@ -7,6 +7,15 @@ import java.awt.Graphics;
 
 public class FieldPanel extends JPanel implements KeyListener{
     Map allMap[][];
+    /*
+    Map Situation
+    0-0 1-0 2-0 3-0 4-0 5-0 6-0
+    0-1 1-1 2-1 3-1 4-1 5-1 6-1
+    0-2 1-2 2-2 3-2 4-2 5-2 6-2
+    */
+    Background allMapBackground[][][];
+    int allMapBackgroundCount[][];
+
     int mapState_i = 1, mapState_j = 5;
     int mapSizeX = 3, mapSizeY = 7;
 
@@ -17,14 +26,26 @@ public class FieldPanel extends JPanel implements KeyListener{
     JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
     static boolean Start;
 
+    void addBackground(int mapx, int mapy, int x, int y, int w, int h, String s){
+        int nowMapBackgroundCount = allMapBackgroundCount[mapx][mapy];
+        Background nowBackground = new Background(x, y, w, h, s);
+        allMapBackground[mapx][mapy][nowMapBackgroundCount] = nowBackground;
+
+        allMapBackgroundCount[mapx][mapy] ++;
+    }
+
     void init(){
         allMap = new Map[mapSizeX][mapSizeY];
+        allMapBackground = new Background[mapSizeX][mapSizeY][70];
+        allMapBackgroundCount = new int[mapSizeX][mapSizeY];
+
         for(int i = mapSizeX - 1; i >= 0; i --){
             for(int j = 0; j < mapSizeY; j ++){
                 Map nowMap = new Map(0, 0, 1280, 720, "field.png");
                 allMap[i][j] = nowMap;
             }
         }
+        
     }
 
     void reset(){
@@ -49,6 +70,10 @@ public class FieldPanel extends JPanel implements KeyListener{
     public void paintComponent(Graphics g){
         map.draw(g, this);
         character1.draw(g, this);
+        for(int i = 0; i < allMapBackgroundCount[mapState_i][mapState_j]; i ++){
+            Background nowbBackground = allMapBackground[mapState_i][mapState_j][i];
+            nowbBackground.draw(g, this);
+        }
     }
 
     public void update() {
