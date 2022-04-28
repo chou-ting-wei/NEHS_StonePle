@@ -60,10 +60,6 @@ public class CavePanel extends JPanel implements KeyListener{
         character1.draw(g, this);
     }
 
-    public void update() {
-        
-	}
-
     boolean mapJudge(int dx, int dy){
         if(mapState_i + dx < 0 || mapState_i + dx >= mapSizeX){
             return false;

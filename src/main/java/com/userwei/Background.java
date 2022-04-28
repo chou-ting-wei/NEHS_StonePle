@@ -4,12 +4,15 @@ import javax.swing.ImageIcon;
 
 public class Background extends Rectangle{
     Image pic;
+    boolean destroyed;
+    String name;
 
     Background(int x, int y, int w, int h, String s){
         this.x = x;
         this.y = y;
         this.width = w;
         this.height = h;
+        name = s;
 
         try{
             // pic = Toolkit.getDefaultToolkit().createImage("StonePle/src/Image/background/" + s);
@@ -21,6 +24,8 @@ public class Background extends Rectangle{
     }
 
     public void draw(Graphics g, Component c){
-        g.drawImage(pic, x, y, width, height, c);
+        if(!destroyed){
+            g.drawImage(pic, x, y, width, height, c);
+        }
     }
 }
