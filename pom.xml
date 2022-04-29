@@ -36,15 +36,12 @@
   </dependencies>
   <build>
     <resources>
-
      <resource>
-       <directory>src.main.java.com.userwei.Audio</directory>
+       <directory>src/main/java/com/userwei/Audio</directory>
      </resource>
-
      <resource>
-       <directory>src.main.java.com.userwei.Image</directory>
+       <directory>src/main/java/com/userwei/Image</directory>
      </resource>
-     
    </resources>
     <pluginManagement>
       <plugins>
