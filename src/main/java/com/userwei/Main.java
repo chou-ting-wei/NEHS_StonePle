@@ -72,7 +72,7 @@ public class Main{
             @Override
             public void actionPerformed(ActionEvent e){
                 try{
-                    Music music = new Music("select.wav");
+                    Music music = new Music("Select.wav");
                     music.playOnce();
                 }catch(Exception e1){
                     e1.printStackTrace();
@@ -106,7 +106,7 @@ public class Main{
             @Override
             public void actionPerformed(ActionEvent e){
                 try{
-                    Music music = new Music("select.wav");
+                    Music music = new Music("Select.wav");
                     music.playOnce();
                 }catch(Exception e1){
                     e1.printStackTrace();
@@ -207,7 +207,7 @@ public class Main{
             @Override
             public void actionPerformed(ActionEvent e){
                 try{
-                    Music music = new Music("select.wav");
+                    Music music = new Music("Select.wav");
                     music.playOnce();
                 }catch(Exception e1){
                     e1.printStackTrace();
@@ -256,7 +256,7 @@ public class Main{
             @Override
             public void actionPerformed(ActionEvent e){
                 try{
-                    Music music = new Music("select.wav");
+                    Music music = new Music("Select.wav");
                     music.playOnce();
                 }catch(Exception e1){
                     e1.printStackTrace();
@@ -305,7 +305,7 @@ public class Main{
             @Override
             public void actionPerformed(ActionEvent e){
                 try{
-                    Music music = new Music("select.wav");
+                    Music music = new Music("Select.wav");
                     music.playOnce();
                 }catch(Exception e1){
                     e1.printStackTrace();

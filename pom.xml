@@ -38,11 +38,11 @@
     <resources>
 
      <resource>
-       <directory>com.userwei.Audio</directory>
+       <directory>src.main.java.com.userwei.Audio</directory>
      </resource>
 
      <resource>
-       <directory>com.userwei.Image</directory>
+       <directory>src.main.java.com.userwei.Image</directory>
      </resource>
      
    </resources>
