@@ -25,6 +25,8 @@ public class FieldPanel extends JPanel implements KeyListener{
     int characterInitX = 560, characterInitY = 400;
     Map map;
 
+    boolean caveUnlocked;
+
     JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
     static boolean Start;
 
@@ -447,7 +449,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             nowFrame.setVisible(true);
             fieldScreen.setVisible(false);
         }
-        else if(mapState_i == 1 && mapState_j == 1 && edgeJudge(x, 6, 9) && edgeJudge(y, 1, 4)){
+        else if(mapState_i == 1 && mapState_j == 1 && edgeJudge(x, 6, 9) && edgeJudge(y, 1, 4) && caveUnlocked){
             Start = false;
             JFrame nowFrame = GamePanel.frame[4];
             CavePanel.Start = true;
