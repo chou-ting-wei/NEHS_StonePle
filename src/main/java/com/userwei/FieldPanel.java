@@ -119,8 +119,11 @@ public class FieldPanel extends JPanel implements KeyListener{
 
         // 1-1 洞穴進入位置(undone) # 可再增加其他功能、圖片未上傳 #
             // cave
-            addBackground(1, 1, 480, 80, 320,320, "cave_floor.png");
-            addMoveJudge(1, 1, 6, 9, 1, 4);
+            addBackground(1, 1, 480, 80, 320,240, "cave_locked.png");
+            addMoveJudge(1, 1, 6, 9, 1, 3);
+            // unlock switch(make sure deleted before package)
+            addBackground(1, 1, 800, 240, 80,80, "switch_off.png");
+            addMoveJudge(1, 1, 10, 10, 3, 3);
 
         // 1-2(done)
             // trunk
@@ -449,7 +452,35 @@ public class FieldPanel extends JPanel implements KeyListener{
             nowFrame.setVisible(true);
             fieldScreen.setVisible(false);
         }
-        else if(mapState_i == 1 && mapState_j == 1 && edgeJudge(x, 6, 9) && edgeJudge(y, 1, 4) && caveUnlocked){
+        else if(mapState_i == 1 && mapState_j == 1 && edgeJudge(x, 10, 10) && edgeJudge(y, 3, 3)){
+            if(!caveUnlocked){
+                caveUnlocked = true;
+                if(allMapBackground[1][1][0].name != "cave_unlocked.png"){
+                    Background newBackground = new Background(480, 80,320, 240, "cave_unlocked.png");
+                    allMapBackground[1][1][0] = newBackground;
+                    repaint();
+                }
+                if(allMapBackground[1][1][1].name != "switch_on.png"){
+                    Background newBackground = new Background(800, 240,80, 80, "switch_on.png");
+                    allMapBackground[1][1][1] = newBackground;
+                    repaint();
+                }
+            } 
+            else{
+                caveUnlocked = false;
+                if(allMapBackground[1][1][0].name != "cave_locked.png"){
+                    Background newBackground = new Background(480, 80,320, 240, "cave_locked.png");
+                    allMapBackground[1][1][0] = newBackground;
+                    repaint();
+                }
+                if(allMapBackground[1][1][1].name != "switch_off.png"){
+                    Background newBackground = new Background(800, 240,80, 80, "switch_off.png");
+                    allMapBackground[1][1][1] = newBackground;
+                    repaint();
+                }
+            }
+        }
+        else if(mapState_i == 1 && mapState_j == 1 && edgeJudge(x, 6, 9) && edgeJudge(y, 1, 3) && caveUnlocked){
             Start = false;
             JFrame nowFrame = GamePanel.frame[4];
             CavePanel.Start = true;
