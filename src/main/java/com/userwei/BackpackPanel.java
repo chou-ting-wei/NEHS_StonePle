@@ -28,12 +28,12 @@ public class BackpackPanel extends JPanel implements KeyListener{
         return idx;
     }
 
-    void addMaterial(int x, int y, String s){
+    void addMaterial(int x, int y, int amt, String s){
         int idx = findIndex(s);
         fontX[idx] = x;
         fontY[idx] = y;
         Material nowMaterial = new Material(x * 80 + 10, y * 80 + 10, 60, 60, 0, s + ".png");
-        Font nowFont = new Font(x * 80, (y + 1) * 80 - 20, 80, 20, "0.png");
+        Font nowFont = new Font(x * 80, (y + 1) * 80 - 20, 80, 20, amt + ".png");
         font[idx] = nowFont;
         material[idx] = nowMaterial;
         // materialCount ++;
@@ -52,13 +52,22 @@ public class BackpackPanel extends JPanel implements KeyListener{
 
     void addMaterialAmount(String s, int addAmt){
         int idx = findIndex(s), nowAmount = material[idx].amt;
-        Font nowFont = new Font(fontX[idx] * 80, (fontY[idx] + 1) * 80 - 20, 80, 20, (nowAmount + addAmt) + ".png");
+        Font nowFont;
+        if(nowAmount + addAmt < 0){
+            nowFont = new Font(fontX[idx] * 80, (fontY[idx] + 1) * 80 - 20, 80, 20, "EOF.png");
+        }
+        else if(nowAmount + addAmt <= 99){
+            nowFont = new Font(fontX[idx] * 80, (fontY[idx] + 1) * 80 - 20, 80, 20, (nowAmount + addAmt) + ".png");
+        }
+        else{
+            nowFont = new Font(fontX[idx] * 80, (fontY[idx] + 1) * 80 - 20, 80, 20, "99+.png");
+        }
         material[idx].amt += addAmt;
         font[idx] = nowFont;
         repaint();
     }
 
-    int getMaterialAmount(String s){
+    public int getMaterialAmount(String s){
         int idx = findIndex(s);
         return material[idx].amt;
     }
@@ -73,10 +82,10 @@ public class BackpackPanel extends JPanel implements KeyListener{
         material = new Material[materialCount];
         weapon = new Weapon[weaponCount];
 
-        addMaterial(1, 1, "coin");
-        addMaterial(2, 1, "herb");
-        addMaterial(3, 1, "iron");
-        addMaterial(4, 1, "wood");
+        addMaterial(1, 1, 0, "coin");
+        addMaterial(2, 1, 0, "herb");
+        addMaterial(3, 1, 0, "iron");
+        addMaterial(4, 1, 0, "wood");
     }
 
     BackpackPanel(JFrame mainFrame, JFrame backpackScreen){
@@ -128,13 +137,7 @@ public class BackpackPanel extends JPanel implements KeyListener{
             addMaterialAmount("coin", 1);
         }
         if(e.getKeyCode() == KeyEvent.VK_1){
-            addMaterialAmount("herb", 1);
-        }
-        if(e.getKeyCode() == KeyEvent.VK_2){
-            addMaterialAmount("iron", 1);
-        }
-        if(e.getKeyCode() == KeyEvent.VK_3){
-            addMaterialAmount("wood", 1);
+            addMaterialAmount("coin", -1);
         }
     }
 
