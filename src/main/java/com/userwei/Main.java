@@ -295,7 +295,7 @@ public class Main{
             }
         });
 
-        JButton backpackButton1 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/cross.png")));
+        JButton backpackButton1 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/cross_white.png")));
         backpackButton1.setBounds(1200, 0, 80, 80);
         backpackButton1.setFocusPainted(false);
         backpackButton1.setBorderPainted(false);
