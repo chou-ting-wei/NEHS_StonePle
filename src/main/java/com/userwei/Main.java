@@ -246,7 +246,7 @@ public class Main{
             }
         });
 
-        JButton upgradeButton1 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/cross.png")));
+        JButton upgradeButton1 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/cross_white.png")));
         upgradeButton1.setBounds(1200, 0, 80, 80);
         upgradeButton1.setFocusPainted(false);
         upgradeButton1.setBorderPainted(false);

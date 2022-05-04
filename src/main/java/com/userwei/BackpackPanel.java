@@ -50,7 +50,7 @@ public class BackpackPanel extends JPanel implements KeyListener{
         // weaponCount ++;
     }
 
-    void addMaterialAmount(String s, int addAmt){
+    public void addMaterialAmount(String s, int addAmt){
         int idx = findIndex(s), nowAmount = material[idx].amt;
         Font nowFont;
         if(nowAmount + addAmt < 0){

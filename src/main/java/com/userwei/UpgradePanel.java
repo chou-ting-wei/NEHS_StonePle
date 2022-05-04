@@ -6,22 +6,30 @@ import java.awt.Graphics;
 
 public class UpgradePanel extends JPanel implements KeyListener{
     JFrame mainFrame, upgradeScreen;
-    Font font1;
+    
+    Icon icon1;
+    Map map;
 
     static boolean Start;
+
+    void init(){
+        icon1 = new Icon(10, 10, 60, 60, "arrow_up_white.png");
+        map = new Map(0, 0, 1280, 720, "upgrade.png");
+    }
 
     UpgradePanel(JFrame mainFrame, JFrame upgradeScreen){
         this.mainFrame = mainFrame;
         this.upgradeScreen = upgradeScreen;
 
-        font1 = new Font(500, 319, 280, 82, "upgrade.png");
+        init();
 
         addKeyListener(this);
         setFocusable(true);
     }
 
     public void paintComponent(Graphics g){
-        font1.draw(g, this);
+        map.draw(g, this);
+        icon1.draw(g, this);
     }
 
     @Override
