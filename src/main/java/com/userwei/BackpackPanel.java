@@ -154,6 +154,22 @@ public class BackpackPanel extends JPanel implements KeyListener{
             System.out.println("Start State:");
             System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);
         }
+        if(e.getKeyCode() == KeyEvent.VK_Q){
+            BackpackPanel.Start = false;
+            if(GamePanel.lastState == 1){
+                GamePanel.Start = true;
+            }
+            else if(GamePanel.lastState == 3){
+                FieldPanel.Start = true;
+            }
+            else if(GamePanel.lastState == 4){
+                CavePanel.Start = true;
+            }
+            JFrame nowFrame = GamePanel.frame[GamePanel.lastState];
+            GamePanel.switchState(GamePanel.lastState);
+            nowFrame.setVisible(true);
+            backpackScreen.setVisible(false);
+        }
     }
 
     @Override

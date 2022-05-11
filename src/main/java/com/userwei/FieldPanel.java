@@ -421,6 +421,10 @@ public class FieldPanel extends JPanel implements KeyListener{
         }
     }
 
+    int randomNumber(int srt, int end){
+        return (int)(Math.random()*(end - srt + 1)) + srt;
+    }
+
     boolean mapJudge(int dx, int dy){
         if(mapState_i + dx < 0 || mapState_i + dx >= mapSizeX){
             return false;

@@ -45,6 +45,24 @@ public class PausePanel extends JPanel implements KeyListener{
             System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);
         }
 
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+            PausePanel.Start = false;
+            if(GamePanel.lastState == 1){
+                GamePanel.Start = true;
+            }
+            else if(GamePanel.lastState == 3){
+                FieldPanel.Start = true;
+            }
+            else if(GamePanel.lastState == 4){
+                CavePanel.Start = true;
+            }
+            PausePanel.Start = false;
+            JFrame nowFrame = GamePanel.frame[GamePanel.lastState];
+            GamePanel.switchState(GamePanel.lastState);
+            nowFrame.setVisible(true);
+            pauseScreen.setVisible(false);
+        }
+
         // Sudo
         // Start Panel
         if(e.getKeyCode() == KeyEvent.VK_0 && Start){
