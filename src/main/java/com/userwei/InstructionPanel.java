@@ -5,22 +5,33 @@ import java.awt.event.*;
 import java.awt.Graphics;
 
 public class InstructionPanel extends JPanel implements KeyListener{
-    Font font1;
     JFrame mainFrame, instructionScreen;
 
+    Font font1;
+    Icon icon1;
+    Map map;
+
     static boolean Start;
+
+    void init(){
+        font1 = new Font(80, 80, 1120, 560, "instruction.png");
+        icon1 = new Icon(10, 10, 60, 60, "exclamation_white.png");
+        map = new Map(0, 0, 1280, 720, "instruction.png");
+    }
 
     InstructionPanel(JFrame mainFrame, JFrame instructionScreen){
         this.mainFrame = mainFrame;
         this.instructionScreen = instructionScreen;
 
-        font1 = new Font(395, 300, 490, 120, "instruction.png");
+        init();
 
         addKeyListener(this);
         setFocusable(true);
     }
 
     public void paintComponent(Graphics g){
+        map.draw(g, this);
+        icon1.draw(g, this);
         font1.draw(g, this);
     }
 

@@ -494,6 +494,7 @@ public class FieldPanel extends JPanel implements KeyListener{
                 Background newBackground = new Background(80, 480, 80, 80, "chest_open.png");
                 allMapBackground[0][6][nowBackgroundCount - 1] = newBackground;
                 repaint();
+                BackpackPanel.addMaterialAmount("herb", 20);
             }
         }
         else if(mapState_i == 2 && mapState_j == 5 && edgeJudge(x, 13, 13) && edgeJudge(y, 4, 4)){
@@ -502,6 +503,7 @@ public class FieldPanel extends JPanel implements KeyListener{
                 Background newBackground = new Background(1040, 320, 80, 80, "chest_open.png");
                 allMapBackground[2][5][nowBackgroundCount - 1] = newBackground;
                 repaint();
+                BackpackPanel.addMaterialAmount("coin", 5);
             }
         }
         else if(mapState_i == 2 && mapState_j == 3 && edgeJudge(x, 14, 14) && edgeJudge(y, 6, 6)){
@@ -510,6 +512,7 @@ public class FieldPanel extends JPanel implements KeyListener{
                 Background newBackground = new Background(1120, 480, 80, 80, "chest_open.png");
                 allMapBackground[2][3][nowBackgroundCount - 1] = newBackground;
                 repaint();
+                BackpackPanel.addMaterialAmount("wood", 10);
             }
         }
         else if(mapState_i == 0 && mapState_j == 1 && edgeJudge(x, 1, 1) && edgeJudge(y, 5, 5)){
@@ -518,6 +521,7 @@ public class FieldPanel extends JPanel implements KeyListener{
                 Background newBackground = new Background(80, 400, 80, 80, "chest_open.png");
                 allMapBackground[0][1][nowBackgroundCount - 1] = newBackground;
                 repaint();
+                BackpackPanel.addMaterialAmount("herb", 10);
             }
         }
         else if(mapState_i == 1 && mapState_j == 2 && edgeJudge(x, 7, 7) && edgeJudge(y, 4, 4)){
@@ -526,6 +530,7 @@ public class FieldPanel extends JPanel implements KeyListener{
                 Background newBackground = new Background(560, 320, 80, 80, "chest_open.png");
                 allMapBackground[1][2][nowBackgroundCount - 2] = newBackground;
                 repaint();
+                BackpackPanel.addMaterialAmount("wood", 20);
             }
         }
         else if(mapState_i == 1 && mapState_j == 2 && edgeJudge(x, 8, 8) && edgeJudge(y, 4, 4)){
@@ -534,6 +539,7 @@ public class FieldPanel extends JPanel implements KeyListener{
                 Background newBackground = new Background(640, 320, 80, 80, "chest_open.png");
                 allMapBackground[1][2][nowBackgroundCount - 1] = newBackground;
                 repaint();
+                BackpackPanel.addMaterialAmount("coin", 10);
             }
         }
         return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80];

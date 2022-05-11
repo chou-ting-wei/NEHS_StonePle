@@ -10,17 +10,18 @@ public class BackpackPanel extends JPanel implements KeyListener{
     Icon icon1;
     Map map;
 
-    String name[] = {"coin", "herb", "iron", "wood"};
-    Font font[];
-    Material material[];
-    Weapon weapon[];
-    int fontX[], fontY[];
+    static String name[] = {"coin", "herb", "iron", "wood"};
+    static Font font[];
+    static Material material[];
+    static Weapon weapon[];
+    static int fontX[], fontY[];
+    static int materialCount = 4, weaponCount = 0;
 
-    int materialCount = 4, weaponCount = 0;
+    static boolean Start, materialChanged;
 
-    static boolean Start;
+    Thread thread;
 
-    int findIndex(String s){
+    static int findIndex(String s){
         int idx;
         for(idx = 0; idx < materialCount + weaponCount; idx ++){
             if(name[idx] == s) break;
@@ -50,7 +51,7 @@ public class BackpackPanel extends JPanel implements KeyListener{
         // weaponCount ++;
     }
 
-    public void addMaterialAmount(String s, int addAmt){
+    static public void addMaterialAmount(String s, int addAmt){
         int idx = findIndex(s), nowAmount = material[idx].amt;
         Font nowFont;
         if(nowAmount + addAmt < 0){
@@ -64,10 +65,10 @@ public class BackpackPanel extends JPanel implements KeyListener{
         }
         material[idx].amt += addAmt;
         font[idx] = nowFont;
-        repaint();
+        materialChanged = true;
     }
 
-    public int getMaterialAmount(String s){
+    static public int getMaterialAmount(String s){
         int idx = findIndex(s);
         return material[idx].amt;
     }
@@ -96,6 +97,26 @@ public class BackpackPanel extends JPanel implements KeyListener{
 
         addKeyListener(this);
         setFocusable(true);
+
+        thread = new Thread(() -> {
+            while(true){
+                update();
+
+                try{
+                    Thread.sleep(10);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    public void update(){
+        if(materialChanged){
+            materialChanged = false;
+            repaint();
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -132,12 +153,6 @@ public class BackpackPanel extends JPanel implements KeyListener{
             
             System.out.println("Start State:");
             System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);
-        }
-        if(e.getKeyCode() == KeyEvent.VK_0){
-            addMaterialAmount("coin", 1);
-        }
-        if(e.getKeyCode() == KeyEvent.VK_1){
-            addMaterialAmount("coin", -1);
         }
     }
 

@@ -197,7 +197,7 @@ public class Main{
             }
         });
 
-        JButton instructionButton1 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/cross.png")));
+        JButton instructionButton1 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/cross_white.png")));
         instructionButton1.setBounds(1200, 0, 80, 80);
         instructionButton1.setFocusPainted(false);
         instructionButton1.setBorderPainted(false);
