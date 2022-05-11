@@ -123,6 +123,15 @@ public class CavePanel extends JPanel implements KeyListener{
         if(x == 0 || y == 0 || x == 1200 || y == 640){
             return false;
         }
+        if(mapState_i == 2 && mapState_j == 5 && edgeJudge(x, 14, 14) && edgeJudge(y, 7, 7)){
+            Start = false;
+            JFrame nowFrame = GamePanel.frame[3];
+            FieldPanel.Start = true;
+            GamePanel.switchState(3);
+            nowFrame.setVisible(true);
+            caveScreen.setVisible(false);
+            return false;
+        }
         return true;
     }
 
