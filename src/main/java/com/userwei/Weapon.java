@@ -4,12 +4,16 @@ import javax.swing.ImageIcon;
 
 public class Weapon extends Rectangle{
     Image pic;
+    int atk, level;
+    boolean unlocked;
 
-    Weapon(int x, int y, int w, int h, String s){
+    Weapon(int x, int y, int w, int h, int atk, int level, String s){
         this.x = x;
         this.y = y;
         this.width = w;
         this.height = h;
+        this.atk = atk;
+        this.level = level;
 
         try{
             // pic = Toolkit.getDefaultToolkit().createImage("StonePle/src/Image/font/" + s);
