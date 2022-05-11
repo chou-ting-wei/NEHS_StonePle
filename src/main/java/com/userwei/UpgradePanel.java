@@ -4,6 +4,19 @@ import javax.swing.JPanel;
 import java.awt.event.*;
 import java.awt.Graphics;
 
+/*
+    會用到的東西
+
+    素材列表：{"coin", "herb", "iron", "wood"}
+
+    取得素材數量：
+    int XXXAmount = BackpackPanel.getMaterialAmount("XXX");
+
+    更改素材數量：
+    BackpackPanel.addMaterialAmount("XXX", 數量);
+        % 減少數量直接加負的
+*/
+
 public class UpgradePanel extends JPanel implements KeyListener{
     JFrame mainFrame, upgradeScreen;
     
@@ -20,7 +33,6 @@ public class UpgradePanel extends JPanel implements KeyListener{
 
     static boolean Start;
 
-    Thread thread;
 
     int findIndex(String s){
         int idx;
@@ -55,7 +67,6 @@ public class UpgradePanel extends JPanel implements KeyListener{
 
         init();
         
-
     }
 
     public void paintComponent(Graphics g){
