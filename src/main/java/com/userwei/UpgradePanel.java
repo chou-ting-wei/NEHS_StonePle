@@ -15,7 +15,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
     Description description;
     Material matericon1, matericon2, matericon3, matericon4, matericon5, matericon6;
     Material matericonw1, matericonw2, matericonw3, matericonw4, matericonw5, matericonw6;
-    JButton weaponbutton, upgrade;
+    JButton weaponButton, upgradeButton;
 
     static boolean materialChanged, Start;
     Thread thread;
@@ -29,13 +29,13 @@ public class UpgradePanel extends JPanel implements KeyListener{
     // 0 : sword1, 1 : sword2
     String name[] = {"sword1", "sword2"};
     String selectedWeapon;
-    Weapon weapon[];
+    static Weapon weapon[];
 
     // 正在查看的武器
     int weaponNumber = 0;
 
     // 正在使用的武器
-    int weaponSelecting = 0;
+    static int weaponSelecting = 0;
     int weaponCount = 2;
     int weaponAtk[][] = {
         {1, 2, 3, 4, 5},
@@ -118,17 +118,25 @@ public class UpgradePanel extends JPanel implements KeyListener{
         return idx;
     }
 
+    boolean upgradable(){
+        boolean test = false;
+        /*if(){
+            test = true;
+        }*/
+        return test;
+    }
+
     void addWeapon(int x, int y, int atk, int level, String s){
         int idx = findIndex(s);
         Weapon nowWeapon = new Weapon(x * 80 + 10, y * 80 + 10, 60, 60, atk, level, s + ".png");
         weapon[idx] = nowWeapon;
-        JButton weaponbutton = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/weapon/" + s + ".png")));
-        weaponbutton.setBounds(x * 80, y * 80, 80, 80);
-        weaponbutton.setFocusPainted(false);
-        weaponbutton.setBorderPainted(false);
-        weaponbutton.setBorder(null);
-        weaponbutton.setLayout(null);
-        weaponbutton.addActionListener(new ActionListener(){
+        weaponButton = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/weapon/" + s + ".png")));
+        weaponButton.setBounds(x * 80, y * 80, 80, 80);
+        weaponButton.setFocusPainted(false);
+        weaponButton.setBorderPainted(false);
+        weaponButton.setBorder(null);
+        weaponButton.setLayout(null);
+        weaponButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 try{
@@ -179,12 +187,30 @@ public class UpgradePanel extends JPanel implements KeyListener{
                     data[13] = font4;
                     
                     repaint();
+
+                    if(weapon[idx].level == 0 && upgradable()){
+                        nowButtonType = 1;
+                    }
+                    else if(weapon[idx].level == 0){
+                        nowButtonType = 0;
+                    }
+                    else if(weapon[idx].level > 0 && upgradable()){
+                        nowButtonType = 3;
+                    }
+                    else if(weapon[idx].level > 0){
+                        nowButtonType = 2;
+                    }
+                    else{
+                        nowButtonType = 4;
+                    }
+                    upgradeButton.setIcon(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttonType[nowButtonType] + ".png")));
+
                 }catch(Exception e2){
                     e2.printStackTrace();
                 }
             }
         });
-        add(weaponbutton);
+        add(weaponButton);
     }
 
     void init(){
@@ -216,7 +242,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
         addWeapon(1, 1, 1, 1, "sword1");
         addWeapon(2, 1, 0, 0, "sword2");
         
-        JButton upgradeButton = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttonType[0] + ".png")));
+        upgradeButton = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttonType[0] + ".png")));
         upgradeButton.setBounds(808, 525, 183, 62);
         upgradeButton.setFocusPainted(false);
         upgradeButton.setBorderPainted(false);
