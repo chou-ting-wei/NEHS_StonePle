@@ -350,6 +350,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
         button[0].setBorder(null);
         button[0].setLayout(null);
         button[0].setVisible(false);
+        button[0].setEnabled(false);
         button[0].addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -409,7 +410,8 @@ public class UpgradePanel extends JPanel implements KeyListener{
                         e1.printStackTrace();
                     }
                 }
-            });    
+            });
+            button1.setEnabled(false);
             button[2 * a] = button1;
             add(button[2 * a]);
         }
