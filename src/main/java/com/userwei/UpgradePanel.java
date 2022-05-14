@@ -15,7 +15,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
     Description description;
     Material matericon1, matericon2, matericon3, matericon4, matericon5, matericon6;
     Material matericonw1, matericonw2, matericonw3, matericonw4, matericonw5, matericonw6;
-    JButton weaponButton, upgradeButton;
+    JButton weaponButton;
 
     static boolean materialChanged, Start;
     Thread thread;
@@ -33,11 +33,13 @@ public class UpgradePanel extends JPanel implements KeyListener{
     //Notation: 0: sword1, 1: sword2
     String name[] = {"sword1", "sword2"};
     String selectedWeapon;
-    Weapon weapon[];
+    static Weapon weapon[];
+
     //正在查看的武器
     int weaponNumber;
+
     //正在使用的武器
-    int weaponSelecting = 0;
+    static int weaponSelecting = 0;
     int weaponCount = 2;
     int weaponAtk[][] = {
         {1, 2, 3, 4, 5},
@@ -46,7 +48,6 @@ public class UpgradePanel extends JPanel implements KeyListener{
 
     // 按鈕
     String buttonType[] = {"make_locked", "make", "upgrade_locked", "upgrade", "maxlevel"};
-    int nowButtonType = 0;
 
     // 位置相關變數
     int i = 36;
@@ -127,7 +128,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
                 break;
             }
             else{
-                BackpackPanel.addMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][i][0], -Integer.parseInt(require[weaponNumber][weapon[weaponNumber].level][i][1]));
+                BackpackPanel.addMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][i][0], - Integer.parseInt(require[weaponNumber][weapon[weaponNumber].level][i][1]));
             }
         }
         weapon[weaponNumber].level ++;
@@ -166,7 +167,6 @@ public class UpgradePanel extends JPanel implements KeyListener{
                             return 2;
                         }
                     }
-                    
                 }
                 if(weapon[weaponNumber].level == 0){
                     return 1;
@@ -237,8 +237,6 @@ public class UpgradePanel extends JPanel implements KeyListener{
         Font font5 = new Font(mx - 3 * j + 18, my + 7 * i + 4, 160, 40, weapon[idx].atk + ".png");
         data[13] = font5;
 
-        //System.out.println(BackpackPanel.getMaterialAmount("coin") < Integer.parseInt(require[weaponNumber][weapon[weaponNumber].level][5][1]));
-        //System.out.println(judge());
         for(int a = 0; a < 5; a++){
             button[a].setVisible(false);
         }
@@ -345,7 +343,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
             data[a] = font;
         }
         button = new JButton[buttonCount];
-        button[0] = new JButton(new ImageIcon(Main.class.getResource("Image/upgrade/" + buttonType[0] + ".png")));
+        button[0] = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttonType[0] + ".png")));
         button[0].setBounds(808, 525, 183, 62);
         button[0].setFocusPainted(false);
         button[0].setBorderPainted(false);
@@ -355,21 +353,19 @@ public class UpgradePanel extends JPanel implements KeyListener{
         button[0].addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                if(nowButtonType != 0 && nowButtonType != 2 && nowButtonType != 4){
-                    try{
-                        Music music = new Music("Select.wav");
-                        music.playOnce();
-                        repaint();
-                    }catch(Exception e1){
-                        e1.printStackTrace();
-                    }
+                try{
+                    Music music = new Music("Select.wav");
+                    music.playOnce();
+                    repaint();
+                }catch(Exception e1){
+                    e1.printStackTrace();
                 }
             }
         });
         add(button[0]);
 
         for(int a = 1; a < 3; a++){
-            JButton button1 = new JButton(new ImageIcon(Main.class.getResource("Image/upgrade/" + buttonType[2 * a - 1] + ".png")));
+            JButton button1 = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttonType[2 * a - 1] + ".png")));
             button1.setBounds(808, 525, 183, 62);
             button1.setFocusPainted(false);
             button1.setBorderPainted(false);
@@ -395,7 +391,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
         }
 
         for(int a = 1; a < 3; a++){
-            JButton button1 = new JButton(new ImageIcon(Main.class.getResource("Image/upgrade/" + buttonType[2 * a] + ".png")));
+            JButton button1 = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttonType[2 * a] + ".png")));
             button1.setBounds(808, 525, 183, 62);
             button1.setFocusPainted(false);
             button1.setBorderPainted(false);
@@ -406,8 +402,8 @@ public class UpgradePanel extends JPanel implements KeyListener{
                 @Override
                 public void actionPerformed(ActionEvent e){
                     try{
-                        Music music = new Music("Select.wav");
-                        music.playOnce();
+                        // Music music = new Music("Select.wav");
+                        // music.playOnce();
                         repaint();
                     }catch(Exception e1){
                         e1.printStackTrace();

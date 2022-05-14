@@ -123,7 +123,7 @@ public class GamePanel extends JPanel implements KeyListener{
         thread = new Thread(() -> {
             // ><
             try{
-                Thread.sleep(3500);
+                Thread.sleep(4000);
             }catch(Exception e){
                 e.printStackTrace();
             }
