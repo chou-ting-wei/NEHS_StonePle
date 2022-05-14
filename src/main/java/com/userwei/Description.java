@@ -13,7 +13,7 @@ public class Description extends Rectangle{
 
         try{
             // pic = Toolkit.getDefaultToolkit().createImage("StonePle/src/Image/icon/" + s);
-            java.net.URL imgURL = Icon.class.getResource("Image/upgrade/" + s);
+            java.net.URL imgURL = Description.class.getResource("Image/upgrade/" + s);
             pic = new ImageIcon(imgURL).getImage();
         }catch(Exception e){
             e.printStackTrace();

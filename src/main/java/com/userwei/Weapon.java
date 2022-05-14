@@ -17,7 +17,7 @@ public class Weapon extends Rectangle{
 
         try{
             // pic = Toolkit.getDefaultToolkit().createImage("StonePle/src/Image/font/" + s);
-            java.net.URL imgURL = Font.class.getResource("Image/weapon/" + s);
+            java.net.URL imgURL = Weapon.class.getResource("Image/weapon/" + s);
             pic = new ImageIcon(imgURL).getImage();
         }catch(Exception e){
             e.printStackTrace();
