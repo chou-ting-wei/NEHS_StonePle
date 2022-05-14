@@ -54,68 +54,58 @@ public class UpgradePanel extends JPanel implements KeyListener{
 
     //[武器名(idx)][升級時的等級(0-4)][素材序][名稱及數量]
     String require[][][][] = {
-        //sword1:
+        // sword1:
         {
-            //lv0
+            // lv0
             {
-            {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "0"}
+                {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "0"}
             },
-
-            //lv1
+            // lv1
             {
-            {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "4"}
+                {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "4"}
             },
-
-            //lv2
+            // lv2
             {
-            {"wood", "2"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "10"}
+                {"wood", "2"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "10"}
             },
-            
-            //lv3
+            // lv3
             {
-            {"wood", "10"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "20"}
+                {"wood", "10"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "20"}
             },
-
-            //lv4
+            // lv4
             {
-            {"wood", "20"}, {"iron", "5"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "80"}
+                {"wood", "20"}, {"iron", "5"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "80"}
             },
-
-            //lv5
+            // lv5
             {
-            {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}
+                {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}
             }
         },
-        //sword2:
+        // sword2:
         {
-            //lv0
+            // lv0
             {
-            {"wood", "12"}, {"iron", "10"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "6"}
+                {"wood", "12"}, {"iron", "10"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "6"}
             },
-
-            //lv1
+            // lv1
             {
-            {"wood", "15"}, {"iron", "15"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "6"}
+                {"wood", "15"}, {"iron", "15"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "6"}
             },
-
-            //lv2
+            // lv2
             {
-            {"wood", "20"}, {"iron", "20"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "12"}
+                {"wood", "20"}, {"iron", "20"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "12"}
             },
-            
-            //lv3
+            // lv3
             {
-            {"wood", "30"}, {"iron", "25"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "24"}
+                {"wood", "30"}, {"iron", "25"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "24"}
             },
-
-            //lv4
+            // lv4
             {
-            {"wood", "50"}, {"iron", "30"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "96"}
+                {"wood", "50"}, {"iron", "30"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "96"}
             },
-
-            //lv5
+            // lv5
             {
-            {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}
+                {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"null", "null"}
             }
         }
     };
@@ -200,7 +190,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
     void init(){
         weapon = new Weapon[weaponCount];
         selectedWeapon = "select";
-        
+
         icon1 = new Icon(10, 10, 60, 60, "arrow_up_white.png");
         equip = new Icon(80 + 12, 160 + 10, 56, 20, "equip.png");
         description = new Description(650, 115, 500, 480, selectedWeapon + ".png");
@@ -235,12 +225,14 @@ public class UpgradePanel extends JPanel implements KeyListener{
         upgradeButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                try{
-                    Music music = new Music("Select.wav");
-                    music.playOnce();
-                    repaint();
-                }catch(Exception e1){
-                    e1.printStackTrace();
+                if(nowButtonType != 0 && nowButtonType != 2 && nowButtonType != 4){
+                    try{
+                        Music music = new Music("Select.wav");
+                        music.playOnce();
+                        repaint();
+                    }catch(Exception e1){
+                        e1.printStackTrace();
+                    }
                 }
             }
         });
