@@ -15,7 +15,7 @@ public class Material extends Rectangle{
 
         try{
             // pic = Toolkit.getDefaultToolkit().createImage("StonePle/src/Image/font/" + s);
-            java.net.URL imgURL = Font.class.getResource("Image/material/" + s);
+            java.net.URL imgURL = Material.class.getResource("Image/material/" + s);
             pic = new ImageIcon(imgURL).getImage();
         }catch(Exception e){
             e.printStackTrace();

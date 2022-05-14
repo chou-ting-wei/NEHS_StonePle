@@ -58,6 +58,9 @@ public class BackpackPanel extends JPanel implements KeyListener{
 
     static public int getMaterialAmount(String s){
         int idx = findIndex(s);
+        if(idx >= materialCount){
+            return -1;
+        }
         return material[idx].amt;
     }
 
