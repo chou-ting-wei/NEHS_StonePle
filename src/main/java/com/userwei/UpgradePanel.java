@@ -291,7 +291,10 @@ public class UpgradePanel extends JPanel implements KeyListener{
                     for(int a = 7; a < 13; a ++){
                         try{
                             Font font3;
-                            if(BackpackPanel.getMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][a - 7][0]) >= 0){
+                            if(BackpackPanel.getMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][a - 7][0]) >= 100){
+                                font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, "99+.png");
+                            }
+                            else if(BackpackPanel.getMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][a - 7][0]) >= 0){
                                 font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, BackpackPanel.getMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][a - 7][0]) + ".png");
                             }
                             else{
