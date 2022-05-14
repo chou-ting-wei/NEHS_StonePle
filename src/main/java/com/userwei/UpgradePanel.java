@@ -16,27 +16,24 @@ public class UpgradePanel extends JPanel implements KeyListener{
     Material matericon1, matericon2, matericon3, matericon4, matericon5, matericon6;
     Material matericonw1, matericonw2, matericonw3, matericonw4, matericonw5, matericonw6;
     JButton weaponbutton, upgrade;
-    String buttontype[] = {"make_locked", "make", "upgrade_locked", "upgrade", "maxlevel"};
-    int nowbuttontype = 0;
-    static boolean materialChanged;
 
+    static boolean materialChanged, Start;
     Thread thread;
     
     // {等級, 素材(1-5, coin), 持有(1-5, coin), 武器ATK}，共14項
     Font data[];
     int dataCount = 14;
-
     String material[] = {"coin", "herb", "iron", "wood"};
     String materialw[] = {"ironw", "woodw"};
 
-    // 0: sword1, 1: sword2
-
+    // 0 : sword1, 1 : sword2
     String name[] = {"sword1", "sword2"};
-    int weaponlevel[] = {1, 0};
-    String nowweapon = "select";
+    String selectedWeapon;
     Weapon weapon[];
+
     // 正在查看的武器
     int weaponNumber = 0;
+
     // 正在使用的武器
     int weaponSelecting = 0;
     int weaponCount = 2;
@@ -44,6 +41,16 @@ public class UpgradePanel extends JPanel implements KeyListener{
         {1, 2, 3, 4, 5},
         {3, 4, 6, 8, 10}
     };
+
+    // 按鈕
+    String buttonType[] = {"make_locked", "make", "upgrade_locked", "upgrade", "maxlevel"};
+    int nowButtonType = 0;
+
+    // 位置相關變數
+    int i = 36;
+    int j = 77;
+    int mx = 797;
+    int my = 155;
 
     //[武器名(idx)][升級時的等級(0-4)][素材序][名稱及數量]
     String require[][][][] = {
@@ -81,7 +88,6 @@ public class UpgradePanel extends JPanel implements KeyListener{
         },
         //sword2:
         {
-
             //lv0
             {
             {"wood", "12"}, {"iron", "10"}, {"null", "null"}, {"null", "null"}, {"null", "null"}, {"coin", "6"}
@@ -114,14 +120,6 @@ public class UpgradePanel extends JPanel implements KeyListener{
         }
     };
 
-    //位置相關變數
-    int i = 36;
-    int j = 77;
-    int mx = 797;
-    int my = 155;
-
-    static boolean Start;
-
     int findIndex(String s){
         int idx;
         for(idx = 0; idx < weaponCount; idx ++){
@@ -146,7 +144,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
                 try{
                     Music music = new Music("Select.wav");
                     music.playOnce();
-                    nowweapon = s;
+                    selectedWeapon = s;
                     description = new Description(650, 115, 500, 480, s + ".png");
                     if(weapon[idx].level > 0){
                         equip = new Icon(80 + 12 + 80 * idx, 160 + 10, 56, 20, "equip.png");
@@ -200,21 +198,24 @@ public class UpgradePanel extends JPanel implements KeyListener{
     }
 
     void init(){
+        weapon = new Weapon[weaponCount];
+        selectedWeapon = "select";
+        
         icon1 = new Icon(10, 10, 60, 60, "arrow_up_white.png");
         equip = new Icon(80 + 12, 160 + 10, 56, 20, "equip.png");
-        description = new Description(650, 115, 500, 480, nowweapon + ".png");
+        description = new Description(650, 115, 500, 480, selectedWeapon + ".png");
         map = new Map(0, 0, 1280, 720, "upgrade.png");
         
-        matericon1 = new Material(6000, 400, 40, 40, 0, "wood.png");
-        matericon2 = new Material(6000, 400, 40, 40, 0, "wood.png");
-        matericon3 = new Material(6000, 400, 40, 40, 0, "wood.png");
-        matericon4 = new Material(6000, 400, 40, 40, 0, "wood.png");
-        matericon5 = new Material(6000, 400, 40, 40, 0, "wood.png");
-        matericonw1 = new Material(6000, 400, 40, 40, 0, "wood.png");
-        matericonw2 = new Material(6000, 400, 40, 40, 0, "wood.png");
-        matericonw3 = new Material(6000, 400, 40, 40, 0, "wood.png");
-        matericonw4 = new Material(6000, 400, 40, 40, 0, "wood.png");
-        matericonw5 = new Material(6000, 400, 40, 40, 0, "wood.png");
+        matericon1 = new Material(0, 0, 40, 40, 0, "null.png");
+        matericon2 = new Material(0, 0, 40, 40, 0, "null.png");
+        matericon3 = new Material(0, 0, 40, 40, 0, "null.png");
+        matericon4 = new Material(0, 0, 40, 40, 0, "null.png");
+        matericon5 = new Material(0, 0, 40, 40, 0, "null.png");
+        matericonw1 = new Material(0, 0, 40, 40, 0, "null.png");
+        matericonw2 = new Material(0, 0, 40, 40, 0, "null.png");
+        matericonw3 = new Material(0, 0, 40, 40, 0, "null.png");
+        matericonw4 = new Material(0, 0, 40, 40, 0, "null.png");
+        matericonw5 = new Material(0, 0, 40, 40, 0, "null.png");
         
         data = new Font[dataCount];
         for(int a = 0;a < 14; a ++){
@@ -222,19 +223,16 @@ public class UpgradePanel extends JPanel implements KeyListener{
             data[a] = font;
         }
 
-        weapon = new Weapon[weaponCount];
-        nowweapon = "select";
-
         addWeapon(1, 1, 1, 1, "sword1");
         addWeapon(2, 1, 0, 0, "sword2");
         
-        JButton upgrade = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttontype[0] + ".png")));
-        upgrade.setBounds(808, 525, 183, 62);
-        upgrade.setFocusPainted(false);
-        upgrade.setBorderPainted(false);
-        upgrade.setBorder(null);
-        upgrade.setLayout(null);
-        upgrade.addActionListener(new ActionListener(){
+        JButton upgradeButton = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttonType[0] + ".png")));
+        upgradeButton.setBounds(808, 525, 183, 62);
+        upgradeButton.setFocusPainted(false);
+        upgradeButton.setBorderPainted(false);
+        upgradeButton.setBorder(null);
+        upgradeButton.setLayout(null);
+        upgradeButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 try{
@@ -246,7 +244,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
                 }
             }
         });
-        add(upgrade);
+        add(upgradeButton);
     }
 
     UpgradePanel(JFrame mainFrame, JFrame upgradeScreen){
