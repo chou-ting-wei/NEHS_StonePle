@@ -211,14 +211,18 @@ public class UpgradePanel extends JPanel implements KeyListener{
                     data[a] = font3;
                 }
                 else{
-                    Font font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, BackpackPanel.getMaterialAmount(require[idx][weapon[idx].level][a - 7][0]) + ".png");
+                    Font font3;
+                    if(BackpackPanel.getMaterialAmount(require[idx][weapon[idx].level][a - 7][0]) > 0){
+                        font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, BackpackPanel.getMaterialAmount(require[idx][weapon[idx].level][a - 7][0]) + ".png");
+                    }
+                    else{
+                        font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, "null.png");
+                    }
                     data[a] = font3;
                 }
+            } catch(Exception e1){
+                e1.printStackTrace();
             }
-            catch(Exception e1){
-                Font font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, "null.png");
-                data[a] = font3;
-                e1.printStackTrace();};
         }
 
         if(BackpackPanel.getMaterialAmount("coin") > 99){
@@ -239,14 +243,6 @@ public class UpgradePanel extends JPanel implements KeyListener{
             button[a].setVisible(false);
         }
         button[judge()].setVisible(true);  
-    }
-
-    boolean upgradable(){
-        boolean test = false;
-        /*if(){
-            test = true;
-        }*/
-        return test;
     }
 
     void addWeapon(int x, int y, int atk, int level, String s){
@@ -311,23 +307,6 @@ public class UpgradePanel extends JPanel implements KeyListener{
                     data[13] = font4;
                     
                     repaint();
-
-                    if(weapon[idx].level == 0 && upgradable()){
-                        nowButtonType = 1;
-                    }
-                    else if(weapon[idx].level == 0){
-                        nowButtonType = 0;
-                    }
-                    else if(weapon[idx].level > 0 && upgradable()){
-                        nowButtonType = 3;
-                    }
-                    else if(weapon[idx].level > 0){
-                        nowButtonType = 2;
-                    }
-                    else{
-                        nowButtonType = 4;
-                    }
-                    upgradeButton.setIcon(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttonType[nowButtonType] + ".png")));
 
                 }catch(Exception e2){
                     e2.printStackTrace();
