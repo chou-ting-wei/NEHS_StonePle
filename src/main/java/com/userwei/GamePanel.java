@@ -186,6 +186,8 @@ public class GamePanel extends JPanel implements KeyListener{
             Start = false;
             UpgradePanel.Start = true;
             switchState(5);
+            BackpackPanel.addMaterialAmount("wood", 0);
+            System.out.println(UpgradePanel.materialChanged);
             character1.y = 560;
             upgradeScreen.setVisible(true);
             mainFrame.setVisible(false);

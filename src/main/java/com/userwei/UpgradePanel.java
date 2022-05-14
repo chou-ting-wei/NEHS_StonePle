@@ -33,6 +33,9 @@ public class UpgradePanel extends JPanel implements KeyListener{
     JButton upgrade;
     String buttontype[] = {"make_locked", "make", "upgrade_locked", "upgrade", "maxlevel"};
     int nowbuttontype = 0;
+    static public boolean materialChanged;
+
+    Thread thread;
     
     //{等級, 素材(1-5, coin), 持有(1-5, coin), 武器ATK}，共14項
     Font data[];
@@ -48,6 +51,10 @@ public class UpgradePanel extends JPanel implements KeyListener{
     String nowweapon = "select";
     Weapon nowWeapon;
     Weapon weapon[];
+    //正在查看的武器
+    int weaponNumber = 0;
+    //正在使用的武器
+    int weaponSelecting = 0;
     int weaponCount = 2;
     int weaponAtk[][] = {
         {1, 2, 3, 4, 5},
@@ -164,7 +171,9 @@ public class UpgradePanel extends JPanel implements KeyListener{
                     description = new Description(650, 115, 500, 480, s + ".png");
                     if(weapon[idx].level > 0){
                         equip = new Icon(80 + 12 + 80 * idx, 160 + 10, 56, 20, "equip.png");
+                        weaponSelecting = idx;
                     }
+                    weaponNumber = idx;
                     matericon1 = new MaterIcon(mx, my + i, 40, 40, require[idx][weapon[idx].level][0][0] + ".png");
                     matericon2 = new MaterIcon(mx, my + 2 * i, 40, 40, require[idx][weapon[idx].level][1][0] + ".png");
                     matericon3 = new MaterIcon(mx, my + 3 * i, 40, 40, require[idx][weapon[idx].level][2][0] + ".png");
@@ -259,11 +268,41 @@ public class UpgradePanel extends JPanel implements KeyListener{
         this.upgradeScreen = upgradeScreen;
         nowweapon = "select";
 
+        init();
+
         addKeyListener(this);
         setFocusable(true);
 
-        init();
-        
+        thread = new Thread(() -> {
+            while(true){
+                update();
+
+                try{
+                    Thread.sleep(10);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+    
+    public void update(){
+        if(materialChanged){
+            materialChanged = false;
+                for(int a = 7; a < 13; a++){
+                    try{
+                        Font font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, BackpackPanel.getMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][a - 7][0]) + ".png");
+                        data[a] = font3;
+                    }
+                    catch(Exception e1){
+                        Font font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, "null.png");
+                        data[a] = font3;
+                        e1.printStackTrace();
+                    };
+                }
+            repaint();
+        }
     }
 
     public void paintComponent(Graphics g){

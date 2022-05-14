@@ -16,7 +16,7 @@ public class BackpackPanel extends JPanel implements KeyListener{
     static int fontX[], fontY[];
     static int materialCount = 4;
 
-    static boolean Start, materialChanged;
+    static public boolean Start, materialChanged;
 
     Thread thread;
 
@@ -53,6 +53,7 @@ public class BackpackPanel extends JPanel implements KeyListener{
         material[idx].amt += addAmt;
         font[idx] = nowFont;
         materialChanged = true;
+        UpgradePanel.materialChanged = true;
     }
 
     static public int getMaterialAmount(String s){
@@ -83,7 +84,7 @@ public class BackpackPanel extends JPanel implements KeyListener{
 
         addKeyListener(this);
         setFocusable(true);
-
+  
         thread = new Thread(() -> {
             while(true){
                 update();
