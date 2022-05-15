@@ -6,6 +6,8 @@ public class Character extends Rectangle{
     Image pic;
     int movX, movY;
 
+    Thread thread;
+
     Character(int x, int y, int mx, int my, int w, int h, String s){
         this.x = x;
         this.y = y;
@@ -21,6 +23,23 @@ public class Character extends Rectangle{
         }catch(Exception e){
             e.printStackTrace();
         }
+
+        thread = new Thread(() -> {
+            while(true){
+                update();
+
+                try{
+                    Thread.sleep(10);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    public void update(){
+        
     }
 
     public void draw(Graphics g, Component c){
