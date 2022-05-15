@@ -20,7 +20,7 @@ public class BackpackPanel extends JPanel implements KeyListener{
 
     Thread thread;
 
-    static int findIndex(String s){
+    static public int findIndex(String s){
         int idx;
         for(idx = 0; idx < materialCount; idx ++){
             if(name[idx] == s) break;
@@ -28,7 +28,7 @@ public class BackpackPanel extends JPanel implements KeyListener{
         return idx;
     }
 
-    void addMaterial(int x, int y, int amt, String s){
+    public void addMaterial(int x, int y, int amt, String s){
         int idx = findIndex(s);
         fontX[idx] = x;
         fontY[idx] = y;

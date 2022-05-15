@@ -55,7 +55,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
     int mx = 797;
     int my = 155;
 
-    //[武器名(idx)][升級時的等級(0-4)][素材序][名稱及數量]
+    // [武器名(idx)][升級時的等級(0-4)][素材序][名稱及數量]
     String require[][][][] = {
         // sword1:
         {
@@ -113,7 +113,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
         }
     };
 
-    int findIndex(String s){
+    public int findIndex(String s){
         int idx;
         for(idx = 0; idx < weaponCount; idx ++){
             if(name[idx] == s) break;
@@ -121,10 +121,10 @@ public class UpgradePanel extends JPanel implements KeyListener{
         return idx;
     }
 
-    void upgrade(){    
+    public void upgrade(){    
         BackpackPanel.addMaterialAmount("coin", -Integer.parseInt(require[weaponNumber][weapon[weaponNumber].level][5][1]));
         for(int i = 0; i < 5; i++){
-            if(require[weaponNumber][weapon[weaponNumber].level][i][0].equals("null")){
+            if(require[weaponNumber][weapon[weaponNumber].level][i][0] == "null"){
                 break;
             }
             else{
@@ -136,7 +136,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
     }
 
     // 0 : "make_locked", 1 : "make", 2 : "upgrade_locked", 3 : "upgrade", 4 : "maxlevel"
-    int judge(){
+    public int judge(){
         if(weapon[weaponNumber].level == 5){
             return 4;
         }
@@ -178,7 +178,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
         }
     }
 
-    void change(int idx){
+    public void change(int idx){
         description = new Description(650, 115, 500, 480, name[idx] + ".png");
         if(weapon[idx].level > 0){
             icon2 = new Icon(80 * (idx + 2) - 20, 160 - 20, 20, 20, "check.png");
@@ -228,9 +228,9 @@ public class UpgradePanel extends JPanel implements KeyListener{
         button[judge()].setVisible(true);  
     }
 
-    void addWeapon(int x, int y, int atk, int level, String s){
+    public void addWeapon(int x, int y, int atk, int atkAddition, int level, String s){
         int idx = findIndex(s);
-        Weapon nowWeapon = new Weapon(x * 80 + 10, y * 80 + 10, 60, 60, atk, level, s + ".png");
+        Weapon nowWeapon = new Weapon(x * 80 + 10, y * 80 + 10, 60, 60, atk, atkAddition, level, s + ".png");
         weapon[idx] = nowWeapon;
         weaponButton = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/weapon/" + s + ".png")));
         weaponButton.setBounds(x * 80, y * 80, 80, 80);
@@ -260,7 +260,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
         add(weaponButton);
     }
 
-    void init(){
+    public void init(){
         weapon = new Weapon[weaponCount];
         selectedWeapon = "select";
 
@@ -316,8 +316,8 @@ public class UpgradePanel extends JPanel implements KeyListener{
             add(nowButton);
         }
 
-        addWeapon(1, 1, 1, 1, "sword1");
-        addWeapon(2, 1, 0, 0, "sword2");
+        addWeapon(1, 1, 1, 1, 1, "sword1");
+        addWeapon(2, 1, 0, 3, 0, "sword2");
         
     }
 

@@ -4,15 +4,16 @@ import javax.swing.ImageIcon;
 
 public class Weapon extends Rectangle{
     Image pic;
-    int atk, level;
+    int atk, level, atkAddition;
     boolean unlocked;
 
-    Weapon(int x, int y, int w, int h, int atk, int level, String s){
+    Weapon(int x, int y, int w, int h, int atk, int atkAddition, int level, String s){
         this.x = x;
         this.y = y;
         this.width = w;
         this.height = h;
         this.atk = atk;
+        this.atkAddition = atkAddition;
         this.level = level;
 
         try{

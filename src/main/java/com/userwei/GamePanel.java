@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements KeyListener{
 
     static boolean Start;
 
-    void init(){
+    public void init(){
         // Music
         musicName = new ArrayList<String>();
         // 0 Start Panel
@@ -245,7 +245,7 @@ public class GamePanel extends JPanel implements KeyListener{
         playMusic();
     }
 
-    boolean edgeJudge(int k, int srt, int end){
+    public boolean edgeJudge(int k, int srt, int end){
         for(int i = srt; i <= end; i ++){
             if(k / 80 == i){
                 return true;
@@ -254,7 +254,7 @@ public class GamePanel extends JPanel implements KeyListener{
         return false;
     }
 
-    boolean moveJudge(int x, int y){
+    public boolean moveJudge(int x, int y){
         if(edgeJudge(x, 1, 1) && edgeJudge(y, 8, 8)){
             return false;
         }

@@ -13,7 +13,7 @@ public class InstructionPanel extends JPanel implements KeyListener{
 
     static boolean Start;
 
-    void init(){
+    public void init(){
         font1 = new Font(80, 80, 1120, 560, "instruction.png");
         icon1 = new Icon(10, 10, 60, 60, "exclamation_white.png");
         map = new Map(0, 0, 1280, 720, "instruction.png");

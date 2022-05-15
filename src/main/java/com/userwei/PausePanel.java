@@ -12,7 +12,7 @@ public class PausePanel extends JPanel implements KeyListener{
     JFrame pauseScreen;
     static boolean Start;
 
-    void init(){
+    public void init(){
         animate1 = new Animate(1136, 639, 144, 81, "paused.gif");
 
         JButton pauseButton1 = new JButton(new ImageIcon(PausePanel.class.getResource("Image/icon/home.png")));

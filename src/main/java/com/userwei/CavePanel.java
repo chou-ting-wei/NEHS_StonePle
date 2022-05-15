@@ -14,6 +14,12 @@ public class CavePanel extends JPanel implements KeyListener{
         {"null", "null", "maze(D).png", "maze(UL).png", "null", "null"}
     };
     Map allMap[][];
+
+    Background allMapBackground[][][];
+    int allMapBackgroundCount[][];
+
+    boolean allMapMoveJudge[][][][];
+
     int mapState_i = 2, mapState_j = 5;
     int mapSizeX = 5, mapSizeY = 6;
 
@@ -24,8 +30,87 @@ public class CavePanel extends JPanel implements KeyListener{
     JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
     static boolean Start;
 
-    void init(){
+    public void addMoveJudge(int mapx, int mapy, int x1, int x2, int y1, int y2){
+        for(int i = x1; i <= x2; i ++){
+            for(int j = y1; j <= y2; j ++){
+                allMapMoveJudge[mapx][mapy][i][j] = true;
+            }
+        }
+    }
+
+    public void addBackground(int mapx, int mapy, int x, int y, int w, int h, String s){
+        int nowMapBackgroundCount = allMapBackgroundCount[mapx][mapy];
+        Background nowBackground = new Background(x, y, w, h, s);
+        allMapBackground[mapx][mapy][nowMapBackgroundCount] = nowBackground;
+
+        allMapBackgroundCount[mapx][mapy] ++;
+    }
+
+    // {"null", "null", "null", "maze(DR).png", "maze(UD).png", "maze(UR).png"},
+    // {"null", "maze(DR).png", "maze(UD).png", "maze(ULR).png", "null", "maze(LR).png"},
+    // {"maze(D).png", "maze(ULR).png", "null", "maze(LDR).png", "maze(UD).png", "maze(ULDR).png"},
+    // {"null", "maze(L).png", "null", "maze(LR).png", "null", "maze(L).png"},
+    // {"null", "null", "maze(D).png", "maze(UL).png", "null", "null"}
+
+    public void init(){
         allMap = new Map[mapSizeX][mapSizeY];
+        allMapBackground = new Background[mapSizeX][mapSizeY][70];
+        allMapBackgroundCount = new int[mapSizeX][mapSizeY];
+        allMapMoveJudge = new boolean[mapSizeX][mapSizeY][16][9];
+
+        // 0-3
+
+
+        // 0-4
+
+
+        // 0-5
+
+
+        // 1-1
+
+
+        // 1-2
+
+
+        // 1-3
+
+
+        // 1-5
+
+
+        // 2-0
+
+
+        // 2-1
+
+
+        // 2-3
+
+
+        // 2-4
+
+
+        // 2-5
+            // transport door
+            addBackground(2, 5, 1120, 560, 80, 80, "transport_door.png");
+            addMoveJudge(2, 5, 14, 14, 7, 7);
+
+        // 3-1
+
+
+        // 3-3
+
+
+        // 3-5
+
+
+        // 4-2
+
+
+        // 4-3
+
+
         for(int i = mapSizeX - 1; i >= 0; i --){
             for(int j = 0; j < mapSizeY; j ++){
                 if(mapName[i][j] != "null"){
@@ -36,7 +121,7 @@ public class CavePanel extends JPanel implements KeyListener{
         }
     }
 
-    void reset(){
+    public void reset(){
         map = allMap[mapState_i][mapState_j];
         character1 = new Character(characterInitX, characterInitY, 80, 80, 80, 80, "walk.gif");
     }
@@ -58,9 +143,17 @@ public class CavePanel extends JPanel implements KeyListener{
     public void paintComponent(Graphics g){
         map.draw(g, this);
         character1.draw(g, this);
+        for(int i = 0; i < allMapBackgroundCount[mapState_i][mapState_j]; i ++){
+            Background nowbBackground = allMapBackground[mapState_i][mapState_j][i];
+            nowbBackground.draw(g, this);
+        }
     }
 
-    boolean mapJudge(int dx, int dy){
+    public int randomNumber(int srt, int end){
+        return (int)(Math.random() * (end - srt + 1)) + srt;
+    }
+
+    public boolean mapJudge(int dx, int dy){
         if(mapState_i + dx < 0 || mapState_i + dx >= mapSizeX){
             return false;
         }
@@ -75,7 +168,7 @@ public class CavePanel extends JPanel implements KeyListener{
         return true;
     }
 
-    boolean edgeJudge(int k, int srt, int end){
+    public boolean edgeJudge(int k, int srt, int end){
         for(int i = srt; i <= end; i ++){
             if(k / 80 == i){
                 return true;
@@ -84,7 +177,7 @@ public class CavePanel extends JPanel implements KeyListener{
         return false;
     }
 
-    boolean moveJudge(int x, int y){
+    public boolean moveJudge(int x, int y){
         String nowMap = mapName[mapState_i][mapState_j].substring(5, 9);
         // ULDR
         boolean mapOpen[] = {false, false, false, false};
@@ -132,7 +225,7 @@ public class CavePanel extends JPanel implements KeyListener{
             caveScreen.setVisible(false);
             return false;
         }
-        return true;
+        return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80];
     }
 
     @Override

@@ -30,7 +30,7 @@ public class FieldPanel extends JPanel implements KeyListener{
     JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
     static boolean Start;
 
-    void addMoveJudge(int mapx, int mapy, int x1, int x2, int y1, int y2){
+    public void addMoveJudge(int mapx, int mapy, int x1, int x2, int y1, int y2){
         for(int i = x1; i <= x2; i ++){
             for(int j = y1; j <= y2; j ++){
                 allMapMoveJudge[mapx][mapy][i][j] = true;
@@ -38,7 +38,7 @@ public class FieldPanel extends JPanel implements KeyListener{
         }
     }
 
-    void addBackground(int mapx, int mapy, int x, int y, int w, int h, String s){
+    public void addBackground(int mapx, int mapy, int x, int y, int w, int h, String s){
         int nowMapBackgroundCount = allMapBackgroundCount[mapx][mapy];
         Background nowBackground = new Background(x, y, w, h, s);
         allMapBackground[mapx][mapy][nowMapBackgroundCount] = nowBackground;
@@ -46,7 +46,7 @@ public class FieldPanel extends JPanel implements KeyListener{
         allMapBackgroundCount[mapx][mapy] ++;
     }
 
-    void init(){
+    public void init(){
         allMap = new Map[mapSizeX][mapSizeY];
         allMapBackground = new Background[mapSizeX][mapSizeY][70];
         allMapBackgroundCount = new int[mapSizeX][mapSizeY];
@@ -393,7 +393,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             addMoveJudge(2, 6, 10, 10, 6, 6);
     }
 
-    void reset(){
+    public void reset(){
         map = allMap[mapState_i][mapState_j];
         character1 = new Character(characterInitX, characterInitY, 80, 80, 80, 80, "walk.gif");
     }
@@ -421,11 +421,11 @@ public class FieldPanel extends JPanel implements KeyListener{
         }
     }
 
-    int randomNumber(int srt, int end){
-        return (int)(Math.random()*(end - srt + 1)) + srt;
+    public int randomNumber(int srt, int end){
+        return (int)(Math.random() * (end - srt + 1)) + srt;
     }
 
-    boolean mapJudge(int dx, int dy){
+    public boolean mapJudge(int dx, int dy){
         if(mapState_i + dx < 0 || mapState_i + dx >= mapSizeX){
             return false;
         }
@@ -437,7 +437,7 @@ public class FieldPanel extends JPanel implements KeyListener{
         return true;
     }
 
-    boolean edgeJudge(int k, int srt, int end){
+    public boolean edgeJudge(int k, int srt, int end){
         for(int i = srt; i <= end; i ++){
             if(k / 80 == i){
                 return true;
@@ -447,7 +447,7 @@ public class FieldPanel extends JPanel implements KeyListener{
     }
 
     // chest pos : [0][6] 1-6, [2][5] 13-4, [2][3] 14-6, [0][1] 1-5, [1][2] 7-4, [1][2] 8-4
-    boolean moveJudge(int x, int y){
+    public boolean moveJudge(int x, int y){
         if(mapState_i == 1 && mapState_j == 5 && edgeJudge(x, 5, 7) && edgeJudge(y, 2, 4)){
             Start = false;
             JFrame nowFrame = GamePanel.frame[1];

@@ -5,11 +5,43 @@ import javax.swing.ImageIcon;
 public class Monster extends Rectangle{
 
     Image pic;
-    boolean destroyed;
+    boolean destroyed, materialAdded;
 
-    int movX, movY, lifeValue, defenseValue;
+    int movX, movY, lif, def, atk, idx;
+    int monsterCount = 5;
+    Thread thread;
 
-    Monster(int x, int y, int mx, int my, int w, int h, int l, int d, String s){
+    String name[] = {"slime", "brownie", "drackmage", "mimic", "overkilling_machine"};
+
+    // "coin", "herb", "iron", "wood"
+    int addMAterialMin[][] = {
+        {},
+        {},
+        {},
+        {},
+        {}
+    };
+    int addMAterialMax[][] = {
+        {},
+        {},
+        {},
+        {},
+        {}
+    };
+
+    public int findIndex(String s){
+        int idx;
+        for(idx = 0; idx < monsterCount; idx ++){
+            if(name[idx] == s) break;
+        }
+        return idx;
+    }
+
+    public void init(){
+
+    }
+
+    Monster(int x, int y, int mx, int my, int w, int h, String s){
         this.x = x;
         this.y = y;
         this.width = w;
@@ -17,8 +49,20 @@ public class Monster extends Rectangle{
         this.movX = mx;
         this.movY = my;
 
-        this.lifeValue = l;
-        this.defenseValue = d;
+        init();
+
+        thread = new Thread(() -> {
+            while(true){
+                update();
+
+                try{
+                    Thread.sleep(10);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
 
         try{
             // pic = Toolkit.getDefaultToolkit().createImage("StonePle/src/Image/monster/" + s);
@@ -26,6 +70,18 @@ public class Monster extends Rectangle{
             pic = new ImageIcon(imgURL).getImage();
         }catch(Exception e){
             e.printStackTrace();
+        }
+    }
+
+    void update(){
+        if(lif < 0){
+            destroyed = true;
+            if(!materialAdded){
+                materialAdded = true;
+                for(){
+
+                }
+            }
         }
     }
 
