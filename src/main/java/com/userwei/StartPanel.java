@@ -6,6 +6,7 @@ import java.awt.Graphics;
 
 public class StartPanel extends JPanel implements KeyListener{
 
+    // Map map;
     Font font1, font2;
     Animate animate1;
     JFrame mainFrame, startScreen;
@@ -16,8 +17,9 @@ public class StartPanel extends JPanel implements KeyListener{
         this.mainFrame = mainFrame;
         this.startScreen = startScreen;
 
+        // map = new Map(0, 0, 1280, 720, "start.png");
         font1 = new Font(240, 100, 800, 400, "welcome.png");
-        font2 = new Font(1120, 700, 160, 20, "version_number.png");
+        font2 = new Font(1160, 690, 120, 30, "version_number.png");
         animate1 = new Animate(520, 520, 240, 135, "start.gif");
 
         addKeyListener(this);
@@ -25,6 +27,7 @@ public class StartPanel extends JPanel implements KeyListener{
     }
 
     public void paintComponent(Graphics g){
+        // map.draw(g, this);
         font1.draw(g, this);
         font2.draw(g, this);
         animate1.draw(g, this);

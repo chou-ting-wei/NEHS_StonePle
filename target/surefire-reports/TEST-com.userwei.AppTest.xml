@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.userwei.AppTest" time="0.029" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.userwei.AppTest" time="0.033" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="gopherProxySet" value="false"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
@@ -17,7 +17,8 @@
     <property name="user.country" value="TW"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="/usr/local/Cellar/openjdk@8/1.8.0+322/libexec/openjdk.jdk/Contents/Home/jre/lib"/>
-    <property name="sun.java.command" value="/Users/chou.ting.wei/StonePle/target/surefire/surefirebooter8465120916240832572.jar /Users/chou.ting.wei/StonePle/target/surefire 2022-04-30T00-12-33_760-jvmRun1 surefire8681330514746561504tmp surefire_01306517622148949466tmp"/>
+    <property name="sun.java.command" value="/Users/chou.ting.wei/StonePle/target/surefire/surefirebooter5894099711555305213.jar /Users/chou.ting.wei/StonePle/target/surefire 2022-05-15T13-52-16_070-jvmRun1 surefire6415278175052720822tmp surefire_05849701626029621548tmp"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="surefire.test.class.path" value="/Users/chou.ting.wei/StonePle/target/test-classes:/Users/chou.ting.wei/StonePle/target/classes:/Users/chou.ting.wei/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.6.0/junit-jupiter-api-5.6.0.jar:/Users/chou.ting.wei/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/Users/chou.ting.wei/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/chou.ting.wei/.m2/repository/org/junit/platform/junit-platform-commons/1.6.0/junit-platform-commons-1.6.0.jar:/Users/chou.ting.wei/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.6.0/junit-jupiter-engine-5.6.0.jar:/Users/chou.ting.wei/.m2/repository/org/junit/platform/junit-platform-engine/1.6.0/junit-platform-engine-1.6.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/Users/chou.ting.wei"/>
@@ -30,9 +31,10 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/Users/chou.ting.wei/StonePle/target/surefire/surefirebooter8465120916240832572.jar"/>
+    <property name="surefire.real.class.path" value="/Users/chou.ting.wei/StonePle/target/surefire/surefirebooter5894099711555305213.jar"/>
     <property name="sun.boot.class.path" value="/usr/local/Cellar/openjdk@8/1.8.0+322/libexec/openjdk.jdk/Contents/Home/jre/lib/resources.jar:/usr/local/Cellar/openjdk@8/1.8.0+322/libexec/openjdk.jdk/Contents/Home/jre/lib/rt.jar:/usr/local/Cellar/openjdk@8/1.8.0+322/libexec/openjdk.jdk/Contents/Home/jre/lib/sunrsasign.jar:/usr/local/Cellar/openjdk@8/1.8.0+322/libexec/openjdk.jdk/Contents/Home/jre/lib/jsse.jar:/usr/local/Cellar/openjdk@8/1.8.0+322/libexec/openjdk.jdk/Contents/Home/jre/lib/jce.jar:/usr/local/Cellar/openjdk@8/1.8.0+322/libexec/openjdk.jdk/Contents/Home/jre/lib/charsets.jar:/usr/local/Cellar/openjdk@8/1.8.0+322/libexec/openjdk.jdk/Contents/Home/jre/lib/jfr.jar:/usr/local/Cellar/openjdk@8/1.8.0+322/libexec/openjdk.jdk/Contents/Home/jre/classes"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="1.8.0_322-bre_2022_02_28_15_01-b00"/>
     <property name="user.name" value="chou.ting.wei"/>
     <property name="path.separator" value=":"/>
@@ -57,6 +59,7 @@
     <property name="java.ext.dirs" value="/Users/chou.ting.wei/Library/Java/Extensions:/usr/local/Cellar/openjdk@8/1.8.0+322/libexec/openjdk.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java"/>
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="java.class.version" value="52.0"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
   </properties>
-  <testcase name="testApp" classname="com.userwei.AppTest" time="0.017"/>
+  <testcase name="testApp" classname="com.userwei.AppTest" time="0.021"/>
 </testsuite>

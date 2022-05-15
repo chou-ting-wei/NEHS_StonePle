@@ -12,16 +12,16 @@ public class Main{
     static boolean loading;
     public static void main(String[] args){
         // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 CavePanel; 5 Instruction Panel; 6 Upgrade Panel; 7 Backpack Panel
-        JFrame blankFrame = new JFrame("StonePle version 0.3(beta)");
+        JFrame blankFrame = new JFrame("StonePle version 0.4(beta)");
 
-        JFrame mainFrame = new JFrame("StonePle version 0.3(beta)");
-        JFrame startScreen = new JFrame("StonePle version 0.3(beta)");
-        JFrame pauseScreen = new JFrame("StonePle version 0.3(beta)");
-        JFrame fieldScreen = new JFrame("StonePle version 0.3(beta)");
-        JFrame caveScreen = new JFrame("StonePle version 0.3(beta)");
-        JFrame instructionScreen = new JFrame("StonePle version 0.3(beta)");
-        JFrame upgradeScreen = new JFrame("StonePle version 0.3(beta)");
-        JFrame backpackScreen = new JFrame("StonePle version 0.3(beta)");
+        JFrame mainFrame = new JFrame("StonePle version 0.4(beta)");
+        JFrame startScreen = new JFrame("StonePle version 0.4(beta)");
+        JFrame pauseScreen = new JFrame("StonePle version 0.4(beta)");
+        JFrame fieldScreen = new JFrame("StonePle version 0.4(beta)");
+        JFrame caveScreen = new JFrame("StonePle version 0.4(beta)");
+        JFrame instructionScreen = new JFrame("StonePle version 0.4(beta)");
+        JFrame upgradeScreen = new JFrame("StonePle version 0.4(beta)");
+        JFrame backpackScreen = new JFrame("StonePle version 0.4(beta)");
 
         GamePanel gamePanel = new GamePanel(startScreen, mainFrame, pauseScreen, fieldScreen, caveScreen, instructionScreen, upgradeScreen, backpackScreen);
         StartPanel startPanel = new StartPanel(mainFrame, startScreen);

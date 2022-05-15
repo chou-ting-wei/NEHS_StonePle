@@ -1,8 +1,8 @@
 package com.userwei;
 
 public class ValueCalculate extends Thread{
-
     Thread thread;
+    static final int INF = 1000007;
 
     static int characterLevel = 1, characterExp = 0, characterLife = 0;
     // atk, def, lif, exp
@@ -10,7 +10,7 @@ public class ValueCalculate extends Thread{
         {0, 0, 1, 1, 2, 2, 3, 4, 6, 7, 9},
         {0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8},
         {0, 10, 12, 14, 16, 18, 20, 25, 30, 35, 40},
-        {0, 0, 2, 6, 16, 30, 50, 70, 95, 125, 175}
+        {0, 2, 6, 16, 30, 50, 70, 95, 125, 175, INF}
     };
 
     public void init(){
@@ -34,7 +34,14 @@ public class ValueCalculate extends Thread{
     }
 
     public void update(){
-        
+        if(characterLevel >= 5){
+            FieldPanel.caveUnlocked = true;
+        }
+        if(characterExp >= characterValue[3][characterLevel]){
+            characterExp -= characterValue[3][characterLevel];
+            characterLevel ++;
+            characterLife += characterValue[2][characterLevel] - characterValue[2][characterLevel - 1];
+        }
     }
 
     static public int characterAttackDamage(){
