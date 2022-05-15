@@ -158,10 +158,10 @@ public class BackpackPanel extends JPanel implements KeyListener{
             backpackScreen.setVisible(false);
         }
         if(e.getKeyCode() == KeyEvent.VK_M){
-            addMaterialAmount("coin", 5);
-            addMaterialAmount("herb", 5);
-            addMaterialAmount("wood", 5);
-            addMaterialAmount("iron", 5);
+            addMaterialAmount("coin", 20);
+            addMaterialAmount("herb", 20);
+            addMaterialAmount("wood", 20);
+            addMaterialAmount("iron", 20);
         }
     }
 

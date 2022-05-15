@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 public class UpgradePanel extends JPanel implements KeyListener{
     JFrame mainFrame, upgradeScreen;
     
-    Icon icon1, equip;
+    Icon icon1, icon2;
     Map map;
     Description description;
     Material matericon1, matericon2, matericon3, matericon4, matericon5, matericon6;
@@ -28,7 +28,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
     int buttonCount = 5;
 
     String material[] = {"coin", "herb", "iron", "wood"};
-    String materialw[] = {"ironw", "woodw"};
+    String materialName[] = {"ironw", "woodw"};
 
     //Notation: 0: sword1, 1: sword2
     String name[] = {"sword1", "sword2"};
@@ -135,7 +135,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
         weapon[weaponNumber].atk = weaponAtk[weaponNumber][weapon[weaponNumber].level - 1];
     }
 
-    //0:"make_locked", 1:"make", 2:"upgrade_locked", 3:"upgrade", 4:"maxlevel"
+    // 0 : "make_locked", 1 : "make", 2 : "upgrade_locked", 3 : "upgrade", 4 : "maxlevel"
     int judge(){
         if(weapon[weaponNumber].level == 5){
             return 4;
@@ -151,7 +151,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
             }
             else{
                 for(int i = 0; i < 5; i++){
-                    if(require[weaponNumber][weapon[weaponNumber].level][i][0].equals("null")){
+                    if(require[weaponNumber][weapon[weaponNumber].level][i][0] == "null"){
                         if(weapon[weaponNumber].level == 0){
                             return 1;
                         }
@@ -168,12 +168,12 @@ public class UpgradePanel extends JPanel implements KeyListener{
                         }
                     }
                 }
-                if(weapon[weaponNumber].level == 0){
-                    return 1;
-                }
-                else{
-                    return 3;
-                }
+            }
+            if(weapon[weaponNumber].level == 0){
+                return 1;
+            }
+            else{
+                return 3;
             }
         }
     }
@@ -181,20 +181,21 @@ public class UpgradePanel extends JPanel implements KeyListener{
     void change(int idx){
         description = new Description(650, 115, 500, 480, name[idx] + ".png");
         if(weapon[idx].level > 0){
-            equip = new Icon(80 + 12 + 80 * idx, 160 + 10, 56, 20, "equip.png");
+            icon2 = new Icon(80 * (idx + 2) - 20, 160 - 20, 20, 20, "check.png");
             weaponSelecting = idx;
         }
         weaponNumber = idx;
+
         matericon1 = new Material(mx, my + i, 40, 40, 0, require[idx][weapon[idx].level][0][0] + ".png");
         matericon2 = new Material(mx, my + 2 * i, 40, 40, 0, require[idx][weapon[idx].level][1][0] + ".png");
         matericon3 = new Material(mx, my + 3 * i, 40, 40, 0, require[idx][weapon[idx].level][2][0] + ".png");
         matericon4 = new Material(mx, my + 4 * i, 40, 40, 0, require[idx][weapon[idx].level][3][0] + ".png");
         matericon5 = new Material(mx, my + 5 * i, 40, 40, 0, require[idx][weapon[idx].level][4][0] + ".png");
-        matericonw1 = new Material(mx + j, my + i + 6, 50, 25, 0, require[idx][weapon[idx].level][0][0] + "w" + ".png");
-        matericonw2 = new Material(mx + j, my + 2 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][1][0] + "w" + ".png");
-        matericonw3 = new Material(mx + j, my + 3 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][2][0] + "w" + ".png");
-        matericonw4 = new Material(mx + j, my + 4 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][3][0] + "w" + ".png");
-        matericonw5 = new Material(mx + j, my + 5 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][4][0] + "w" + ".png");
+        matericonw1 = new Material(mx + j, my + i + 6, 50, 25, 0, require[idx][weapon[idx].level][0][0] + "w.png");
+        matericonw2 = new Material(mx + j, my + 2 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][1][0] + "w.png");
+        matericonw3 = new Material(mx + j, my + 3 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][2][0] + "w.png");
+        matericonw4 = new Material(mx + j, my + 4 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][3][0] + "w.png");
+        matericonw5 = new Material(mx + j, my + 5 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][4][0] + "w.png");
         
         Font font1 = new Font(mx + 182, my - i - 2, 160, 40, weapon[idx].level + ".png");
         data[0] = font1;
@@ -204,38 +205,22 @@ public class UpgradePanel extends JPanel implements KeyListener{
             data[a] = font2;
         }
 
-        for(int a = 7; a < 12; a++){
-            try{
-                if(BackpackPanel.getMaterialAmount(require[idx][weapon[idx].level][a - 7][0]) > 99){
-                    Font font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, "99+.png");
-                    data[a] = font3;
-                }
-                else{
-                    Font font3;
-                    if(BackpackPanel.getMaterialAmount(require[idx][weapon[idx].level][a - 7][0]) > 0){
-                        font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, BackpackPanel.getMaterialAmount(require[idx][weapon[idx].level][a - 7][0]) + ".png");
-                    }
-                    else{
-                        font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, "null.png");
-                    }
-                    data[a] = font3;
-                }
-            } catch(Exception e1){
-                e1.printStackTrace();
+        for(int a = 7; a < 13; a++){
+            Font font3;
+            if(BackpackPanel.getMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][a - 7][0]) >= 100){
+                font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, "99+.png");
             }
+            else if(BackpackPanel.getMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][a - 7][0]) >= 0){
+                font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, BackpackPanel.getMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][a - 7][0]) + ".png");
+            }
+            else{
+                font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, "null.png");
+            }
+            data[a] = font3;
         }
 
-        if(BackpackPanel.getMaterialAmount("coin") > 99){
-            Font font4 = new Font(mx + 165, my + 6 * i, 160, 40, "99+.png");
-            data[12] = font4;
-        }
-        else{
-            Font font4 = new Font(mx + 165, my + 6 * i, 160, 40, BackpackPanel.getMaterialAmount("coin") + ".png");
-            data[12] = font4;
-        }
-
-        Font font5 = new Font(mx - 3 * j + 18, my + 7 * i + 4, 160, 40, weapon[idx].atk + ".png");
-        data[13] = font5;
+        Font font4 = new Font(mx - 3 * j + 23, my + 7 * i + 3, 160, 40, weapon[idx].atk + ".png");
+        data[13] = font4;
 
         for(int a = 0; a < 5; a++){
             button[a].setVisible(false);
@@ -263,54 +248,13 @@ public class UpgradePanel extends JPanel implements KeyListener{
                     selectedWeapon = s;
                     description = new Description(650, 115, 500, 480, s + ".png");
                     if(weapon[idx].level > 0){
-                        equip = new Icon(80 + 12 + 80 * idx, 160 + 10, 56, 20, "equip.png");
+                        icon2 = new Icon(80 * (idx + 2) - 20, 160 - 20, 20, 20, "check.png");
                         weaponSelecting = idx;
                     }
-                    weaponNumber = idx;
-                    matericon1 = new Material(mx, my + 1 * i, 40, 40, 0, require[idx][weapon[idx].level][0][0] + ".png");
-                    matericon2 = new Material(mx, my + 2 * i, 40, 40, 0, require[idx][weapon[idx].level][1][0] + ".png");
-                    matericon3 = new Material(mx, my + 3 * i, 40, 40, 0, require[idx][weapon[idx].level][2][0] + ".png");
-                    matericon4 = new Material(mx, my + 4 * i, 40, 40, 0, require[idx][weapon[idx].level][3][0] + ".png");
-                    matericon5 = new Material(mx, my + 5 * i, 40, 40, 0, require[idx][weapon[idx].level][4][0] + ".png");
-                    matericonw1 = new Material(mx + j, my + 1 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][0][0] + "w" + ".png");
-                    matericonw2 = new Material(mx + j, my + 2 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][1][0] + "w" + ".png");
-                    matericonw3 = new Material(mx + j, my + 3 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][2][0] + "w" + ".png");
-                    matericonw4 = new Material(mx + j, my + 4 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][3][0] + "w" + ".png");
-                    matericonw5 = new Material(mx + j, my + 5 * i + 6, 50, 25, 0, require[idx][weapon[idx].level][4][0] + "w" + ".png");
-                    
-                    Font font1 = new Font(mx + 182, my - i - 2, 160, 40, weapon[idx].level + ".png");
-                    data[0] = font1;
-
-                    for(int a = 1; a < 7; a ++){
-                        Font font2 = new Font(mx + 68, my + a * i, 160, 40, require[idx][weapon[idx].level][a-1][1] + ".png");
-                        data[a] = font2;
-                    }
-
-                    for(int a = 7; a < 13; a ++){
-                        try{
-                            Font font3;
-                            if(BackpackPanel.getMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][a - 7][0]) >= 100){
-                                font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, "99+.png");
-                            }
-                            else if(BackpackPanel.getMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][a - 7][0]) >= 0){
-                                font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, BackpackPanel.getMaterialAmount(require[weaponNumber][weapon[weaponNumber].level][a - 7][0]) + ".png");
-                            }
-                            else{
-                                font3 = new Font(mx + 165, my + (a - 6) * i, 160, 40, "null.png");
-                            }
-                            data[a] = font3;
-                        }
-                        catch(Exception e1){
-                            e1.printStackTrace();};
-                    }
-
-                    Font font4 = new Font(mx - 3 * j + 18, my + 7 * i + 4, 160, 40, weapon[idx].atk + ".png");
-                    data[13] = font4;
-                    
                     repaint();
 
-                }catch(Exception e2){
-                    e2.printStackTrace();
+                }catch(Exception e1){
+                    e1.printStackTrace();
                 }
             }
         });
@@ -322,7 +266,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
         selectedWeapon = "select";
 
         icon1 = new Icon(10, 10, 60, 60, "arrow_up_white.png");
-        equip = new Icon(80 + 12, 160 + 10, 56, 20, "equip.png");
+        icon2 = new Icon(160 - 20 , 160 - 20, 20, 20, "check.png");
         description = new Description(650, 115, 500, 480, selectedWeapon + ".png");
         map = new Map(0, 0, 1280, 720, "upgrade.png");
         
@@ -342,38 +286,17 @@ public class UpgradePanel extends JPanel implements KeyListener{
             Font font = new Font(mx + 6000, my + i, 160, 40, "0.png");
             data[a] = font;
         }
+        
         button = new JButton[buttonCount];
-        button[0] = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttonType[0] + ".png")));
-        button[0].setBounds(808, 525, 183, 62);
-        button[0].setFocusPainted(false);
-        button[0].setBorderPainted(false);
-        button[0].setBorder(null);
-        button[0].setLayout(null);
-        button[0].setVisible(false);
-        button[0].setEnabled(false);
-        button[0].addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                try{
-                    Music music = new Music("Select.wav");
-                    music.playOnce();
-                    repaint();
-                }catch(Exception e1){
-                    e1.printStackTrace();
-                }
-            }
-        });
-        add(button[0]);
-
-        for(int a = 1; a < 3; a++){
-            JButton button1 = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttonType[2 * a - 1] + ".png")));
-            button1.setBounds(808, 525, 183, 62);
-            button1.setFocusPainted(false);
-            button1.setBorderPainted(false);
-            button1.setBorder(null);
-            button1.setLayout(null);
-            button1.setVisible(false);
-            button1.addActionListener(new ActionListener(){
+        for(int i = 0; i < 5; i ++){
+            JButton nowButton = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttonType[i] + ".png")));
+            nowButton.setBounds(808, 525, 183, 62);
+            nowButton.setFocusPainted(false);
+            nowButton.setBorderPainted(false);
+            nowButton.setBorder(null);
+            nowButton.setLayout(null);
+            nowButton.setVisible(false);
+            nowButton.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e){
                     try{
@@ -386,37 +309,14 @@ public class UpgradePanel extends JPanel implements KeyListener{
                         e1.printStackTrace();
                     }
                 }
-            });    
-            button[2 * a - 1] = button1;
-            add(button[2 * a - 1]);
-        }
-
-        for(int a = 1; a < 3; a++){
-            JButton button1 = new JButton(new ImageIcon(UpgradePanel.class.getResource("Image/upgrade/" + buttonType[2 * a] + ".png")));
-            button1.setBounds(808, 525, 183, 62);
-            button1.setFocusPainted(false);
-            button1.setBorderPainted(false);
-            button1.setBorder(null);
-            button1.setLayout(null);
-            button1.setVisible(false);
-            button1.addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    try{
-                        // Music music = new Music("Select.wav");
-                        // music.playOnce();
-                        repaint();
-                    }catch(Exception e1){
-                        e1.printStackTrace();
-                    }
-                }
             });
-            button1.setEnabled(false);
-            button[2 * a] = button1;
-            add(button[2 * a]);
-        }
 
-        //weapon = new Weapon[weaponCount];
+            if(i == 0 || i == 2 || i == 4){
+                nowButton.setEnabled(false);
+            }
+            button[i] = nowButton;
+            add(nowButton);
+        }
 
         addWeapon(1, 1, 1, 1, "sword1");
         addWeapon(2, 1, 0, 0, "sword2");
@@ -457,7 +357,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
     public void paintComponent(Graphics g){
         map.draw(g, this);
         icon1.draw(g, this);
-        equip.draw(g, this);
+        icon2.draw(g, this);
         description.draw(g, this);
         matericon1.draw(g, this);
         matericon2.draw(g, this);
