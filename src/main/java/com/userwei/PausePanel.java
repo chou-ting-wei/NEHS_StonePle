@@ -1,4 +1,6 @@
 package com.userwei;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.event.*;
@@ -10,10 +12,57 @@ public class PausePanel extends JPanel implements KeyListener{
     JFrame pauseScreen;
     static boolean Start;
 
+    void init(){
+        animate1 = new Animate(1136, 639, 144, 81, "paused.gif");
+
+        JButton pauseButton1 = new JButton(new ImageIcon(PausePanel.class.getResource("Image/icon/home.png")));
+        pauseButton1.setBounds(560, 320, 80, 80);
+        pauseButton1.setFocusPainted(false);
+        pauseButton1.setBorderPainted(false);
+        pauseButton1.setBorder(null);
+        pauseButton1.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try{
+                    Music music = new Music("Select.wav");
+                    music.playOnce();
+                }catch(Exception e1){
+                    e1.printStackTrace();
+                }
+                GamePanel.sudo = true;
+                PausePanel.Start = false;
+                JFrame nowFrame = GamePanel.frame[1];
+                GamePanel.Start = true;
+                GamePanel.switchState(1);
+                nowFrame.setVisible(true);
+                pauseScreen.setVisible(false);
+            }
+        });
+        add(pauseButton1);
+
+        JButton pauseButton2 = new JButton(new ImageIcon(PausePanel.class.getResource("Image/icon/settings.png")));
+        pauseButton2.setBounds(1200, 0, 80, 80);
+        pauseButton2.setFocusPainted(false);
+        pauseButton2.setBorderPainted(false);
+        pauseButton2.setBorder(null);
+        pauseButton2.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try{
+                    Music music = new Music("Select.wav");
+                    music.playOnce();
+                }catch(Exception e1){
+                    e1.printStackTrace();
+                }
+            }
+        });
+        add(pauseButton2);
+    }
+
     PausePanel(JFrame pauseScreen){
         this.pauseScreen = pauseScreen;
 
-        animate1 = new Animate(1136, 639, 144, 81, "paused.gif");
+        init();
 
         addKeyListener(this);
         setFocusable(true);

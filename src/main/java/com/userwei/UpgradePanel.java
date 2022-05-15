@@ -237,7 +237,6 @@ public class UpgradePanel extends JPanel implements KeyListener{
         weaponButton.setFocusPainted(false);
         weaponButton.setBorderPainted(false);
         weaponButton.setBorder(null);
-        weaponButton.setLayout(null);
         weaponButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -294,7 +293,6 @@ public class UpgradePanel extends JPanel implements KeyListener{
             nowButton.setFocusPainted(false);
             nowButton.setBorderPainted(false);
             nowButton.setBorder(null);
-            nowButton.setLayout(null);
             nowButton.setVisible(false);
             nowButton.addActionListener(new ActionListener(){
                 @Override

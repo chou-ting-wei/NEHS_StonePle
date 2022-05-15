@@ -96,32 +96,6 @@ public class Main{
         });
         pausePanel.add(pauseButton1);
 
-        JButton pauseButton2 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/home.png")));
-        pauseButton2.setBounds(560, 320, 80, 80);
-        pauseButton2.setFocusPainted(false);
-        pauseButton2.setBorderPainted(false);
-        pauseButton2.setBorder(null);
-        pausePanel.setLayout(null);
-        pauseButton2.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                try{
-                    Music music = new Music("Select.wav");
-                    music.playOnce();
-                }catch(Exception e1){
-                    e1.printStackTrace();
-                }
-                GamePanel.sudo = true;
-                PausePanel.Start = false;
-                JFrame nowFrame = GamePanel.frame[1];
-                GamePanel.Start = true;
-                GamePanel.switchState(1);
-                nowFrame.setVisible(true);
-                pauseScreen.setVisible(false);
-            }
-        });
-        pausePanel.add(pauseButton2);
-
         pauseScreen.getContentPane().add(pausePanel);
         pauseScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pauseScreen.setSize(size_x, size_y);
