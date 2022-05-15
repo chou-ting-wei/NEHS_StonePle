@@ -32,6 +32,9 @@ public class Main{
         UpgradePanel upgradePanel = new UpgradePanel(mainFrame, upgradeScreen);
         BackpackPanel backpackPanel = new BackpackPanel(mainFrame, backpackScreen);
 
+        ValueCalculate vc = new ValueCalculate();
+        vc.start();
+
         int size_x = 1280, size_y = 748;
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
         int loc_x = (int) screensize.getWidth() / 2 - size_x / 2;

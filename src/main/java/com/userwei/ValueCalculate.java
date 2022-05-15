@@ -1,31 +1,36 @@
 package com.userwei;
 
-public class ValueCalculate {
+public class ValueCalculate extends Thread{
+
     Thread thread;
 
-    static int characterLevel = 0, characterExp = 0;
+    static int characterLevel = 1, characterExp = 0, characterLife = 0;
     // atk, def, lif, exp
     static int characterValue[][] = {
-        {0, 1, 1, 2, 2, 3, 4, 6, 7, 9},
-        {0, 0, 1, 2, 3, 4, 5, 6, 7, 8},
-        {10, 12, 14, 16, 18, 20, 25, 30, 35, 40},
-        {0, 2, 6, 16, 30, 50, 70, 95, 125, 175}
+        {0, 0, 1, 1, 2, 2, 3, 4, 6, 7, 9},
+        {0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8},
+        {0, 10, 12, 14, 16, 18, 20, 25, 30, 35, 40},
+        {0, 0, 2, 6, 16, 30, 50, 70, 95, 125, 175}
     };
 
-    ValueCalculate(){
-        thread = new Thread(() -> {
-            while(true){
+    public void init(){
+        characterLife = characterValue[2][characterLevel];
+    }
 
-                update();
+    public void run(){
+        
+        init();
 
-                try{
-                    Thread.sleep(10);
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
+        while(true){
+
+            update();
+
+            try{
+                Thread.sleep(1000);
+            }catch(Exception e){
+                e.printStackTrace();
             }
-        });
-        thread.start();
+        }
     }
 
     public void update(){
