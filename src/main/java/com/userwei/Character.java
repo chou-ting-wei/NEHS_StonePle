@@ -41,6 +41,7 @@ public class Character extends Rectangle{
 
     public void update(){
         if(ValueCalculate.characterLife < 0 && GamePanel.nowState != 1){
+            ValueCalculate.characterLife = ValueCalculate.characterValue[2][ValueCalculate.characterLevel] / 3;
             if(GamePanel.nowState == 3){
                 FieldPanel.Start = false;
             }
@@ -53,8 +54,6 @@ public class Character extends Rectangle{
             GamePanel.switchState(1);
             preFrame.setVisible(true);
             nowFrame.setVisible(false);
-
-            ValueCalculate.characterLife = ValueCalculate.characterValue[2][ValueCalculate.characterLevel] / 3;
         }
     }
 
