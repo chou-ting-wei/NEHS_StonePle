@@ -58,11 +58,19 @@ public class ValueCalculate extends Thread{
         return CharacterAtk + weaponAtk;
     }
 
+    static public int additionCharacterAttackDamage(){
+        // 角色攻擊度 + 武器攻擊力
+        Weapon nowWeapon = UpgradePanel.weapon[UpgradePanel.weaponSelecting];
+        int CharacterAtk = characterValue[0][characterLevel], weaponAtk = nowWeapon.atk, additionWeaponAtk = nowWeapon.atkAddition;
+        return CharacterAtk + weaponAtk + additionWeaponAtk;
+    }
+
     // "slime", "brownie", "drackmage", "mimic", "overkilling_machine"
     static public int monsterAttackDamage(Monster nowMonster){
+        int dmg = 0;
         if(!nowMonster.destroyed){
-
+            
         }
-        return 0;
+        return dmg;
     }
 }

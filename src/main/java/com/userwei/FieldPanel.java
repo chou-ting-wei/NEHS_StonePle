@@ -566,6 +566,21 @@ public class FieldPanel extends JPanel implements KeyListener{
         return (int)(Math.random() * (end - srt + 1)) + srt;
     }
 
+    public void monsterMove(){
+        
+    }
+
+    public boolean monsterJudge(int x, int y){
+        int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
+        for(int i = 0; i < nowMonsterCount; i ++){
+            Monster nowMonster = allMonster[mapState_i][mapState_j][i];
+            if(x == (nowMonster.x / 80) && y == (nowMonster.y / 80)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean mapJudge(int dx, int dy){
         if(mapState_i + dx < 0 || mapState_i + dx >= mapSizeX){
             return false;
@@ -659,7 +674,7 @@ public class FieldPanel extends JPanel implements KeyListener{
                 BackpackPanel.addMaterialAmount("coin", 10);
             }
         }
-        return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80];
+        return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80] && monsterJudge(x / 80, y / 80);
     }
 
     @Override
@@ -700,6 +715,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             System.out.println("Character Coordinate:");
             System.out.println(character1.x + " " + character1.y);
         }
+        // move
         if(e.getKeyCode() == KeyEvent.VK_W){
             if(character1.y >= character1.movY){
                 if(moveJudge(character1.x, character1.y - character1.movY)){
@@ -748,9 +764,13 @@ public class FieldPanel extends JPanel implements KeyListener{
                 reset();
             }
         }
-        if(e.getKeyCode() == KeyEvent.VK_M){
-            ValueCalculate.characterLife -= 3;
-            ValueCalculate.characterLifeChange = true;
+        // attack
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+
+        }
+        // props
+        if(e.getKeyCode() == KeyEvent.VK_C){
+            
         }
     }
 

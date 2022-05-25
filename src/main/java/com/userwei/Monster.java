@@ -103,7 +103,7 @@ public class Monster extends Rectangle{
                 update();
 
                 try{
-                    Thread.sleep(10);
+                    Thread.sleep(100);
                 }catch(Exception e){
                     e.printStackTrace();
                 }
