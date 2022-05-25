@@ -4,7 +4,8 @@ public class ValueCalculate extends Thread{
     Thread thread;
     static final int INF = 1000007;
 
-    static int characterLevel = 1, characterExp = 0, characterLife = 0;
+    static int characterLevel = 1, characterExp = 0, characterLife = 0, characterPercent = 0;
+    static boolean characterLifeChange = false;
 
     // atk, def, lif, exp
     static int characterValue[][] = {
@@ -13,13 +14,10 @@ public class ValueCalculate extends Thread{
         {0, 10, 12, 14, 16, 18, 20, 25, 30, 35, 40},
         {0, 2, 6, 16, 30, 50, 70, 95, 125, 175, INF}
     };
-
-    static int characterPercent = 100;
-
-    static boolean characterLifeChange = false;
-
+  
     public void init(){
         characterLife = characterValue[2][characterLevel];
+        characterPercent = characterLife / characterValue[2][characterLevel];
     }
 
     public void run(){
@@ -47,8 +45,8 @@ public class ValueCalculate extends Thread{
             characterLevel ++;
             characterLife += characterValue[2][characterLevel] - characterValue[2][characterLevel - 1];
         }
-        if(characterLifeChange = true){
-            characterPercent = 100 * (characterLife/characterValue[2][characterLevel]);
+        if(characterLifeChange){
+            characterPercent = 100 * (characterLife / characterValue[2][characterLevel]);
         }
     }
 
