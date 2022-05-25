@@ -227,7 +227,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             addMoveJudge(2, 2, 15, 15, 0, 4);
 
             // brownie
-                addMonster(1, 2, 480, 320, 80, 80, "slime.gif");
+                addMonster(1, 2, 1040, 480, 80, 80, "brownie.gif");
 
         // 3-0(done)
             // trunk
@@ -237,6 +237,11 @@ public class FieldPanel extends JPanel implements KeyListener{
             }
             addMoveJudge(0, 3, 0, 0, 0, 8);
             addMoveJudge(0, 3, 2, 2, 0, 8);
+
+            // slime
+                for(int i = 1; i <= 6; i ++){
+                    
+                }
 
         // 3-1(done)
             // fence
