@@ -195,9 +195,7 @@ public class GamePanel extends JPanel implements KeyListener{
             upgradeScreen.setVisible(true);
             mainFrame.setVisible(false);
         }
-        hpbar = new Font(0, 0, 240, 40, "hp" + Integer.toString(ValueCalculate.characterPercent) + ".png" );
-        System.out.println(ValueCalculate.characterLife);
-        System.out.println(Integer.toString(ValueCalculate.characterPercent));
+        hpbar = new Font(0, 0, 240, 40, "hp" + ValueCalculate.characterPercent + ".png" );
         repaint();
 	}
 
