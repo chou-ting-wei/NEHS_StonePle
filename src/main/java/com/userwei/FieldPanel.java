@@ -671,6 +671,7 @@ public class FieldPanel extends JPanel implements KeyListener{
         }
         if(e.getKeyCode() == KeyEvent.VK_M){
             ValueCalculate.characterLife -= 3;
+            ValueCalculate.characterLifeChange = true;
         }
     }
 

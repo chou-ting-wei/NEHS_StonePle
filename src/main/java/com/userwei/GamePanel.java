@@ -96,7 +96,7 @@ public class GamePanel extends JPanel implements KeyListener{
 
         character1 = new Character(0, 640, 80, 80, 80, 80, "walk.gif");
 
-        hpbar = new Font(0, 0, 120, 20, "hp" +".png" );
+        hpbar = new Font(0, 0, 120, 20, "hp" + Integer.toString(ValueCalculate.characterPercent) + ".png" );
     }
 
     GamePanel(JFrame startScreen, JFrame mainFrame, JFrame pauseScreen, JFrame fieldScreen, JFrame caveScreen, JFrame instructionScreen, JFrame upgradeScreen, JFrame backpackScreen){
@@ -163,6 +163,7 @@ public class GamePanel extends JPanel implements KeyListener{
         icon2.draw(g, this);
         icon3.draw(g, this);
         character1.draw(g, this);
+        hpbar.draw(g, this);
     }
 
     // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 Cave Panel; 5 Instruction Panel; 6 Upgrade Panel; 7 Backpack Panel
@@ -194,6 +195,10 @@ public class GamePanel extends JPanel implements KeyListener{
             upgradeScreen.setVisible(true);
             mainFrame.setVisible(false);
         }
+        hpbar = new Font(0, 0, 240, 40, "hp" + Integer.toString(ValueCalculate.characterPercent) + ".png" );
+        System.out.println(ValueCalculate.characterLife);
+        System.out.println(Integer.toString(ValueCalculate.characterPercent));
+        repaint();
 	}
 
     // Music
@@ -350,6 +355,10 @@ public class GamePanel extends JPanel implements KeyListener{
                     character1.x += character1.movX;
                 }
             }
+        }
+        if(e.getKeyCode() == KeyEvent.VK_M){
+            ValueCalculate.characterLife -= 3;
+            ValueCalculate.characterLifeChange = true;
         }
     }
 
