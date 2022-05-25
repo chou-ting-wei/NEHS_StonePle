@@ -24,7 +24,9 @@ public class FieldPanel extends JPanel implements KeyListener{
     static int mapState_i = 1, mapState_j = 5;
     int mapSizeX = 3, mapSizeY = 7;
 
+    // character Front : 0 up, 1 left, 2 down, 3 right
     Character character1;
+    int characterFront = 2;
     int characterInitX = 560, characterInitY = 400;
     Map map;
 
@@ -579,8 +581,11 @@ public class FieldPanel extends JPanel implements KeyListener{
         return (int)(Math.random() * (end - srt + 1)) + srt;
     }
 
+    // character Front : 0 up, 1 left, 2 down, 3 right
     public void characterAttack(){
+        int cx = character1.x, cy = character1.y;
 
+        
     }
 
     public void monsterMove(){
@@ -836,7 +841,9 @@ public class FieldPanel extends JPanel implements KeyListener{
             System.out.println(character1.x + " " + character1.y);
         }
         // move
+        // character Front : 0 up, 1 left, 2 down, 3 right
         if(e.getKeyCode() == KeyEvent.VK_W){
+            characterFront = 0;
             if(character1.y >= character1.movY){
                 if(moveJudge(character1.x, character1.y - character1.movY, "character")){
                     character1.y -= character1.movY;
@@ -849,6 +856,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             }
         }
         if(e.getKeyCode() == KeyEvent.VK_S){
+            characterFront = 2;
             if(character1.y <= mainFrame.getHeight() - character1.width - character1.movY){
                 if(moveJudge(character1.x, character1.y + character1.movY, "character")){
                     character1.y += character1.movY;
@@ -861,6 +869,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             }
         }
         if(e.getKeyCode() == KeyEvent.VK_A){
+            characterFront = 1;
             if(character1.x >= character1.movX){
                 if(moveJudge(character1.x - character1.movX, character1.y, "character")){
                     character1.x -= character1.movX;
@@ -873,6 +882,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             }
         }
         if(e.getKeyCode() == KeyEvent.VK_D){
+            characterFront = 3;
             if(character1.x <= mainFrame.getWidth() - character1.width - character1.movX){
                 if(moveJudge(character1.x + character1.movX, character1.y, "character")){
                     character1.x += character1.movX;
