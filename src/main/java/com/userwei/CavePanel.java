@@ -157,7 +157,7 @@ public class CavePanel extends JPanel implements KeyListener{
     }
 
     public void update(){
-        if(ValueCalculate.characterLife >= 0){
+        if(ValueCalculate.characterPercent >= 0){
             hpbar = new Font(0, 0, 180, 30, "hp" + ValueCalculate.characterPercent + ".png");
             repaint();
         }
