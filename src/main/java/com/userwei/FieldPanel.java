@@ -28,6 +28,8 @@ public class FieldPanel extends JPanel implements KeyListener{
     int characterInitX = 560, characterInitY = 400;
     Map map;
 
+    Font hpbar;
+
     static boolean caveUnlocked;
 
     JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
@@ -482,6 +484,14 @@ public class FieldPanel extends JPanel implements KeyListener{
                 repaint();
             }
         }
+        if(ValueCalculate.characterLife >= 0){
+            hpbar = new Font(0, 0, 180, 30, "hp" + ValueCalculate.characterPercent + ".png");
+            repaint();
+        }
+        else{
+            hpbar = new Font(0, 0, 180, 30, "hpRevive.png");
+            repaint();
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -495,6 +505,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             Monster nowMonster = allMonster[mapState_i][mapState_j][i];
             nowMonster.draw(g, this);
         }
+        hpbar.draw(g, this);
     }
 
     public int randomNumber(int srt, int end){
