@@ -26,6 +26,8 @@ public class GamePanel extends JPanel implements KeyListener{
     Character character1;
     Icon icon1, icon2, icon3;
     Map map;
+
+    Font hpbar;
     
     // Thread
     Thread thread;
@@ -93,6 +95,8 @@ public class GamePanel extends JPanel implements KeyListener{
         background11 = new Background(1120, 640, 80, 80, "plant1.png");
 
         character1 = new Character(0, 640, 80, 80, 80, 80, "walk.gif");
+
+        hpbar = new Font(0, 0, 120, 20, "hp" +".png" );
     }
 
     GamePanel(JFrame startScreen, JFrame mainFrame, JFrame pauseScreen, JFrame fieldScreen, JFrame caveScreen, JFrame instructionScreen, JFrame upgradeScreen, JFrame backpackScreen){
