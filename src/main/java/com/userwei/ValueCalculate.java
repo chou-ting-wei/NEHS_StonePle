@@ -4,7 +4,7 @@ public class ValueCalculate extends Thread{
     Thread thread;
     static final int INF = 1000007;
 
-    static int characterLevel = 1, characterExp = 0, characterLife = 0, characterPercent = 0;
+    static int characterLevel = 5, characterExp = 0, characterLife = 0, characterPercent = 0;
     static boolean characterLifeChange = false;
 
     // atk, def, lif, exp
