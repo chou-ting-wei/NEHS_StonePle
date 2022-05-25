@@ -27,8 +27,11 @@ public class CavePanel extends JPanel implements KeyListener{
     int characterInitX = 640, characterInitY = 640;
     Map map;
 
+    Font hpbar;
+
     JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
     static boolean Start;
+    Thread thread;
 
     public void addMoveJudge(int mapx, int mapy, int x1, int x2, int y1, int y2){
         for(int i = x1; i <= x2; i ++){
@@ -138,6 +141,30 @@ public class CavePanel extends JPanel implements KeyListener{
         
         init();
         reset();
+
+        thread = new Thread(() -> {
+            while(true){
+                update();
+
+                try{
+                    Thread.sleep(10);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    public void update(){
+        if(ValueCalculate.characterLife >= 0){
+            hpbar = new Font(0, 0, 180, 30, "hp" + ValueCalculate.characterPercent + ".png");
+            repaint();
+        }
+        else{
+            hpbar = new Font(0, 0, 180, 30, "hpRevive.png");
+            repaint();
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -147,6 +174,7 @@ public class CavePanel extends JPanel implements KeyListener{
             Background nowbBackground = allMapBackground[mapState_i][mapState_j][i];
             nowbBackground.draw(g, this);
         }
+        hpbar.draw(g, this);
     }
 
     public int randomNumber(int srt, int end){
