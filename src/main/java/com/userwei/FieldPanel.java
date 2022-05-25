@@ -16,12 +16,12 @@ public class FieldPanel extends JPanel implements KeyListener{
     Background allMapBackground[][][];
     int allMapBackgroundCount[][];
 
-    Monster allMonster[][][];
-    int allMonsterCount[][];
+    static Monster allMonster[][][];
+    static int allMonsterCount[][];
 
     boolean allMapMoveJudge[][][][];
 
-    int mapState_i = 1, mapState_j = 5;
+    static int mapState_i = 1, mapState_j = 5;
     int mapSizeX = 3, mapSizeY = 7;
 
     Character character1;
@@ -587,14 +587,13 @@ public class FieldPanel extends JPanel implements KeyListener{
         int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
         for(int i = 0; i < nowMonsterCount; i ++){
             Monster nowMonster = allMonster[mapState_i][mapState_j][i];
-            if(!nowMonster.destroyed){
+            if(!nowMonster.destroyed && Start){
                 int cx = character1.x, cy = character1.y, mx = nowMonster.x, my = nowMonster.y;
                 int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
                 if(Math.max(distx, disty) == 1){
                     monsterAttack(nowMonster);
                 }
                 else if(Math.max(distx, disty) <= 4){
-                    System.out.println("moving!");
                     int rand = randomNumber(1, 100);
                     boolean test = (distx == disty ? true : false);
 
@@ -677,7 +676,7 @@ public class FieldPanel extends JPanel implements KeyListener{
 
     }
 
-    public void monsterReset(){
+    static public void monsterReset(){
         int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
         for(int i = 0; i < nowMonsterCount; i ++){
             Monster nowMonster = allMonster[mapState_i][mapState_j][i];
@@ -725,6 +724,7 @@ public class FieldPanel extends JPanel implements KeyListener{
     // chest pos : [0][6] 1-6, [2][5] 13-4, [2][3] 14-6, [0][1] 1-5, [1][2] 7-4, [1][2] 8-4
     public boolean moveJudge(int x, int y, String s){
         if(mapState_i == 1 && mapState_j == 5 && edgeJudge(x, 5, 7) && edgeJudge(y, 2, 4) && s == "character"){
+            monsterReset();
             Start = false;
             JFrame nowFrame = GamePanel.frame[1];
             GamePanel.Start = true;
