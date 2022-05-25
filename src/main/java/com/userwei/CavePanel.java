@@ -342,6 +342,10 @@ public class CavePanel extends JPanel implements KeyListener{
                 reset();
             }
         }
+        if(e.getKeyCode() == KeyEvent.VK_M){
+            ValueCalculate.characterLife -= 3;
+            ValueCalculate.characterLifeChange = true;
+        }
     }
 
     @Override
