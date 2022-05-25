@@ -13,6 +13,10 @@ public class ValueCalculate extends Thread{
         {0, 2, 6, 16, 30, 50, 70, 95, 125, 175, INF}
     };
 
+    static int characterPercent = 100;
+
+    static boolean characterLifeChange = false;
+
     public void init(){
         characterLife = characterValue[2][characterLevel];
     }
@@ -41,6 +45,9 @@ public class ValueCalculate extends Thread{
             characterExp -= characterValue[3][characterLevel];
             characterLevel ++;
             characterLife += characterValue[2][characterLevel] - characterValue[2][characterLevel - 1];
+        }
+        if(characterLifeChange = true){
+            characterPercent = 100 * (characterLife/characterValue[2][characterLevel]);
         }
     }
 
