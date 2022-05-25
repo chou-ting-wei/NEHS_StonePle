@@ -1,7 +1,28 @@
-# StonePle
-## Game Introduction
+# StonePle（俗投人）
+> 語言：繁體中文  
+> 當前版本：0.4 (beta)
+## 簡介
+西元前1856年，你，一顆再平凡不過的俗投，成岩了  
+世間大亂，令堂「起馱石」消失  
+你在世間徘徊，尋找她的蹤影...
 
-## Game Instructions
-![instruction](https://user-images.githubusercontent.com/70355885/170225955-1e75a120-9b67-4490-a70f-fe3f3c77ca82.png)
+## 說明
+1. 操作說明
+    1. 基礎按鍵  
+        1. Esc 鍵：暫停  
+        2. W/S/A/D 鍵：移動   
+    2. 特殊互動  
+        1. 以角色觸碰圖標  
 
-## Game Preview
+2. 其他說明
+    1. 待完成...
+
+## 預覽
+1. 啟動介面
+2. 遊戲主介面
+3. 各地圖介面
+4. 背包介面
+5. 武器升級介面
+
+## 其他
+> 待完成...
