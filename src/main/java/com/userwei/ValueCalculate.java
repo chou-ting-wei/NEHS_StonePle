@@ -17,7 +17,7 @@ public class ValueCalculate extends Thread{
   
     public void init(){
         characterLife = characterValue[2][characterLevel];
-        characterPercent = characterLife / characterValue[2][characterLevel];
+        characterPercent = 100 * (characterLife / characterValue[2][characterLevel]);
     }
 
     public void run(){
