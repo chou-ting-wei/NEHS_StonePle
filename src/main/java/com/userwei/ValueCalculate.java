@@ -46,8 +46,8 @@ public class ValueCalculate extends Thread{
             characterLife += characterValue[2][characterLevel] - characterValue[2][characterLevel - 1];
         }
         if(characterLifeChange){
-            characterPercent = 100 * (characterLife / characterValue[2][characterLevel]);
             characterLifeChange = false;
+            characterPercent = 100 * (characterLife / characterValue[2][characterLevel]);
         }
     }
 
