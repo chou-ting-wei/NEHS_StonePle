@@ -566,15 +566,42 @@ public class FieldPanel extends JPanel implements KeyListener{
         return (int)(Math.random() * (end - srt + 1)) + srt;
     }
 
+    public void characterAttack(){
+
+    }
+
     public void monsterMove(){
-        
+        int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
+        for(int i = 0; i < nowMonsterCount; i ++){
+            Monster nowMonster = allMonster[mapState_i][mapState_j][i];
+            if(!nowMonster.destroyed){
+                int distx = nowMonster.x - character1.x, disty = nowMonster.y - character1.y;
+                
+            }
+        }
+    }
+
+    public void monsterAttack(){
+
+    }
+
+    public void monsterReset(){
+        int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
+        for(int i = 0; i < nowMonsterCount; i ++){
+            Monster nowMonster = allMonster[mapState_i][mapState_j][i];
+            if(!nowMonster.destroyed){
+                nowMonster.nowlif = nowMonster.maxlif;
+                nowMonster.x = nowMonster.initX;
+                nowMonster.y = nowMonster.initY;
+            }
+        }
     }
 
     public boolean monsterJudge(int x, int y){
         int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
         for(int i = 0; i < nowMonsterCount; i ++){
             Monster nowMonster = allMonster[mapState_i][mapState_j][i];
-            if(x == (nowMonster.x / 80) && y == (nowMonster.y / 80)){
+            if(x == (nowMonster.x / 80) && y == (nowMonster.y / 80) && !nowMonster.destroyed){
                 return false;
             }
         }
@@ -588,6 +615,7 @@ public class FieldPanel extends JPanel implements KeyListener{
         if(mapState_j + dy < 0 || mapState_j + dy >= mapSizeY){
             return false;
         }
+        monsterReset();
         mapState_i += dx;
         mapState_j += dy;
         return true;
@@ -766,7 +794,7 @@ public class FieldPanel extends JPanel implements KeyListener{
         }
         // attack
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
-
+            characterAttack();
         }
         // props
         if(e.getKeyCode() == KeyEvent.VK_C){

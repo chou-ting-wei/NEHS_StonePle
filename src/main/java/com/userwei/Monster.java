@@ -7,7 +7,7 @@ public class Monster extends Rectangle{
     Image pic;
     boolean destroyed, materialAdded;
 
-    int movX, movY, lif, monsterIdx;
+    int movX, movY, maxlif, nowlif, monsterIdx, initX, initY;
     int atk[][];
     int monsterCount = 5;
     Thread thread;
@@ -30,7 +30,8 @@ public class Monster extends Rectangle{
         atk = new int[5][5];
 
         if(monsterIdx == 0){
-            lif = randomNumber(3, 5);
+            maxlif = randomNumber(3, 5);
+            nowlif = maxlif;
             // 面前
             atk[1][0] = 2;
             atk[1][1] = 2;
@@ -38,7 +39,8 @@ public class Monster extends Rectangle{
             atk[1][0] = 2;
         }
         else if(monsterIdx == 1){
-            lif = randomNumber(5, 10);
+            maxlif = randomNumber(5, 10);
+            nowlif = maxlif;
             // 上下左右
             atk[1][0] = 5;
             atk[1][1] = 5;
@@ -46,7 +48,8 @@ public class Monster extends Rectangle{
             atk[1][0] = 5;
         }
         else if(monsterIdx == 2){
-            lif = randomNumber(20, 30);
+            maxlif = randomNumber(20, 30);
+            nowlif = maxlif;
             // 面前
             atk[1][0] = 8;
             atk[1][1] = 8;
@@ -54,7 +57,8 @@ public class Monster extends Rectangle{
             atk[1][0] = 8;
         }
         else if(monsterIdx == 3){
-            lif = randomNumber(40, 60);
+            maxlif = randomNumber(40, 60);
+            nowlif = maxlif;
             // 全
             atk[1][0] = 12;
             atk[1][1] = 12;
@@ -66,7 +70,8 @@ public class Monster extends Rectangle{
             atk[2][2] = 12;
         }
         else if(monsterIdx == 4){
-            lif = 100;
+            maxlif = 100;
+            nowlif = maxlif;
             // 全
             atk[1][0] = 8;
             atk[1][1] = 8;
@@ -87,6 +92,8 @@ public class Monster extends Rectangle{
         this.movX = mx;
         this.movY = my;
         monsterIdx = findIndex(s);
+        initX = x;
+        initY = y;
 
         try{
             // pic = Toolkit.getDefaultToolkit().createImage("StonePle/src/Image/monster/" + s);
@@ -113,7 +120,7 @@ public class Monster extends Rectangle{
     }
 
     public void update(){
-        if(lif < 0){
+        if(nowlif < 0){
             destroyed = true;
             if(!materialAdded){
                 materialAdded = true;
