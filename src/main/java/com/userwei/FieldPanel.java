@@ -16,6 +16,9 @@ public class FieldPanel extends JPanel implements KeyListener{
     Background allMapBackground[][][];
     int allMapBackgroundCount[][];
 
+    Monster allMonster[][][];
+    int allMonsterCount[][];
+
     boolean allMapMoveJudge[][][][];
 
     int mapState_i = 1, mapState_j = 5;
@@ -47,11 +50,22 @@ public class FieldPanel extends JPanel implements KeyListener{
         allMapBackgroundCount[mapx][mapy] ++;
     }
 
+    public void addMonster(int mapx, int mapy, int x, int y, int w, int h, String s){
+        int nowMonsterCount = allMonsterCount[mapx][mapy];
+        Monster nowMonster = new Monster(x, y, 80, 80, w, h, s);
+        allMonster[mapx][mapy][nowMonsterCount] = nowMonster;
+
+        allMonsterCount[mapx][mapy] ++;
+    }
+
     public void init(){
         allMap = new Map[mapSizeX][mapSizeY];
         allMapBackground = new Background[mapSizeX][mapSizeY][70];
         allMapBackgroundCount = new int[mapSizeX][mapSizeY];
         allMapMoveJudge = new boolean[mapSizeX][mapSizeY][16][9];
+
+        allMonster = new Monster[mapSizeX][mapSizeY][70];
+        allMonsterCount = new int[mapSizeX][mapSizeY];
 
         for(int i = mapSizeX - 1; i >= 0; i --){
             for(int j = 0; j < mapSizeY; j ++){
@@ -77,12 +91,19 @@ public class FieldPanel extends JPanel implements KeyListener{
             }
             addMoveJudge(0, 0, 0, 1, 1, 8);
 
+            // slime
+                addMonster(0, 0, 240, 160, 80, 80, "slime.gif");
+                addMonster(0, 0, 320, 240, 80, 80, "slime.gif");
+
         // 0-1(done)
             // fence
             for(int i = 0; i <= 15; i ++){
                 addBackground(1, 0, 80 * i, 0, 80, 80, "fence.png");
             }
             addMoveJudge(1, 0, 0, 15, 0, 0);
+
+            // brownie
+                
 
         // 0-2(done)
             // fence
@@ -439,6 +460,10 @@ public class FieldPanel extends JPanel implements KeyListener{
         for(int i = 0; i < allMapBackgroundCount[mapState_i][mapState_j]; i ++){
             Background nowbBackground = allMapBackground[mapState_i][mapState_j][i];
             nowbBackground.draw(g, this);
+        }
+        for(int i = 0; i < allMonsterCount[mapState_i][mapState_j]; i ++){
+            Monster nowMonster = allMonster[mapState_i][mapState_j][i];
+            nowMonster.draw(g, this);
         }
     }
 
