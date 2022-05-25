@@ -12,7 +12,7 @@ public class Monster extends Rectangle{
     int monsterCount = 5;
     Thread thread;
 
-    String name[] = {"slime", "brownie", "drackmage", "mimic", "overkilling_machine"};
+    String name[] = {"slime.gif", "brownie.gif", "drackmage.gif", "mimic.gif", "overkilling_machine.gif"};
 
     public int randomNumber(int srt, int end){
         return (int)(Math.random() * (end - srt + 1)) + srt;
@@ -27,6 +27,8 @@ public class Monster extends Rectangle{
     }
 
     public void init(){
+        atk = new int[5][5];
+
         if(monsterIdx == 0){
             lif = randomNumber(3, 5);
             // 面前
