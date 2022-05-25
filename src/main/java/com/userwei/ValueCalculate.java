@@ -5,6 +5,7 @@ public class ValueCalculate extends Thread{
     static final int INF = 1000007;
 
     static int characterLevel = 1, characterExp = 0, characterLife = 0;
+
     // atk, def, lif, exp
     static int characterValue[][] = {
         {0, 0, 1, 1, 2, 2, 3, 4, 6, 7, 9},
