@@ -23,6 +23,7 @@ public class Main{
         JFrame upgradeScreen = new JFrame("StonePle version 0.4(beta)");
         JFrame backpackScreen = new JFrame("StonePle version 0.4(beta)");
 
+        BackpackPanel backpackPanel = new BackpackPanel(mainFrame, backpackScreen);
         GamePanel gamePanel = new GamePanel(startScreen, mainFrame, pauseScreen, fieldScreen, caveScreen, instructionScreen, upgradeScreen, backpackScreen);
         StartPanel startPanel = new StartPanel(mainFrame, startScreen);
         PausePanel pausePanel = new PausePanel(pauseScreen);
@@ -30,7 +31,6 @@ public class Main{
         CavePanel cavePanel = new CavePanel(mainFrame, pauseScreen, fieldScreen, caveScreen,backpackScreen);
         InstructionPanel instructionPanel = new InstructionPanel(mainFrame, instructionScreen);
         UpgradePanel upgradePanel = new UpgradePanel(mainFrame, upgradeScreen);
-        BackpackPanel backpackPanel = new BackpackPanel(mainFrame, backpackScreen);
 
         ValueCalculate vc = new ValueCalculate();
         vc.start();
