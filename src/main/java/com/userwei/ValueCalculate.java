@@ -64,13 +64,4 @@ public class ValueCalculate extends Thread{
         int CharacterAtk = characterValue[0][characterLevel], weaponAtk = nowWeapon.atk, additionWeaponAtk = nowWeapon.atkAddition;
         return CharacterAtk + weaponAtk + additionWeaponAtk;
     }
-
-    // "slime", "brownie", "drackmage", "mimic", "overkilling_machine"
-    static public int monsterAttackDamage(Monster nowMonster){
-        int dmg = 0;
-        if(!nowMonster.destroyed){
-            
-        }
-        return dmg;
-    }
 }

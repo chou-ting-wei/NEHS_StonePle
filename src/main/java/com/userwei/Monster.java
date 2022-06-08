@@ -33,28 +33,28 @@ public class Monster extends Rectangle{
             maxlif = randomNumber(3, 5);
             nowlif = maxlif;
             // 面前
-            atk[1][0] = 2;
-            atk[1][1] = 2;
             atk[0][1] = 2;
             atk[1][0] = 2;
+            atk[2][1] = 2;
+            atk[1][2] = 2;
         }
         else if(monsterIdx == 1){
             maxlif = randomNumber(5, 10);
             nowlif = maxlif;
             // 上下左右
-            atk[1][0] = 5;
-            atk[1][1] = 5;
             atk[0][1] = 5;
             atk[1][0] = 5;
+            atk[2][1] = 5;
+            atk[1][2] = 5;
         }
         else if(monsterIdx == 2){
             maxlif = randomNumber(20, 30);
             nowlif = maxlif;
             // 面前
-            atk[1][0] = 8;
-            atk[1][1] = 8;
             atk[0][1] = 8;
             atk[1][0] = 8;
+            atk[2][1] = 8;
+            atk[1][2] = 8;
         }
         else if(monsterIdx == 3){
             maxlif = randomNumber(40, 60);
@@ -73,10 +73,10 @@ public class Monster extends Rectangle{
             maxlif = 100;
             nowlif = maxlif;
             // 全
-            atk[1][0] = 8;
-            atk[1][1] = 8;
             atk[0][1] = 8;
             atk[1][0] = 8;
+            atk[2][1] = 8;
+            atk[1][2] = 8;
             atk[0][0] = 30;
             atk[0][2] = 30;
             atk[2][0] = 30;

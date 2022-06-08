@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.awt.Graphics;
 
 public class FieldPanel extends JPanel implements KeyListener{
-    Map allMap[][];
+    static Map allMap[][];
     /*
     Map Situation
     0-0 1-0 2-0 3-0 4-0 5-0 6-0
@@ -25,10 +25,10 @@ public class FieldPanel extends JPanel implements KeyListener{
     int mapSizeX = 3, mapSizeY = 7;
 
     // character Front : 0 up, 1 left, 2 down, 3 right
-    Character character1;
+    static Character character1;
     int characterFront = 2;
-    int characterInitX = 560, characterInitY = 400;
-    Map map;
+    static int characterInitX = 560, characterInitY = 400;
+    static Map map;
 
     Background inventory;
     Material herb;
@@ -521,7 +521,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             }
     }
 
-    public void reset(){
+    static public void reset(){
         map = allMap[mapState_i][mapState_j];
         character1 = new Character(characterInitX, characterInitY, 80, 80, 80, 80, "walk.gif");
     }
@@ -594,7 +594,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             while(true){
                 if(MonsterAttackChange){
                     try{
-                        Thread.sleep(100);
+                        Thread.sleep(50);
                     }catch(Exception e){
                         e.printStackTrace();
                     }
@@ -648,7 +648,6 @@ public class FieldPanel extends JPanel implements KeyListener{
 
     public void paintComponent(Graphics g){
         map.draw(g, this);
-        character1.draw(g, this);
         for(int i = 0; i < 16; i ++){
             for(int j = 0; j < 9; j ++){
                 Background nowBackground = CharacterAttackBackground[i][j];
@@ -665,6 +664,7 @@ public class FieldPanel extends JPanel implements KeyListener{
                 }
             }
         }
+        character1.draw(g, this);
         for(int i = 0; i < allMapBackgroundCount[mapState_i][mapState_j]; i ++){
             Background nowBackground = allMapBackground[mapState_i][mapState_j][i];
             nowBackground.draw(g, this);
@@ -746,8 +746,58 @@ public class FieldPanel extends JPanel implements KeyListener{
 
     public void monsterAttack(Monster nowMonster){
         int cx = character1.x, cy = character1.y, mx = nowMonster.x, my = nowMonster.y;
-        
-        // MonsterAttackChange = true;
+        int relatx = (cx - (mx - 80)), relaty = (cy - (my - 80));
+
+        if(!nowMonster.destroyed && Start){
+            if(nowMonster.monsterIdx == 0){
+                if(relatx / 80 >= 0 && relatx / 80 < 3 && relaty / 80 >= 0 && relaty / 80 < 3){
+                    int dmg = nowMonster.atk[relatx / 80][relaty / 80];
+                    if(dmg > 0){
+                        if(cx == character1.x && cy == character1.y && mx == nowMonster.x && my == nowMonster.y){
+                            Background nowBackground = new Background(cx, cy, 80, 80, "monster_attack.png");
+                            MonsterAttackBackground[cx / 80][cy / 80] = nowBackground;
+                            ChkMonsterAttackBackground[cx / 80][cy / 80] = true;
+                            ValueCalculate.characterLife -= dmg;
+                            ValueCalculate.characterLifeChange = true;
+                            repaint();
+                        }
+                    }
+                }
+            }
+            if(nowMonster.monsterIdx == 1){
+                if(relatx / 80 >= 0 && relatx / 80 < 3 && relaty / 80 >= 0 && relaty / 80 < 3){
+                    int dmg = nowMonster.atk[relatx / 80][relaty / 80];
+                    if(dmg > 0){
+                        if(cx == character1.x && cy == character1.y && mx == nowMonster.x && my == nowMonster.y){
+                            if((mx - 80) >= 0 && (mx - 80) <= 1200){
+                                Background nowBackground = new Background(mx - 80, my, 80, 80, "monster_attack.png");
+                                MonsterAttackBackground[(mx - 80) / 80][my / 80] = nowBackground;
+                                ChkMonsterAttackBackground[(mx - 80) / 80][my / 80] = true;
+                            }
+                            if((my - 80) >= 0 && (my - 80) <= 640){
+                                Background nowBackground = new Background(mx, my - 80, 80, 80, "monster_attack.png");
+                                MonsterAttackBackground[mx / 80][(my - 80) / 80] = nowBackground;
+                                ChkMonsterAttackBackground[mx / 80][(my - 80) / 80] = true;
+                            }
+                            if((mx + 80) >= 0 && (mx + 80) <= 1200){
+                                Background nowBackground = new Background(mx + 80, my, 80, 80, "monster_attack.png");
+                                MonsterAttackBackground[(mx + 80) / 80][my / 80] = nowBackground;
+                                ChkMonsterAttackBackground[(mx + 80) / 80][my / 80] = true;
+                            }
+                            if((my + 80) >= 0 && (my + 80) <= 640){
+                                Background nowBackground = new Background(mx, my + 80, 80, 80, "monster_attack.png");
+                                MonsterAttackBackground[mx / 80][(my + 80) / 80] = nowBackground;
+                                ChkMonsterAttackBackground[mx / 80][(my + 80) / 80] = true;
+                            }
+                            ValueCalculate.characterLife -= dmg;
+                            ValueCalculate.characterLifeChange = true;
+                            repaint();
+                        }
+                    }
+                }
+            }
+        }
+        MonsterAttackChange = true;
     }
 
     public void monsterMove(){

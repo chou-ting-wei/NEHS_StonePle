@@ -42,6 +42,12 @@ public class Character extends Rectangle{
     public void update(){
         if(ValueCalculate.characterLife < 0 && GamePanel.nowState != 1){
             FieldPanel.monsterReset();
+            FieldPanel.mapState_i = 1;
+            FieldPanel.mapState_j = 5;
+            FieldPanel.characterInitX = 560;
+            FieldPanel.characterInitY = 400;
+            FieldPanel.reset();
+
             ValueCalculate.characterLife = ValueCalculate.characterValue[2][ValueCalculate.characterLevel] / 3;
             ValueCalculate.characterLifeChange = true;
             if(GamePanel.nowState == 3){
