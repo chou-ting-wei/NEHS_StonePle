@@ -27,7 +27,9 @@ public class CavePanel extends JPanel implements KeyListener{
     int characterInitX = 640, characterInitY = 640;
     Map map;
 
-    Font hpbar;
+    Background inventory;
+    Material herb;
+    Font hpbar, herbcount;
 
     JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
     static boolean Start;
@@ -165,6 +167,18 @@ public class CavePanel extends JPanel implements KeyListener{
             hpbar = new Font(0, 0, 180, 30, "hpRevive.png");
             repaint();
         }
+        if(BackpackPanel.getMaterialAmount("herb") < 0){
+            herbcount = new Font(1180, 690, 60, 15, "EOF.png");
+            repaint();
+        }
+        else if(BackpackPanel.getMaterialAmount("herb") <= 99){
+            herbcount = new Font(1173, 690, 60, 15, BackpackPanel.getMaterialAmount("herb") + ".png" );
+            repaint();
+        }
+        else{
+            herbcount = new Font(1180, 690, 60, 15, "99+.png");
+            repaint();
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -175,6 +189,9 @@ public class CavePanel extends JPanel implements KeyListener{
             nowbBackground.draw(g, this);
         }
         hpbar.draw(g, this);
+        inventory.draw(g, this);
+        herb.draw(g, this);
+        herbcount.draw(g, this);
     }
 
     public int randomNumber(int srt, int end){
@@ -342,9 +359,24 @@ public class CavePanel extends JPanel implements KeyListener{
                 reset();
             }
         }
-        if(e.getKeyCode() == KeyEvent.VK_M){
-            ValueCalculate.characterLife -= 3;
-            ValueCalculate.characterLifeChange = true;
+        // attack
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            // characterAttack();
+        }
+        // props
+        if(e.getKeyCode() == KeyEvent.VK_C){
+            if(BackpackPanel.getMaterialAmount("herb") > 0){
+                BackpackPanel.addMaterialAmount("herb", -1);
+                if(ValueCalculate.characterLife + 4 <= ValueCalculate.characterValue[2][ValueCalculate.characterLevel]){
+                    ValueCalculate.characterLife += 4;
+                    ValueCalculate.characterLifeChange = true;
+
+                }
+                else{
+                    ValueCalculate.characterLife = ValueCalculate.characterValue[2][ValueCalculate.characterLevel];
+                    ValueCalculate.characterLifeChange = true;
+                }
+            }
         }
     }
 

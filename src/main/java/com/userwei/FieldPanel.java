@@ -30,7 +30,9 @@ public class FieldPanel extends JPanel implements KeyListener{
     int characterInitX = 560, characterInitY = 400;
     Map map;
 
-    Font hpbar;
+    Background inventory;
+    Material herb;
+    Font hpbar, herbcount;
 
     static boolean caveUnlocked;
 
@@ -92,6 +94,10 @@ public class FieldPanel extends JPanel implements KeyListener{
                 allMap[i][j] = nowMap;
             }
         }
+
+        inventory = new Background(1210, 650, 60, 60, "inventory.png");
+        herb = new Material(1220, 655, 40, 40, 0, "herb.png" );
+        herbcount = new Font(1173, 690, 60, 15, BackpackPanel.getMaterialAmount("herb") + ".png" );
 
         // Map Situation
         // 0-0 1-0 2-0 3-0 4-0 5-0 6-0
@@ -626,6 +632,18 @@ public class FieldPanel extends JPanel implements KeyListener{
             hpbar = new Font(0, 0, 180, 30, "hpRevive.png");
             repaint();
         }
+        if(BackpackPanel.getMaterialAmount("herb") < 0){
+            herbcount = new Font(1180, 690, 60, 15, "EOF.png");
+            repaint();
+        }
+        else if(BackpackPanel.getMaterialAmount("herb") <= 99){
+            herbcount = new Font(1173, 690, 60, 15, BackpackPanel.getMaterialAmount("herb") + ".png" );
+            repaint();
+        }
+        else{
+            herbcount = new Font(1180, 690, 60, 15, "99+.png");
+            repaint();
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -656,6 +674,9 @@ public class FieldPanel extends JPanel implements KeyListener{
             nowMonster.draw(g, this);
         }
         hpbar.draw(g, this);
+        inventory.draw(g, this);
+        herb.draw(g, this);
+        herbcount.draw(g, this);
     }
 
     public int randomNumber(int srt, int end){
@@ -1034,7 +1055,18 @@ public class FieldPanel extends JPanel implements KeyListener{
         }
         // props
         if(e.getKeyCode() == KeyEvent.VK_C){
-            
+            if(BackpackPanel.getMaterialAmount("herb") > 0){
+                BackpackPanel.addMaterialAmount("herb", -1);
+                if(ValueCalculate.characterLife + 4 <= ValueCalculate.characterValue[2][ValueCalculate.characterLevel]){
+                    ValueCalculate.characterLife += 4;
+                    ValueCalculate.characterLifeChange = true;
+
+                }
+                else{
+                    ValueCalculate.characterLife = ValueCalculate.characterValue[2][ValueCalculate.characterLevel];
+                    ValueCalculate.characterLifeChange = true;
+                }
+            }
         }
     }
 
