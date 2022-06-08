@@ -23,11 +23,13 @@ public class GamePanel extends JPanel implements KeyListener{
     Background background1, background2, background3, background4, background5;
     Background background6, background7, background8, background9, background10;
     Background background11, background12, background13, background14, background15;
+    Background inventory;
     Character character1;
     Icon icon1, icon2, icon3;
     Map map;
 
-    Font hpbar;
+    Material herb;
+    Font hpbar, herbcount;
     
     // Thread
     Thread thread;
@@ -97,6 +99,10 @@ public class GamePanel extends JPanel implements KeyListener{
         character1 = new Character(0, 640, 80, 80, 80, 80, "walk.gif");
 
         hpbar = new Font(0, 0, 120, 20, "hp" + Integer.toString(ValueCalculate.characterPercent) + ".png" );
+
+        inventory = new Background(1210, 650, 60, 60, "inventory.png");
+        herb = new Material(1220, 660, 40, 40, 0, "herb.png" );
+        herbcount = new Font(1177, 682, 80, 20, Integer.toString(BackpackPanel.getMaterialAmount("herb")) + ".png" );
     }
 
     GamePanel(JFrame startScreen, JFrame mainFrame, JFrame pauseScreen, JFrame fieldScreen, JFrame caveScreen, JFrame instructionScreen, JFrame upgradeScreen, JFrame backpackScreen){
@@ -164,6 +170,9 @@ public class GamePanel extends JPanel implements KeyListener{
         icon3.draw(g, this);
         character1.draw(g, this);
         hpbar.draw(g, this);
+        inventory.draw(g, this);
+        herb.draw(g, this);
+        herbcount.draw(g, this);
     }
 
     // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 Cave Panel; 5 Instruction Panel; 6 Upgrade Panel; 7 Backpack Panel
@@ -201,6 +210,18 @@ public class GamePanel extends JPanel implements KeyListener{
         }
         else{
             hpbar = new Font(0, 0, 180, 30, "hpRevive.png");
+            repaint();
+        }
+        if(BackpackPanel.getMaterialAmount("herb") <= 99){
+            herbcount = new Font(1177, 682, 80, 20, Integer.toString(BackpackPanel.getMaterialAmount("herb")) + ".png" );
+            repaint();
+        }
+        else if(BackpackPanel.getMaterialAmount("herb") > 99){
+            herbcount = new Font(1177, 682, 80, 20, "99+.png" );
+            repaint();
+        }
+        else{
+            herbcount = new Font(1177, 682, 80, 20, "EOF.png" );
             repaint();
         }
 	}
@@ -359,6 +380,27 @@ public class GamePanel extends JPanel implements KeyListener{
                     character1.x += character1.movX;
                 }
             }
+        }
+        if(e.getKeyCode() == KeyEvent.VK_C){
+            if(BackpackPanel.getMaterialAmount("herb") > 0){
+                BackpackPanel.addMaterialAmount("herb", -1);
+                if(ValueCalculate.characterLife + 4 <= ValueCalculate.characterValue[2][ValueCalculate.characterLevel]){
+                    ValueCalculate.characterLife += 4;
+                    ValueCalculate.characterLifeChange = true;
+
+                }
+                else{
+                    ValueCalculate.characterLife = ValueCalculate.characterValue[2][ValueCalculate.characterLevel];
+                    ValueCalculate.characterLifeChange = true;
+                }
+            }
+        }
+        if(e.getKeyCode() == KeyEvent.VK_M){
+            ValueCalculate.characterLife -= 5;
+            ValueCalculate.characterLifeChange = true;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_L){
+            BackpackPanel.addMaterialAmount("herb", 5);
         }
     }
 
