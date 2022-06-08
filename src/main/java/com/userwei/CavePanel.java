@@ -63,6 +63,10 @@ public class CavePanel extends JPanel implements KeyListener{
         allMapBackgroundCount = new int[mapSizeX][mapSizeY];
         allMapMoveJudge = new boolean[mapSizeX][mapSizeY][16][9];
 
+        inventory = new Background(1210, 650, 60, 60, "inventory.png");
+        herb = new Material(1220, 655, 40, 40, 0, "herb.png" );
+        herbcount = new Font(1173, 690, 60, 15, BackpackPanel.getMaterialAmount("herb") + ".png" );
+
         // 0-3
 
 
