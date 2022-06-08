@@ -40,7 +40,7 @@ public class Character extends Rectangle{
     }
 
     public void update(){
-        if(ValueCalculate.characterLife < 0 && GamePanel.nowState != 1){
+        if(ValueCalculate.characterLife <= 0 && GamePanel.nowState != 1){
             FieldPanel.monsterReset();
             FieldPanel.mapState_i = 1;
             FieldPanel.mapState_j = 5;
