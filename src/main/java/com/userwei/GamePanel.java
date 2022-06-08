@@ -212,16 +212,16 @@ public class GamePanel extends JPanel implements KeyListener{
             hpbar = new Font(0, 0, 180, 30, "hpRevive.png");
             repaint();
         }
-        if(BackpackPanel.getMaterialAmount("herb") <= 99){
+        if(BackpackPanel.getMaterialAmount("herb") < 0){
+            herbcount = new Font(1180, 690, 60, 15, "EOF.png");
+            repaint();
+        }
+        else if(BackpackPanel.getMaterialAmount("herb") <= 99){
             herbcount = new Font(1173, 690, 60, 15, BackpackPanel.getMaterialAmount("herb") + ".png" );
             repaint();
         }
-        else if(BackpackPanel.getMaterialAmount("herb") > 99){
-            herbcount = new Font(1180, 690, 60, 15, "99+.png");
-            repaint();
-        }
         else{
-            herbcount = new Font(1180, 690, 60, 15, "EOF.png");
+            herbcount = new Font(1180, 690, 60, 15, "99+.png");
             repaint();
         }
 	}
@@ -400,7 +400,7 @@ public class GamePanel extends JPanel implements KeyListener{
             ValueCalculate.characterLifeChange = true;
         }
         if(e.getKeyCode() == KeyEvent.VK_L){
-            BackpackPanel.addMaterialAmount("herb", -1);
+            BackpackPanel.addMaterialAmount("herb", 5);
         }
     }
 
