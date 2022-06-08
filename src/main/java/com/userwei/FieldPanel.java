@@ -34,9 +34,18 @@ public class FieldPanel extends JPanel implements KeyListener{
 
     static boolean caveUnlocked;
 
+    static Background CharacterAttackBackground[][];
+    static Background MonsterAttackBackground[][];
+
+    static boolean ChkCharacterAttackBackground[][];
+    static boolean ChkMonsterAttackBackground[][];
+
+    static boolean CharacterAttackChange;
+    boolean MonsterAttackChange;
+
     JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
     static boolean Start;
-    Thread thread, monsterThread;
+    Thread thread, monsterThread, AttackThread;
 
     public void addMoveJudge(int mapx, int mapy, int x1, int x2, int y1, int y2){
         for(int i = x1; i <= x2; i ++){
@@ -70,6 +79,12 @@ public class FieldPanel extends JPanel implements KeyListener{
 
         allMonster = new Monster[mapSizeX][mapSizeY][70];
         allMonsterCount = new int[mapSizeX][mapSizeY];
+
+        CharacterAttackBackground = new Background[16][9];
+        MonsterAttackBackground = new Background[16][9];
+
+        ChkCharacterAttackBackground = new boolean[16][9];
+        ChkMonsterAttackBackground = new boolean[16][9];
 
         for(int i = mapSizeX - 1; i >= 0; i --){
             for(int j = 0; j < mapSizeY; j ++){
@@ -543,6 +558,31 @@ public class FieldPanel extends JPanel implements KeyListener{
             }
         });
         monsterThread.start();
+
+        AttackThread = new Thread(() -> {
+            while(true){
+                if(CharacterAttackChange){
+                    try{
+                        Thread.sleep(100);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    CharacterAttackChange = false;
+                    for(int i = 0; i < 16; i ++){
+                        for(int j = 0; j < 9; j ++){
+                            ChkCharacterAttackBackground[i][j] = false;
+                        }
+                    }
+                }
+                repaint();
+                try{
+                    Thread.sleep(10);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        AttackThread.start();
     }
 
     public void update(){
@@ -566,9 +606,25 @@ public class FieldPanel extends JPanel implements KeyListener{
     public void paintComponent(Graphics g){
         map.draw(g, this);
         character1.draw(g, this);
+        for(int i = 0; i < 16; i ++){
+            for(int j = 0; j < 9; j ++){
+                Background nowBackground = CharacterAttackBackground[i][j];
+                if(ChkCharacterAttackBackground[i][j]){
+                    nowBackground.draw(g, this);
+                }
+            }
+        }
+        for(int i = 0; i < 16; i ++){
+            for(int j = 0; j < 9; j ++){
+                Background nowBackground = MonsterAttackBackground[i][j];
+                if(ChkMonsterAttackBackground[i][j]){
+                    nowBackground.draw(g, this);
+                }
+            }
+        }
         for(int i = 0; i < allMapBackgroundCount[mapState_i][mapState_j]; i ++){
-            Background nowbBackground = allMapBackground[mapState_i][mapState_j][i];
-            nowbBackground.draw(g, this);
+            Background nowBackground = allMapBackground[mapState_i][mapState_j][i];
+            nowBackground.draw(g, this);
         }
         for(int i = 0; i < allMonsterCount[mapState_i][mapState_j]; i ++){
             Monster nowMonster = allMonster[mapState_i][mapState_j][i];
@@ -584,8 +640,62 @@ public class FieldPanel extends JPanel implements KeyListener{
     // character Front : 0 up, 1 left, 2 down, 3 right
     public void characterAttack(){
         int cx = character1.x, cy = character1.y;
+        int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
 
-        
+        int addx, addy;
+        if(characterFront == 0){
+            addx = cx;
+            addy = cy - 80;
+        }
+        else if(characterFront == 1){
+            addx = cx - 80;
+            addy = cy;
+        }
+        else if(characterFront == 2){
+            addx = cx;
+            addy = cy + 80;
+        }
+        else{
+            addx = cx + 80;
+            addy = cy;
+        }
+
+        for(int i = cx - 80; i <= cx + 80; i += 80){
+            for(int j = cy - 80; j <= cy + 80; j += 80){
+                if(i < 0 || j < 0 || i > 1200 || j > 640){
+                    continue;
+                }
+                if(i == cx && j == cy){
+                    continue;
+                }
+                if(i == addx && j == addy){
+                    Background nowBackground = new Background(i, j, 80, 80, "character_addition_attack.png");
+                    CharacterAttackBackground[i / 80][j / 80] = nowBackground;
+                    ChkCharacterAttackBackground[i / 80][j / 80] = true;
+                }
+                else{
+                    Background nowBackground = new Background(i, j, 80, 80, "character_attack.png");
+                    CharacterAttackBackground[i / 80][j / 80] = nowBackground;
+                    ChkCharacterAttackBackground[i / 80][j / 80] = true;
+                }
+                repaint();
+                for(int k = 0; k < nowMonsterCount; k ++){
+                    Monster nowMonster = allMonster[mapState_i][mapState_j][k];
+                    int mx = nowMonster.x, my = nowMonster.y;
+                    if(!nowMonster.destroyed && Start){
+                        if(i == mx && j == my){
+                            if(i == addx && j == addy){
+                                nowMonster.nowlif -= ValueCalculate.additionCharacterAttackDamage();
+                            }
+                            else{
+                                nowMonster.nowlif -= ValueCalculate.characterAttackDamage();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        CharacterAttackChange = true;      
     }
 
     public void monsterAttack(Monster nowMonster){
