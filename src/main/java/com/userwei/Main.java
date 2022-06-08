@@ -23,17 +23,17 @@ public class Main{
         JFrame upgradeScreen = new JFrame("StonePle version 0.4(beta)");
         JFrame backpackScreen = new JFrame("StonePle version 0.4(beta)");
 
+        ValueCalculate vc = new ValueCalculate();
+        vc.start();
+
         BackpackPanel backpackPanel = new BackpackPanel(mainFrame, backpackScreen);
+        UpgradePanel upgradePanel = new UpgradePanel(mainFrame, upgradeScreen);
         GamePanel gamePanel = new GamePanel(startScreen, mainFrame, pauseScreen, fieldScreen, caveScreen, instructionScreen, upgradeScreen, backpackScreen);
         StartPanel startPanel = new StartPanel(mainFrame, startScreen);
         PausePanel pausePanel = new PausePanel(pauseScreen);
         FieldPanel fieldPanel = new FieldPanel(mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen);
         CavePanel cavePanel = new CavePanel(mainFrame, pauseScreen, fieldScreen, caveScreen,backpackScreen);
         InstructionPanel instructionPanel = new InstructionPanel(mainFrame, instructionScreen);
-        UpgradePanel upgradePanel = new UpgradePanel(mainFrame, upgradeScreen);
-
-        ValueCalculate vc = new ValueCalculate();
-        vc.start();
 
         int size_x = 1280, size_y = 748;
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
