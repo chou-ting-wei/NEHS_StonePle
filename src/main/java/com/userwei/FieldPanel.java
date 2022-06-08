@@ -588,6 +588,12 @@ public class FieldPanel extends JPanel implements KeyListener{
         
     }
 
+    public void monsterAttack(Monster nowMonster){
+        int cx = character1.x, cy = character1.y, mx = nowMonster.x, my = nowMonster.y;
+        
+        
+    }
+
     public void monsterMove(){
         int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
         for(int i = 0; i < nowMonsterCount; i ++){
@@ -672,13 +678,6 @@ public class FieldPanel extends JPanel implements KeyListener{
                 }
             }
         }
-    }
-
-    public void monsterAttack(Monster nowMonster){
-        int cx = character1.x, cy = character1.y, mx = nowMonster.x, my = nowMonster.y;
-
-
-
     }
 
     static public void monsterReset(){
