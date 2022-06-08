@@ -98,11 +98,11 @@ public class GamePanel extends JPanel implements KeyListener{
 
         character1 = new Character(0, 640, 80, 80, 80, 80, "walk.gif");
 
-        hpbar = new Font(0, 0, 120, 20, "hp" + Integer.toString(ValueCalculate.characterPercent) + ".png" );
+        hpbar = new Font(0, 0, 120, 20, "hp" + ValueCalculate.characterPercent + ".png" );
 
         inventory = new Background(1210, 650, 60, 60, "inventory.png");
-        herb = new Material(1220, 660, 40, 40, 0, "herb.png" );
-        herbcount = new Font(1177, 682, 80, 20, Integer.toString(BackpackPanel.getMaterialAmount("herb")) + ".png" );
+        herb = new Material(1220, 655, 40, 40, 0, "herb.png" );
+        herbcount = new Font(1173, 690, 60, 15, BackpackPanel.getMaterialAmount("herb") + ".png" );
     }
 
     GamePanel(JFrame startScreen, JFrame mainFrame, JFrame pauseScreen, JFrame fieldScreen, JFrame caveScreen, JFrame instructionScreen, JFrame upgradeScreen, JFrame backpackScreen){
@@ -213,15 +213,15 @@ public class GamePanel extends JPanel implements KeyListener{
             repaint();
         }
         if(BackpackPanel.getMaterialAmount("herb") <= 99){
-            herbcount = new Font(1177, 682, 80, 20, Integer.toString(BackpackPanel.getMaterialAmount("herb")) + ".png" );
+            herbcount = new Font(1173, 690, 60, 15, BackpackPanel.getMaterialAmount("herb") + ".png" );
             repaint();
         }
         else if(BackpackPanel.getMaterialAmount("herb") > 99){
-            herbcount = new Font(1177, 682, 80, 20, "99+.png" );
+            herbcount = new Font(1180, 690, 60, 15, "99+.png");
             repaint();
         }
         else{
-            herbcount = new Font(1177, 682, 80, 20, "EOF.png" );
+            herbcount = new Font(1180, 690, 60, 15, "EOF.png");
             repaint();
         }
 	}
@@ -400,7 +400,7 @@ public class GamePanel extends JPanel implements KeyListener{
             ValueCalculate.characterLifeChange = true;
         }
         if(e.getKeyCode() == KeyEvent.VK_L){
-            BackpackPanel.addMaterialAmount("herb", 5);
+            BackpackPanel.addMaterialAmount("herb", -1);
         }
     }
 

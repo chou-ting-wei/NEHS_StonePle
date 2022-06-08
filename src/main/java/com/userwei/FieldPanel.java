@@ -45,7 +45,7 @@ public class FieldPanel extends JPanel implements KeyListener{
 
     JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
     static boolean Start;
-    Thread thread, monsterThread, AttackThread;
+    Thread thread, monsterThread, CharacterAttackThread, MonsterAttackThread;
 
     public void addMoveJudge(int mapx, int mapy, int x1, int x2, int y1, int y2){
         for(int i = x1; i <= x2; i ++){
@@ -559,7 +559,7 @@ public class FieldPanel extends JPanel implements KeyListener{
         });
         monsterThread.start();
 
-        AttackThread = new Thread(() -> {
+        CharacterAttackThread = new Thread(() -> {
             while(true){
                 if(CharacterAttackChange){
                     try{
@@ -582,7 +582,32 @@ public class FieldPanel extends JPanel implements KeyListener{
                 }
             }
         });
-        AttackThread.start();
+        CharacterAttackThread.start();
+
+        MonsterAttackThread = new Thread(() -> {
+            while(true){
+                if(MonsterAttackChange){
+                    try{
+                        Thread.sleep(100);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    MonsterAttackChange = false;
+                    for(int i = 0; i < 16; i ++){
+                        for(int j = 0; j < 9; j ++){
+                            ChkMonsterAttackBackground[i][j] = false;
+                        }
+                    }
+                }
+                repaint();
+                try{
+                    Thread.sleep(10);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        MonsterAttackThread.start();
     }
 
     public void update(){
@@ -701,7 +726,7 @@ public class FieldPanel extends JPanel implements KeyListener{
     public void monsterAttack(Monster nowMonster){
         int cx = character1.x, cy = character1.y, mx = nowMonster.x, my = nowMonster.y;
         
-        
+        // MonsterAttackChange = true;
     }
 
     public void monsterMove(){
