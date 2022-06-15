@@ -168,10 +168,15 @@ public class CavePanel extends JPanel implements KeyListener{
             // NULL
 
         // 2-3
-
+            // drackmage
+            for(int i = 7; i <= 8; i ++){
+                addMonster(2, 3, 80 * i, 240, 80, 80, "drackmage.gif");
+            }
 
         // 2-4
-
+            // chest 7-4
+            addBackground(2, 4, 560, 320, 80, 80, "chest_close.png");
+            addMoveJudge(2, 4, 7, 7, 4, 4);
 
         // 2-5
             // transport door
@@ -179,19 +184,30 @@ public class CavePanel extends JPanel implements KeyListener{
             addMoveJudge(2, 5, 14, 14, 7, 7);
 
         // 3-1
-
+            // chest 11-4
+            addBackground(3, 1, 880, 320, 80, 80, "chest_close.png");
+            addMoveJudge(3, 1, 11, 11, 4, 4);
 
         // 3-3
-
+            // mimic
+            for(int i = 3; i <= 5; i ++){
+                addMonster(3, 3, 160, 80 * i, 80, 80, "mimic.gif");
+            }
 
         // 3-5
-
+            // NULL
 
         // 4-2
-
+            // chest 7-4, 8-4
+            addBackground(4, 2, 560, 320, 80, 80, "chest_close.png");
+            addBackground(4, 2, 640, 320, 80, 80, "chest_close.png");
+            addMoveJudge(4, 2, 7, 8, 4, 4);
 
         // 4-3
-
+            // drackmage
+            for(int i = 7; i <= 8; i ++){
+                addMonster(4, 3, 80 * i, 320, 80, 80, "drackmage.gif");
+            }
 
     }
 
@@ -622,7 +638,7 @@ public class CavePanel extends JPanel implements KeyListener{
         return false;
     }
 
-    // chest pos : [0][4] 7-4, [1][3] 1-1
+    // chest pos : [0][4] 7-4, [1][3] 1-1, [2][4] 7-4, [3][1] 11-4, [4][2] 7-4, [4][2] 8-4
     public boolean moveJudge(int x, int y, String s){
         String nowMap = mapName[mapState_i][mapState_j].substring(5, 9);
         // ULDR
@@ -690,6 +706,42 @@ public class CavePanel extends JPanel implements KeyListener{
                 BackpackPanel.addMaterialAmount("wood", 10);
             }
         }
+        else if(mapState_i == 2 && mapState_j == 4 && edgeJudge(x, 7, 7) && edgeJudge(y, 4, 4) && s == "character"){
+            int nowBackgroundCount = allMapBackgroundCount[2][4];
+            if(allMapBackground[2][4][nowBackgroundCount - 1].name != "chest_open.png"){
+                Background newBackground = new Background(560, 320, 80, 80, "chest_open.png");
+                allMapBackground[2][4][nowBackgroundCount - 1] = newBackground;
+                repaint();
+                BackpackPanel.addMaterialAmount("iron", 10);
+            }
+        }
+        else if(mapState_i == 3 && mapState_j == 1 && edgeJudge(x, 11, 11) && edgeJudge(y, 4, 4) && s == "character"){
+            int nowBackgroundCount = allMapBackgroundCount[3][1];
+            if(allMapBackground[3][1][nowBackgroundCount - 1].name != "chest_open.png"){
+                Background newBackground = new Background(880, 320, 80, 80, "chest_open.png");
+                allMapBackground[3][1][nowBackgroundCount - 1] = newBackground;
+                repaint();
+                BackpackPanel.addMaterialAmount("herb", 20);
+            }
+        }
+        else if(mapState_i == 4 && mapState_j == 2 && edgeJudge(x, 7, 7) && edgeJudge(y, 4, 4) && s == "character"){
+            int nowBackgroundCount = allMapBackgroundCount[4][2];
+            if(allMapBackground[4][2][nowBackgroundCount - 2].name != "chest_open.png"){
+                Background newBackground = new Background(560, 320, 80, 80, "chest_open.png");
+                allMapBackground[4][2][nowBackgroundCount - 2] = newBackground;
+                repaint();
+                BackpackPanel.addMaterialAmount("coin", 40);
+            }
+        }
+        else if(mapState_i == 4 && mapState_j == 2 && edgeJudge(x, 8, 8) && edgeJudge(y, 4, 4) && s == "character"){
+            int nowBackgroundCount = allMapBackgroundCount[4][2];
+            if(allMapBackground[4][2][nowBackgroundCount - 1].name != "chest_open.png"){
+                Background newBackground = new Background(640, 320, 80, 80, "chest_open.png");
+                allMapBackground[4][2][nowBackgroundCount - 1] = newBackground;
+                repaint();
+                BackpackPanel.addMaterialAmount("iron", 20);
+            }
+        }
         return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80] && monsterJudge(x / 80, y / 80);
     }
 
@@ -731,7 +783,10 @@ public class CavePanel extends JPanel implements KeyListener{
             System.out.println("Character Coordinate:");
             System.out.println(character1.x + " " + character1.y);
         }
+        // move
+        // character Front : 0 up, 1 left, 2 down, 3 right
         if(e.getKeyCode() == KeyEvent.VK_W){
+            characterFront = 0;
             if(character1.y >= character1.movY){
                 if(moveJudge(character1.x, character1.y - character1.movY, "character")){
                     character1.y -= character1.movY;
@@ -744,6 +799,7 @@ public class CavePanel extends JPanel implements KeyListener{
             }
         }
         if(e.getKeyCode() == KeyEvent.VK_S){
+            characterFront = 2;
             if(character1.y <= mainFrame.getHeight() - character1.width - character1.movY){
                 if(moveJudge(character1.x, character1.y + character1.movY, "character")){
                     character1.y += character1.movY;
@@ -756,6 +812,7 @@ public class CavePanel extends JPanel implements KeyListener{
             }
         }
         if(e.getKeyCode() == KeyEvent.VK_A){
+            characterFront = 1;
             if(character1.x >= character1.movX){
                 if(moveJudge(character1.x - character1.movX, character1.y, "character")){
                     character1.x -= character1.movX;
@@ -768,6 +825,7 @@ public class CavePanel extends JPanel implements KeyListener{
             }
         }
         if(e.getKeyCode() == KeyEvent.VK_D){
+            characterFront = 3;
             if(character1.x <= mainFrame.getWidth() - character1.width - character1.movX){
                 if(moveJudge(character1.x + character1.movX, character1.y, "character")){
                     character1.x += character1.movX;
