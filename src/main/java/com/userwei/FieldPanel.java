@@ -555,6 +555,7 @@ public class FieldPanel extends JPanel implements KeyListener{
         monsterThread = new Thread(() -> {
             while(true){
                 monsterMove();
+                repaint();
 
                 try{
                     Thread.sleep(800);
@@ -720,9 +721,9 @@ public class FieldPanel extends JPanel implements KeyListener{
                     ChkCharacterAttackBackground[i / 80][j / 80] = true;
                 }
                 else{
-                    Background nowBackground = new Background(i, j, 80, 80, "character_attack.png");
-                    CharacterAttackBackground[i / 80][j / 80] = nowBackground;
-                    ChkCharacterAttackBackground[i / 80][j / 80] = true;
+                    // Background nowBackground = new Background(i, j, 80, 80, "character_attack.png");
+                    // CharacterAttackBackground[i / 80][j / 80] = nowBackground;
+                    // ChkCharacterAttackBackground[i / 80][j / 80] = true;
                 }
                 repaint();
                 for(int k = 0; k < nowMonsterCount; k ++){
@@ -734,7 +735,7 @@ public class FieldPanel extends JPanel implements KeyListener{
                                 nowMonster.nowlif -= ValueCalculate.additionCharacterAttackDamage();
                             }
                             else{
-                                nowMonster.nowlif -= ValueCalculate.characterAttackDamage();
+                                // nowMonster.nowlif -= ValueCalculate.characterAttackDamage();
                             }
                         }
                     }
@@ -800,6 +801,13 @@ public class FieldPanel extends JPanel implements KeyListener{
         MonsterAttackChange = true;
     }
 
+    public boolean checkMonsterIdx(Monster nowMonster){
+        if(nowMonster.monsterIdx == 3 || nowMonster.monsterIdx == 4){
+            return true;
+        }
+        return false;
+    }
+
     public void monsterMove(){
         int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
         for(int i = 0; i < nowMonsterCount; i ++){
@@ -807,7 +815,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             if(!nowMonster.destroyed && Start){
                 int cx = character1.x, cy = character1.y, mx = nowMonster.x, my = nowMonster.y;
                 int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
-                if(Math.max(distx, disty) == 1){
+                if(((distx == 1 && disty == 0) || (distx == 0 && disty == 1)) || (Math.max(distx, disty) == 1 && checkMonsterIdx(nowMonster))){
                     monsterAttack(nowMonster);
                 }
                 else if(Math.max(distx, disty) <= 4){
