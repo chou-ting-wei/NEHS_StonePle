@@ -48,6 +48,13 @@ public class Character extends Rectangle{
             FieldPanel.characterInitY = 400;
             FieldPanel.reset();
 
+            CavePanel.monsterReset();
+            CavePanel.mapState_i = 2;
+            CavePanel.mapState_j = 5;
+            CavePanel.characterInitX = 640;
+            CavePanel.characterInitY = 640;
+            CavePanel.reset();
+
             ValueCalculate.characterLife = ValueCalculate.characterValue[2][ValueCalculate.characterLevel] / 3;
             ValueCalculate.characterLifeChange = true;
             if(GamePanel.nowState == 3){

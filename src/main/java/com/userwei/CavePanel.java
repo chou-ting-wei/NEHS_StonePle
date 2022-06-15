@@ -13,27 +13,41 @@ public class CavePanel extends JPanel implements KeyListener{
         {"null", "maze(L).png", "null", "maze(LR).png", "null", "maze(L).png"},
         {"null", "null", "maze(D).png", "maze(UL).png", "null", "null"}
     };
-    Map allMap[][];
+    static Map allMap[][];
 
     Background allMapBackground[][][];
     int allMapBackgroundCount[][];
 
+    static Monster allMonster[][][];
+    static int allMonsterCount[][];
+
     boolean allMapMoveJudge[][][][];
 
-    int mapState_i = 2, mapState_j = 5;
+    static int mapState_i = 2, mapState_j = 5;
     int mapSizeX = 5, mapSizeY = 6;
 
-    Character character1;
-    int characterInitX = 640, characterInitY = 640;
-    Map map;
+    // character Front : 0 up, 1 left, 2 down, 3 right
+    static Character character1;
+    int characterFront = 0;
+    static int characterInitX = 640, characterInitY = 640;
+    static Map map;
 
     Background inventory;
     Material herb;
     Font hpbar, herbcount;
 
+    static Background CharacterAttackBackground[][];
+    static Background MonsterAttackBackground[][];
+
+    static boolean ChkCharacterAttackBackground[][];
+    static boolean ChkMonsterAttackBackground[][];
+
+    static boolean CharacterAttackChange;
+    boolean MonsterAttackChange;
+
     JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
     static boolean Start;
-    Thread thread;
+    Thread thread, monsterThread, CharacterAttackThread, MonsterAttackThread;
 
     public void addMoveJudge(int mapx, int mapy, int x1, int x2, int y1, int y2){
         for(int i = x1; i <= x2; i ++){
@@ -51,6 +65,14 @@ public class CavePanel extends JPanel implements KeyListener{
         allMapBackgroundCount[mapx][mapy] ++;
     }
 
+    public void addMonster(int mapx, int mapy, int x, int y, int w, int h, String s){
+        int nowMonsterCount = allMonsterCount[mapx][mapy];
+        Monster nowMonster = new Monster(x, y, 80, 80, w, h, s);
+        allMonster[mapx][mapy][nowMonsterCount] = nowMonster;
+
+        allMonsterCount[mapx][mapy] ++;
+    }
+
     // {"null", "null", "null", "maze(DR).png", "maze(UD).png", "maze(UR).png"},
     // {"null", "maze(DR).png", "maze(UD).png", "maze(ULR).png", "null", "maze(LR).png"},
     // {"maze(D).png", "maze(ULR).png", "null", "maze(LDR).png", "maze(UD).png", "maze(ULDR).png"},
@@ -63,21 +85,52 @@ public class CavePanel extends JPanel implements KeyListener{
         allMapBackgroundCount = new int[mapSizeX][mapSizeY];
         allMapMoveJudge = new boolean[mapSizeX][mapSizeY][16][9];
 
+        allMonster = new Monster[mapSizeX][mapSizeY][70];
+        allMonsterCount = new int[mapSizeX][mapSizeY];
+
+        CharacterAttackBackground = new Background[16][9];
+        MonsterAttackBackground = new Background[16][9];
+
+        ChkCharacterAttackBackground = new boolean[16][9];
+        ChkMonsterAttackBackground = new boolean[16][9];
+
+        for(int i = mapSizeX - 1; i >= 0; i --){
+            for(int j = 0; j < mapSizeY; j ++){
+                if(mapName[i][j] != "null"){
+                    Map nowMap = new Map(0, 0, 1280, 720, mapName[i][j]);
+                    allMap[i][j] = nowMap;
+                }
+            }
+        }
+
         inventory = new Background(1210, 650, 60, 60, "inventory.png");
         herb = new Material(1220, 655, 40, 40, 0, "herb.png" );
         herbcount = new Font(1173, 690, 60, 15, BackpackPanel.getMaterialAmount("herb") + ".png" );
 
         // 0-3
-
+            // mimic
+            addMonster(0, 3, 80, 80, 80, 80, "mimic.gif");
+            addMonster(0, 3, 1120, 80, 80, 80, "mimic.gif");
+            addMonster(0, 3, 80, 560, 80, 80, "mimic.gif");
+            addMonster(0, 3, 1120, 560, 80, 80, "mimic.gif");
 
         // 0-4
-
+            // chest 7-4
+            addBackground(0, 4, 560, 320, 80, 80, "chest_close.png");
+            addMoveJudge(0, 4, 7, 7, 4, 4);
 
         // 0-5
-
+            // drackmage
+            for(int i = 3; i <= 5; i ++){
+                addMonster(0, 5, 80, 80 * i, 80, 80, "drackmage.gif");
+            }
 
         // 1-1
-
+            for(int i = 6; i <= 9; i ++){
+                for(int j = 3; j <= 5; j ++){
+                    addMonster(1, 1, 80 * i, 80 * j, 80, 80, "drackmage.gif");
+                }
+            }
 
         // 1-2
 
@@ -120,17 +173,9 @@ public class CavePanel extends JPanel implements KeyListener{
         // 4-3
 
 
-        for(int i = mapSizeX - 1; i >= 0; i --){
-            for(int j = 0; j < mapSizeY; j ++){
-                if(mapName[i][j] != "null"){
-                    Map nowMap = new Map(0, 0, 1280, 720, mapName[i][j]);
-                    allMap[i][j] = nowMap;
-                }
-            }
-        }
     }
 
-    public void reset(){
+    static public void reset(){
         map = allMap[mapState_i][mapState_j];
         character1 = new Character(characterInitX, characterInitY, 80, 80, 80, 80, "walk.gif");
     }
@@ -160,6 +205,70 @@ public class CavePanel extends JPanel implements KeyListener{
             }
         });
         thread.start();
+
+        monsterThread = new Thread(() -> {
+            while(true){
+                monsterMove();
+                repaint();
+
+                try{
+                    Thread.sleep(800);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        monsterThread.start();
+
+        CharacterAttackThread = new Thread(() -> {
+            while(true){
+                if(CharacterAttackChange){
+                    try{
+                        Thread.sleep(100);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    CharacterAttackChange = false;
+                    for(int i = 0; i < 16; i ++){
+                        for(int j = 0; j < 9; j ++){
+                            ChkCharacterAttackBackground[i][j] = false;
+                        }
+                    }
+                }
+                repaint();
+                try{
+                    Thread.sleep(10);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        CharacterAttackThread.start();
+
+        MonsterAttackThread = new Thread(() -> {
+            while(true){
+                if(MonsterAttackChange){
+                    try{
+                        Thread.sleep(50);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    MonsterAttackChange = false;
+                    for(int i = 0; i < 16; i ++){
+                        for(int j = 0; j < 9; j ++){
+                            ChkMonsterAttackBackground[i][j] = false;
+                        }
+                    }
+                }
+                repaint();
+                try{
+                    Thread.sleep(10);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        MonsterAttackThread.start();
     }
 
     public void update(){
@@ -187,10 +296,30 @@ public class CavePanel extends JPanel implements KeyListener{
 
     public void paintComponent(Graphics g){
         map.draw(g, this);
+        for(int i = 0; i < 16; i ++){
+            for(int j = 0; j < 9; j ++){
+                Background nowBackground = CharacterAttackBackground[i][j];
+                if(ChkCharacterAttackBackground[i][j]){
+                    nowBackground.draw(g, this);
+                }
+            }
+        }
+        for(int i = 0; i < 16; i ++){
+            for(int j = 0; j < 9; j ++){
+                Background nowBackground = MonsterAttackBackground[i][j];
+                if(ChkMonsterAttackBackground[i][j]){
+                    nowBackground.draw(g, this);
+                }
+            }
+        }
         character1.draw(g, this);
         for(int i = 0; i < allMapBackgroundCount[mapState_i][mapState_j]; i ++){
             Background nowbBackground = allMapBackground[mapState_i][mapState_j][i];
             nowbBackground.draw(g, this);
+        }
+        for(int i = 0; i < allMonsterCount[mapState_i][mapState_j]; i ++){
+            Monster nowMonster = allMonster[mapState_i][mapState_j][i];
+            nowMonster.draw(g, this);
         }
         hpbar.draw(g, this);
         inventory.draw(g, this);
@@ -200,6 +329,248 @@ public class CavePanel extends JPanel implements KeyListener{
 
     public int randomNumber(int srt, int end){
         return (int)(Math.random() * (end - srt + 1)) + srt;
+    }
+
+    // character Front : 0 up, 1 left, 2 down, 3 right
+    public void characterAttack(){
+        int cx = character1.x, cy = character1.y;
+        int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
+
+        int addx, addy;
+        if(characterFront == 0){
+            addx = cx;
+            addy = cy - 80;
+        }
+        else if(characterFront == 1){
+            addx = cx - 80;
+            addy = cy;
+        }
+        else if(characterFront == 2){
+            addx = cx;
+            addy = cy + 80;
+        }
+        else{
+            addx = cx + 80;
+            addy = cy;
+        }
+
+        for(int i = cx - 80; i <= cx + 80; i += 80){
+            for(int j = cy - 80; j <= cy + 80; j += 80){
+                if(i < 0 || j < 0 || i > 1200 || j > 640){
+                    continue;
+                }
+                if(i == cx && j == cy){
+                    continue;
+                }
+                if(i == addx && j == addy){
+                    Background nowBackground = new Background(i, j, 80, 80, "character_addition_attack.png");
+                    CharacterAttackBackground[i / 80][j / 80] = nowBackground;
+                    ChkCharacterAttackBackground[i / 80][j / 80] = true;
+                }
+                else{
+                    // Background nowBackground = new Background(i, j, 80, 80, "character_attack.png");
+                    // CharacterAttackBackground[i / 80][j / 80] = nowBackground;
+                    // ChkCharacterAttackBackground[i / 80][j / 80] = true;
+                }
+                repaint();
+                for(int k = 0; k < nowMonsterCount; k ++){
+                    Monster nowMonster = allMonster[mapState_i][mapState_j][k];
+                    int mx = nowMonster.x, my = nowMonster.y;
+                    if(!nowMonster.destroyed && Start){
+                        if(i == mx && j == my){
+                            if(i == addx && j == addy){
+                                nowMonster.nowlif -= ValueCalculate.additionCharacterAttackDamage();
+                            }
+                            else{
+                                // nowMonster.nowlif -= ValueCalculate.characterAttackDamage();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        CharacterAttackChange = true;      
+    }
+
+    public void monsterAttack(Monster nowMonster){
+        int cx = character1.x, cy = character1.y, mx = nowMonster.x, my = nowMonster.y;
+        int relatx = (cx - (mx - 80)), relaty = (cy - (my - 80));
+
+        if(!nowMonster.destroyed && Start){
+            if(nowMonster.monsterIdx == 0){
+                if(relatx / 80 >= 0 && relatx / 80 < 3 && relaty / 80 >= 0 && relaty / 80 < 3){
+                    int dmg = nowMonster.atk[relatx / 80][relaty / 80];
+                    if(dmg > 0){
+                        if(cx == character1.x && cy == character1.y && mx == nowMonster.x && my == nowMonster.y){
+                            Background nowBackground = new Background(cx, cy, 80, 80, "monster_attack.png");
+                            MonsterAttackBackground[cx / 80][cy / 80] = nowBackground;
+                            ChkMonsterAttackBackground[cx / 80][cy / 80] = true;
+                            ValueCalculate.characterLife -= dmg;
+                            ValueCalculate.characterLifeChange = true;
+                            repaint();
+                        }
+                    }
+                }
+            }
+            if(nowMonster.monsterIdx == 1){
+                if(relatx / 80 >= 0 && relatx / 80 < 3 && relaty / 80 >= 0 && relaty / 80 < 3){
+                    int dmg = nowMonster.atk[relatx / 80][relaty / 80];
+                    if(dmg > 0){
+                        if(cx == character1.x && cy == character1.y && mx == nowMonster.x && my == nowMonster.y){
+                            if((mx - 80) >= 0 && (mx - 80) <= 1200){
+                                Background nowBackground = new Background(mx - 80, my, 80, 80, "monster_attack.png");
+                                MonsterAttackBackground[(mx - 80) / 80][my / 80] = nowBackground;
+                                ChkMonsterAttackBackground[(mx - 80) / 80][my / 80] = true;
+                            }
+                            if((my - 80) >= 0 && (my - 80) <= 640){
+                                Background nowBackground = new Background(mx, my - 80, 80, 80, "monster_attack.png");
+                                MonsterAttackBackground[mx / 80][(my - 80) / 80] = nowBackground;
+                                ChkMonsterAttackBackground[mx / 80][(my - 80) / 80] = true;
+                            }
+                            if((mx + 80) >= 0 && (mx + 80) <= 1200){
+                                Background nowBackground = new Background(mx + 80, my, 80, 80, "monster_attack.png");
+                                MonsterAttackBackground[(mx + 80) / 80][my / 80] = nowBackground;
+                                ChkMonsterAttackBackground[(mx + 80) / 80][my / 80] = true;
+                            }
+                            if((my + 80) >= 0 && (my + 80) <= 640){
+                                Background nowBackground = new Background(mx, my + 80, 80, 80, "monster_attack.png");
+                                MonsterAttackBackground[mx / 80][(my + 80) / 80] = nowBackground;
+                                ChkMonsterAttackBackground[mx / 80][(my + 80) / 80] = true;
+                            }
+                            ValueCalculate.characterLife -= dmg;
+                            ValueCalculate.characterLifeChange = true;
+                            repaint();
+                        }
+                    }
+                }
+            }
+            if(nowMonster.monsterIdx == 2){
+
+            }
+            if(nowMonster.monsterIdx == 3){
+
+            }
+            if(nowMonster.monsterIdx == 4){
+
+            }
+        }
+        MonsterAttackChange = true;
+    }
+
+    public boolean checkMonsterIdx(Monster nowMonster){
+        if(nowMonster.monsterIdx == 3 || nowMonster.monsterIdx == 4){
+            return true;
+        }
+        return false;
+    }
+
+    public void monsterMove(){
+        int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
+        for(int i = 0; i < nowMonsterCount; i ++){
+            Monster nowMonster = allMonster[mapState_i][mapState_j][i];
+            if(!nowMonster.destroyed && Start){
+                int cx = character1.x, cy = character1.y, mx = nowMonster.x, my = nowMonster.y;
+                int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
+                if(((distx == 1 && disty == 0) || (distx == 0 && disty == 1)) || (Math.max(distx, disty) == 1 && checkMonsterIdx(nowMonster))){
+                    monsterAttack(nowMonster);
+                }
+                else if(Math.max(distx, disty) <= 4){
+                    int rand = randomNumber(1, 100);
+                    boolean test = (distx == disty ? true : false);
+
+                    if(distx > disty || (test && rand % 2 == 0)){
+                        boolean moved = false;
+                        if(cx > mx){
+                            if(moveJudge(mx + nowMonster.movX, my, "monster")){
+                                nowMonster.x += nowMonster.movX;
+                                moved = true;
+                            }
+                        }
+                        else if(cx < mx){
+                            if(moveJudge(mx - nowMonster.movX, my, "monster")){
+                                nowMonster.x -= nowMonster.movX;
+                                moved = true;
+                            }
+                        }
+                        else{
+                            if(!moved){
+                                if(cy > my){
+                                    if(moveJudge(mx, my + nowMonster.movY, "monster")){
+                                        nowMonster.y += nowMonster.movY;
+                                        moved = true;
+                                    }
+                                }
+                                else if(cy < my){
+                                    if(moveJudge(mx, my - nowMonster.movY, "monster")){
+                                        nowMonster.y -= nowMonster.movY;
+                                        moved = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if(distx < disty || (test && rand % 2 == 1)){
+                        boolean moved = false;
+                        if(cy > my){
+                            if(moveJudge(mx, my + nowMonster.movY, "monster")){
+                                nowMonster.y += nowMonster.movY;
+                                moved = true;
+                            }
+                        }
+                        else if(cy < my){
+                            if(moveJudge(mx, my - nowMonster.movY, "monster")){
+                                nowMonster.y -= nowMonster.movY;
+                                moved = true;
+                            }
+                        }
+                        else{
+                            if(!moved){
+                                if(cx > mx){
+                                    if(moveJudge(mx + nowMonster.movX, my, "monster")){
+                                        nowMonster.x += nowMonster.movX;
+                                        moved = true;
+                                    }
+                                }
+                                else if(cx < mx){
+                                    if(moveJudge(mx - nowMonster.movX, my, "monster")){
+                                        nowMonster.x -= nowMonster.movX;
+                                        moved = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else{
+                    nowMonster.nowlif = nowMonster.maxlif;
+                    nowMonster.x = nowMonster.initX;
+                    nowMonster.y = nowMonster.initY;
+                }
+            }
+        }
+    }
+
+    static public void monsterReset(){
+        int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
+        for(int i = 0; i < nowMonsterCount; i ++){
+            Monster nowMonster = allMonster[mapState_i][mapState_j][i];
+            if(!nowMonster.destroyed){
+                nowMonster.nowlif = nowMonster.maxlif;
+                nowMonster.x = nowMonster.initX;
+                nowMonster.y = nowMonster.initY;
+            }
+        }
+    }
+
+    public boolean monsterJudge(int x, int y){
+        int nowMonsterCount = allMonsterCount[mapState_i][mapState_j];
+        for(int i = 0; i < nowMonsterCount; i ++){
+            Monster nowMonster = allMonster[mapState_i][mapState_j][i];
+            if(x == (nowMonster.x / 80) && y == (nowMonster.y / 80) && !nowMonster.destroyed){
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean mapJudge(int dx, int dy){
@@ -212,6 +583,7 @@ public class CavePanel extends JPanel implements KeyListener{
         if(mapName[mapState_i + dx][mapState_j + dy] == "null"){
             return false;
         }
+        monsterReset();
         mapState_i += dx;
         mapState_j += dy;
         return true;
@@ -226,7 +598,8 @@ public class CavePanel extends JPanel implements KeyListener{
         return false;
     }
 
-    public boolean moveJudge(int x, int y){
+    // chest pos : [0][4] 7-4
+    public boolean moveJudge(int x, int y, String s){
         String nowMap = mapName[mapState_i][mapState_j].substring(5, 9);
         // ULDR
         boolean mapOpen[] = {false, false, false, false};
@@ -250,22 +623,23 @@ public class CavePanel extends JPanel implements KeyListener{
                 }
             }
         }
-        if(mapOpen[0] && (edgeJudge(x, 6, 9) && edgeJudge(y, 0, 0))){
+        if(mapOpen[0] && (edgeJudge(x, 6, 9) && edgeJudge(y, 0, 0)) && s == "character"){
             return true;
         }
-        if(mapOpen[1] && (edgeJudge(x, 0, 0) && edgeJudge(y, 3, 5))){
+        if(mapOpen[1] && (edgeJudge(x, 0, 0) && edgeJudge(y, 3, 5)) && s == "character"){
             return true;
         }
-        if(mapOpen[2] && (edgeJudge(x, 6, 9) && edgeJudge(y, 8, 8))){
+        if(mapOpen[2] && (edgeJudge(x, 6, 9) && edgeJudge(y, 8, 8)) && s == "character"){
             return true;
         }
-        if(mapOpen[3] && (edgeJudge(x, 15, 15) && edgeJudge(y, 3, 5))){
+        if(mapOpen[3] && (edgeJudge(x, 15, 15) && edgeJudge(y, 3, 5)) && s == "character"){
             return true;
         }
         if(x == 0 || y == 0 || x == 1200 || y == 640){
             return false;
         }
-        if(mapState_i == 2 && mapState_j == 5 && edgeJudge(x, 14, 14) && edgeJudge(y, 7, 7)){
+        if(mapState_i == 2 && mapState_j == 5 && edgeJudge(x, 14, 14) && edgeJudge(y, 7, 7) && s == "character"){
+            monsterReset();
             Start = false;
             JFrame nowFrame = GamePanel.frame[3];
             FieldPanel.Start = true;
@@ -274,7 +648,16 @@ public class CavePanel extends JPanel implements KeyListener{
             caveScreen.setVisible(false);
             return false;
         }
-        return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80];
+        else if(mapState_i == 0 && mapState_j == 4 && edgeJudge(x, 7, 7) && edgeJudge(y, 4, 4) && s == "character"){
+            int nowBackgroundCount = allMapBackgroundCount[0][4];
+            if(allMapBackground[0][4][nowBackgroundCount - 1].name != "chest_open.png"){
+                Background newBackground = new Background(560, 320, 80, 80, "chest_open.png");
+                allMapBackground[0][4][nowBackgroundCount - 1] = newBackground;
+                repaint();
+                BackpackPanel.addMaterialAmount("iron", 10);
+            }
+        }
+        return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80] && monsterJudge(x / 80, y / 80);
     }
 
     @Override
@@ -317,7 +700,7 @@ public class CavePanel extends JPanel implements KeyListener{
         }
         if(e.getKeyCode() == KeyEvent.VK_W){
             if(character1.y >= character1.movY){
-                if(moveJudge(character1.x, character1.y - character1.movY)){
+                if(moveJudge(character1.x, character1.y - character1.movY, "character")){
                     character1.y -= character1.movY;
                 }
             }
@@ -329,7 +712,7 @@ public class CavePanel extends JPanel implements KeyListener{
         }
         if(e.getKeyCode() == KeyEvent.VK_S){
             if(character1.y <= mainFrame.getHeight() - character1.width - character1.movY){
-                if(moveJudge(character1.x, character1.y + character1.movY)){
+                if(moveJudge(character1.x, character1.y + character1.movY, "character")){
                     character1.y += character1.movY;
                 }
             }
@@ -341,7 +724,7 @@ public class CavePanel extends JPanel implements KeyListener{
         }
         if(e.getKeyCode() == KeyEvent.VK_A){
             if(character1.x >= character1.movX){
-                if(moveJudge(character1.x - character1.movX, character1.y)){
+                if(moveJudge(character1.x - character1.movX, character1.y, "character")){
                     character1.x -= character1.movX;
                 }
             }
@@ -353,7 +736,7 @@ public class CavePanel extends JPanel implements KeyListener{
         }
         if(e.getKeyCode() == KeyEvent.VK_D){
             if(character1.x <= mainFrame.getWidth() - character1.width - character1.movX){
-                if(moveJudge(character1.x + character1.movX, character1.y)){
+                if(moveJudge(character1.x + character1.movX, character1.y, "character")){
                     character1.x += character1.movX;
                 }
             }

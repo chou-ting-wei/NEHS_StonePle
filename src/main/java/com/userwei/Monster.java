@@ -128,23 +128,28 @@ public class Monster extends Rectangle{
                     BackpackPanel.addMaterialAmount("wood", randomNumber(1, 3));
                     BackpackPanel.addMaterialAmount("coin", randomNumber(1, 2));
                     ValueCalculate.characterExp += 2;
+                    ValueCalculate.characterExpChange = true;
                 }
                 else if(monsterIdx == 1){
                     BackpackPanel.addMaterialAmount("herb", randomNumber(1, 2));
                     BackpackPanel.addMaterialAmount("coin", randomNumber(1, 2));
                     ValueCalculate.characterExp += 6;
+                    ValueCalculate.characterExpChange = true;
                 }
                 else if(monsterIdx == 2){
                     BackpackPanel.addMaterialAmount("iron", randomNumber(1, 2));
                     BackpackPanel.addMaterialAmount("coin", randomNumber(2, 3));
                     ValueCalculate.characterExp += 8;
+                    ValueCalculate.characterExpChange = true;
                 }
                 else if(monsterIdx == 3){
                     BackpackPanel.addMaterialAmount("coin", randomNumber(5, 10));
                     ValueCalculate.characterExp += 5;
+                    ValueCalculate.characterExpChange = true;
                 }
                 else if(monsterIdx == 4){
                     ValueCalculate.characterExp += 50;
+                    ValueCalculate.characterExpChange = true;
                 }
             }
         }
