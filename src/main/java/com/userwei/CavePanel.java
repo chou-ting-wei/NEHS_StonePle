@@ -133,19 +133,37 @@ public class CavePanel extends JPanel implements KeyListener{
             }
 
         // 1-2
-
+            // mimic
+            addMonster(1, 2, 80, 80, 80, 80, "mimic.gif");
+            addMonster(1, 2, 1120, 80, 80, 80, "mimic.gif");
 
         // 1-3
+            // chest 1-1
+            addBackground(1, 3, 80, 80, 80, 80, "chest_close.png");
+            addMoveJudge(1, 3, 1, 1, 1, 1);
 
+            // drackmage
+            addMonster(1, 3, 160, 80, 80, 80, "drackmage.gif");
+            for(int i = 1; i <= 2; i ++){
+                addMonster(1, 3, 80 * i, 160, 80, 80, "drackmage.gif");
+            }
+
+            // slime
+            for(int i = 1; i <= 2; i ++){
+                addMonster(1, 3, 240, 80 * i, 80, 80, "slime.gif");
+            }
+            for(int i = 1; i <= 3; i ++){
+                addMonster(1, 3, 80 * i, 240, 80, 80, "slime.gif");
+            }
 
         // 1-5
-
+            // NULL
 
         // 2-0
-
+            addMonster(2, 0, 560, 240, 80, 80, "overkilling_machine.gif");
 
         // 2-1
-
+            // NULL
 
         // 2-3
 
@@ -598,7 +616,7 @@ public class CavePanel extends JPanel implements KeyListener{
         return false;
     }
 
-    // chest pos : [0][4] 7-4
+    // chest pos : [0][4] 7-4, [1][3] 1-1
     public boolean moveJudge(int x, int y, String s){
         String nowMap = mapName[mapState_i][mapState_j].substring(5, 9);
         // ULDR
@@ -655,6 +673,15 @@ public class CavePanel extends JPanel implements KeyListener{
                 allMapBackground[0][4][nowBackgroundCount - 1] = newBackground;
                 repaint();
                 BackpackPanel.addMaterialAmount("iron", 10);
+            }
+        }
+        else if(mapState_i == 1 && mapState_j == 3 && edgeJudge(x, 1, 1) && edgeJudge(y, 1, 1) && s == "character"){
+            int nowBackgroundCount = allMapBackgroundCount[1][3];
+            if(allMapBackground[1][3][nowBackgroundCount - 1].name != "chest_open.png"){
+                Background newBackground = new Background(80, 80, 80, 80, "chest_open.png");
+                allMapBackground[1][3][nowBackgroundCount - 1] = newBackground;
+                repaint();
+                BackpackPanel.addMaterialAmount("wood", 10);
             }
         }
         return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80] && monsterJudge(x / 80, y / 80);
@@ -748,7 +775,7 @@ public class CavePanel extends JPanel implements KeyListener{
         }
         // attack
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
-            // characterAttack();
+            characterAttack();
         }
         // props
         if(e.getKeyCode() == KeyEvent.VK_C){
