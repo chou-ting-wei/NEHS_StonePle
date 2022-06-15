@@ -67,7 +67,7 @@ public class Main{
 
         JButton pauseButton1 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/undo.png")));
         pauseButton1.setBounds(0, 0, 80, 80);
-        pauseButton1.setFocusPainted(false);
+    ;
         pauseButton1.setBorderPainted(false);
         pauseButton1.setBorder(null);
         pausePanel.setLayout(null);
