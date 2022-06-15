@@ -32,7 +32,7 @@ public class FieldPanel extends JPanel implements KeyListener{
 
     Background inventory;
     Material herb;
-    Font hpbar, herbcount;
+    Font hpbar, expbar1, expbar2, herbcount;
 
     static boolean caveUnlocked;
 
@@ -98,6 +98,8 @@ public class FieldPanel extends JPanel implements KeyListener{
         inventory = new Background(1210, 650, 60, 60, "inventory.png");
         herb = new Material(1220, 655, 40, 40, 0, "herb.png" );
         herbcount = new Font(1173, 690, 60, 15, BackpackPanel.getMaterialAmount("herb") + ".png" );
+        expbar1 = new Font(1135, 0, 40, 20, "level" + ValueCalculate.characterLevel+ ".png" );
+        expbar2 = new Font(1175, 0, 105, 20, "lv" + ValueCalculate.characterExpPercent + ".png" );
 
         // Map Situation
         // 0-0 1-0 2-0 3-0 4-0 5-0 6-0
@@ -645,6 +647,8 @@ public class FieldPanel extends JPanel implements KeyListener{
             herbcount = new Font(1180, 690, 60, 15, "99+.png");
             repaint();
         }
+        expbar1 = new Font(1135, 0, 40, 20, "level" + ValueCalculate.characterLevel+ ".png" );
+        expbar2 = new Font(1175, 0, 105, 20, "lv" + ValueCalculate.characterExpPercent + ".png" );
     }
 
     public void paintComponent(Graphics g){
@@ -678,6 +682,8 @@ public class FieldPanel extends JPanel implements KeyListener{
         inventory.draw(g, this);
         herb.draw(g, this);
         herbcount.draw(g, this);
+        expbar1.draw(g, this);
+        expbar2.draw(g, this);
     }
 
     public int randomNumber(int srt, int end){
