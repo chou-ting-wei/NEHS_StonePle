@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements KeyListener{
     Map map;
 
     Material herb;
-    Font hpbar, herbcount;
+    Font hpbar, expbar1, expbar2, herbcount;
     
     // Thread
     Thread thread;
@@ -99,6 +99,8 @@ public class GamePanel extends JPanel implements KeyListener{
         character1 = new Character(0, 640, 80, 80, 80, 80, "walk.gif");
 
         hpbar = new Font(0, 0, 120, 20, "hp" + ValueCalculate.characterPercent + ".png" );
+        expbar1 = new Font(1135, 0, 40, 20, "level" + ValueCalculate.characterLevel+ ".png" );
+        expbar2 = new Font(1175, 0, 105, 20, "lv" + ValueCalculate.characterExpPercent + ".png" );
 
         inventory = new Background(1210, 650, 60, 60, "inventory.png");
         herb = new Material(1220, 655, 40, 40, 0, "herb.png" );
@@ -170,6 +172,8 @@ public class GamePanel extends JPanel implements KeyListener{
         icon3.draw(g, this);
         character1.draw(g, this);
         hpbar.draw(g, this);
+        expbar1.draw(g, this);
+        expbar2.draw(g, this);
         inventory.draw(g, this);
         herb.draw(g, this);
         herbcount.draw(g, this);
@@ -224,6 +228,8 @@ public class GamePanel extends JPanel implements KeyListener{
             herbcount = new Font(1180, 690, 60, 15, "99+.png");
             repaint();
         }
+        expbar1 = new Font(1135, 0, 40, 20, "level" + ValueCalculate.characterLevel+ ".png" );
+        expbar2 = new Font(1175, 0, 105, 20, "lv" + ValueCalculate.characterExpPercent + ".png" );
 	}
 
     // Music
