@@ -162,7 +162,8 @@ public class CavePanel extends JPanel implements KeyListener{
             // NULL
 
         // 2-0
-            addMonster(2, 0, 560, 240, 80, 80, "overkilling_machine.gif");
+            // overkilling_machine
+            addMonster(2, 0, 560, 240, 160, 160, "overkilling_machine.gif");
 
         // 2-1
             // NULL

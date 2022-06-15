@@ -41,10 +41,11 @@ public class ValueCalculate extends Thread{
         if(characterLevel >= 5){
             FieldPanel.caveUnlocked = true;
         }
-        if(characterExp >= characterValue[3][characterLevel]){
+        while(characterExp >= characterValue[3][characterLevel]){
             characterExp -= characterValue[3][characterLevel];
             characterLevel ++;
             characterLife += characterValue[2][characterLevel] - characterValue[2][characterLevel - 1];
+            characterExpChange = true;
         }
         if(characterLifeChange){
             characterLifeChange = false;
