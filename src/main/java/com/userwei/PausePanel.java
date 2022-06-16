@@ -29,6 +29,20 @@ public class PausePanel extends JPanel implements KeyListener{
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
+                FieldPanel.monsterReset();
+                FieldPanel.mapState_i = 1;
+                FieldPanel.mapState_j = 5;
+                FieldPanel.characterInitX = 560;
+                FieldPanel.characterInitY = 400;
+                FieldPanel.reset();
+
+                CavePanel.monsterReset();
+                CavePanel.mapState_i = 2;
+                CavePanel.mapState_j = 5;
+                CavePanel.characterInitX = 640;
+                CavePanel.characterInitY = 640;
+                CavePanel.reset();
+
                 GamePanel.sudo = true;
                 PausePanel.Start = false;
                 JFrame nowFrame = GamePanel.frame[1];

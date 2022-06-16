@@ -60,10 +60,10 @@ public class Monster extends Rectangle{
             maxlif = randomNumber(40, 60);
             nowlif = maxlif;
             // 全
-            atk[1][0] = 12;
-            atk[1][1] = 12;
             atk[0][1] = 12;
             atk[1][0] = 12;
+            atk[2][1] = 12;
+            atk[1][2] = 12;
             atk[0][0] = 12;
             atk[0][2] = 12;
             atk[2][0] = 12;
@@ -74,13 +74,17 @@ public class Monster extends Rectangle{
             nowlif = maxlif;
             // 全
             atk[0][1] = 8;
+            atk[0][2] = 8;
             atk[1][0] = 8;
-            atk[2][1] = 8;
-            atk[1][2] = 8;
+            atk[2][0] = 8;
+            atk[3][1] = 8;
+            atk[3][2] = 8;
+            atk[1][3] = 8;
+            atk[2][3] = 8;
             atk[0][0] = 30;
-            atk[0][2] = 30;
-            atk[2][0] = 30;
-            atk[2][2] = 30;
+            atk[0][3] = 30;
+            atk[3][0] = 30;
+            atk[3][3] = 30;
         }
     }
 

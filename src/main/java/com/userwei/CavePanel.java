@@ -372,6 +372,48 @@ public class CavePanel extends JPanel implements KeyListener{
         return (int)(Math.random() * (end - srt + 1)) + srt;
     }
 
+    public boolean AttackJudge(int x, int y){
+        String nowMap = mapName[mapState_i][mapState_j].substring(5, 9);
+        // ULDR
+        boolean mapOpen[] = {false, false, false, false};
+        for(int i = 0; i < 4; i ++){
+            char nowChar = nowMap.charAt(i);
+            if(nowChar == ')'){
+                break;
+            }
+            else{
+                if(nowChar == 'U'){
+                    mapOpen[0] = true;
+                }
+                else if(nowChar == 'L'){
+                    mapOpen[1] = true;
+                }
+                else if(nowChar == 'D'){
+                    mapOpen[2] = true;
+                }
+                else if(nowChar == 'R'){
+                    mapOpen[3] = true;
+                }
+            }
+        }
+        if(mapOpen[0] && (edgeJudge(x, 6, 9) && edgeJudge(y, 0, 0))){
+            return true;
+        }
+        if(mapOpen[1] && (edgeJudge(x, 0, 0) && edgeJudge(y, 3, 5))){
+            return true;
+        }
+        if(mapOpen[2] && (edgeJudge(x, 6, 9) && edgeJudge(y, 8, 8))){
+            return true;
+        }
+        if(mapOpen[3] && (edgeJudge(x, 15, 15) && edgeJudge(y, 3, 5))){
+            return true;
+        }
+        if(x <= 0 || y <= 0 || x >= 1200 || y >= 640){
+            return false;
+        }
+        return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80];
+    }
+
     // character Front : 0 up, 1 left, 2 down, 3 right
     public void characterAttack(){
         int cx = character1.x, cy = character1.y;
@@ -397,7 +439,7 @@ public class CavePanel extends JPanel implements KeyListener{
 
         for(int i = cx - 80; i <= cx + 80; i += 80){
             for(int j = cy - 80; j <= cy + 80; j += 80){
-                if(i < 0 || j < 0 || i > 1200 || j > 640){
+                if(!AttackJudge(i, j)){
                     continue;
                 }
                 if(i == cx && j == cy){
@@ -438,7 +480,7 @@ public class CavePanel extends JPanel implements KeyListener{
         int relatx = (cx - (mx - 80)), relaty = (cy - (my - 80));
 
         if(!nowMonster.destroyed && Start){
-            if(nowMonster.monsterIdx == 0){
+            if(nowMonster.monsterIdx == 0 || nowMonster.monsterIdx == 2){
                 if(relatx / 80 >= 0 && relatx / 80 < 3 && relaty / 80 >= 0 && relaty / 80 < 3){
                     int dmg = nowMonster.atk[relatx / 80][relaty / 80];
                     if(dmg > 0){
@@ -485,24 +527,43 @@ public class CavePanel extends JPanel implements KeyListener{
                     }
                 }
             }
-            if(nowMonster.monsterIdx == 2){
-
-            }
             if(nowMonster.monsterIdx == 3){
-
-            }
-            if(nowMonster.monsterIdx == 4){
-
+                if(relatx / 80 >= 0 && relatx / 80 < 3 && relaty / 80 >= 0 && relaty / 80 < 3){
+                    int dmg = nowMonster.atk[relatx / 80][relaty / 80];
+                    if(dmg > 0){
+                        if(cx == character1.x && cy == character1.y && mx == nowMonster.x && my == nowMonster.y){
+                            for(int i = mx - 80; i <= mx + 80; i += 80){
+                                for(int j = my - 80; j <= my + 80; j += 80){
+                                    if(i == mx && j == my){
+                                        continue;
+                                    }
+                                    if(AttackJudge(i, j) && monsterJudge(i / 80, j / 80)){
+                                        Background nowBackground = new Background(i, j, 80, 80, "monster_attack.png");
+                                        MonsterAttackBackground[i / 80][j / 80] = nowBackground;
+                                        ChkMonsterAttackBackground[i / 80][j / 80] = true;
+                                    }
+                                }
+                            }
+                            ValueCalculate.characterLife -= dmg;
+                            ValueCalculate.characterLifeChange = true;
+                            repaint();
+                        }
+                    }
+                }
             }
         }
         MonsterAttackChange = true;
     }
 
-    public boolean checkMonsterIdx(Monster nowMonster){
-        if(nowMonster.monsterIdx == 3 || nowMonster.monsterIdx == 4){
-            return true;
+    public void BOSS(Monster nowMonster){
+        int cx = character1.x, cy = character1.y;
+        /* 
+        if(){
+
         }
-        return false;
+        else{
+
+        }*/
     }
 
     public void monsterMove(){
@@ -510,82 +571,87 @@ public class CavePanel extends JPanel implements KeyListener{
         for(int i = 0; i < nowMonsterCount; i ++){
             Monster nowMonster = allMonster[mapState_i][mapState_j][i];
             if(!nowMonster.destroyed && Start){
-                int cx = character1.x, cy = character1.y, mx = nowMonster.x, my = nowMonster.y;
-                int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
-                if(((distx == 1 && disty == 0) || (distx == 0 && disty == 1)) || (Math.max(distx, disty) == 1 && checkMonsterIdx(nowMonster))){
-                    monsterAttack(nowMonster);
-                }
-                else if(Math.max(distx, disty) <= 4){
-                    int rand = randomNumber(1, 100);
-                    boolean test = (distx == disty ? true : false);
-
-                    if(distx > disty || (test && rand % 2 == 0)){
-                        boolean moved = false;
-                        if(cx > mx){
-                            if(moveJudge(mx + nowMonster.movX, my, "monster")){
-                                nowMonster.x += nowMonster.movX;
-                                moved = true;
-                            }
-                        }
-                        else if(cx < mx){
-                            if(moveJudge(mx - nowMonster.movX, my, "monster")){
-                                nowMonster.x -= nowMonster.movX;
-                                moved = true;
-                            }
-                        }
-                        else{
-                            if(!moved){
-                                if(cy > my){
-                                    if(moveJudge(mx, my + nowMonster.movY, "monster")){
-                                        nowMonster.y += nowMonster.movY;
-                                        moved = true;
-                                    }
-                                }
-                                else if(cy < my){
-                                    if(moveJudge(mx, my - nowMonster.movY, "monster")){
-                                        nowMonster.y -= nowMonster.movY;
-                                        moved = true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else if(distx < disty || (test && rand % 2 == 1)){
-                        boolean moved = false;
-                        if(cy > my){
-                            if(moveJudge(mx, my + nowMonster.movY, "monster")){
-                                nowMonster.y += nowMonster.movY;
-                                moved = true;
-                            }
-                        }
-                        else if(cy < my){
-                            if(moveJudge(mx, my - nowMonster.movY, "monster")){
-                                nowMonster.y -= nowMonster.movY;
-                                moved = true;
-                            }
-                        }
-                        else{
-                            if(!moved){
-                                if(cx > mx){
-                                    if(moveJudge(mx + nowMonster.movX, my, "monster")){
-                                        nowMonster.x += nowMonster.movX;
-                                        moved = true;
-                                    }
-                                }
-                                else if(cx < mx){
-                                    if(moveJudge(mx - nowMonster.movX, my, "monster")){
-                                        nowMonster.x -= nowMonster.movX;
-                                        moved = true;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                if(nowMonster.monsterIdx == 4){
+                    BOSS(nowMonster);
                 }
                 else{
-                    nowMonster.nowlif = nowMonster.maxlif;
-                    nowMonster.x = nowMonster.initX;
-                    nowMonster.y = nowMonster.initY;
+                    int cx = character1.x, cy = character1.y, mx = nowMonster.x, my = nowMonster.y;
+                    int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
+                    if(((distx == 1 && disty == 0) || (distx == 0 && disty == 1)) || (distx == 1 && disty == 1 && nowMonster.monsterIdx == 3)){
+                        monsterAttack(nowMonster);
+                    }
+                    else if(Math.max(distx, disty) <= 4){
+                        int rand = randomNumber(1, 100);
+                        boolean test = (distx == disty ? true : false);
+
+                        if(distx > disty || (test && rand % 2 == 0)){
+                            boolean moved = false;
+                            if(cx > mx){
+                                if(moveJudge(mx + nowMonster.movX, my, "monster")){
+                                    nowMonster.x += nowMonster.movX;
+                                    moved = true;
+                                }
+                            }
+                            else if(cx < mx){
+                                if(moveJudge(mx - nowMonster.movX, my, "monster")){
+                                    nowMonster.x -= nowMonster.movX;
+                                    moved = true;
+                                }
+                            }
+                            else{
+                                if(!moved){
+                                    if(cy > my){
+                                        if(moveJudge(mx, my + nowMonster.movY, "monster")){
+                                            nowMonster.y += nowMonster.movY;
+                                            moved = true;
+                                        }
+                                    }
+                                    else if(cy < my){
+                                        if(moveJudge(mx, my - nowMonster.movY, "monster")){
+                                            nowMonster.y -= nowMonster.movY;
+                                            moved = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else if(distx < disty || (test && rand % 2 == 1)){
+                            boolean moved = false;
+                            if(cy > my){
+                                if(moveJudge(mx, my + nowMonster.movY, "monster")){
+                                    nowMonster.y += nowMonster.movY;
+                                    moved = true;
+                                }
+                            }
+                            else if(cy < my){
+                                if(moveJudge(mx, my - nowMonster.movY, "monster")){
+                                    nowMonster.y -= nowMonster.movY;
+                                    moved = true;
+                                }
+                            }
+                            else{
+                                if(!moved){
+                                    if(cx > mx){
+                                        if(moveJudge(mx + nowMonster.movX, my, "monster")){
+                                            nowMonster.x += nowMonster.movX;
+                                            moved = true;
+                                        }
+                                    }
+                                    else if(cx < mx){
+                                        if(moveJudge(mx - nowMonster.movX, my, "monster")){
+                                            nowMonster.x -= nowMonster.movX;
+                                            moved = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        nowMonster.nowlif = nowMonster.maxlif;
+                        nowMonster.x = nowMonster.initX;
+                        nowMonster.y = nowMonster.initY;
+                    }
                 }
             }
         }
