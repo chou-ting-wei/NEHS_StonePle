@@ -61,21 +61,21 @@ public class Main{
             PropertiesUtil.setValue("Init_Border_Y", "748");
         }
         else if(osName.startsWith("Windows")){
-            size_x = 1300;
-            size_y = 770;
-            PropertiesUtil.setValue("Custom_Size_X", "1300");
-            PropertiesUtil.setValue("Custom_Size_Y", "770");
-            PropertiesUtil.setValue("Init_Border_X", "1300");
-            PropertiesUtil.setValue("Init_Border_Y", "770");
+            size_x = 1296;
+            size_y = 759;
+            PropertiesUtil.setValue("Custom_Size_X", "1296");
+            PropertiesUtil.setValue("Custom_Size_Y", "759");
+            PropertiesUtil.setValue("Init_Border_X", "1296");
+            PropertiesUtil.setValue("Init_Border_Y", "759");
         }
         else{
             // unix or linux
             size_x = 1280;
-            size_y = 720;
+            size_y = 730;
             PropertiesUtil.setValue("Custom_Size_X", "1280");
-            PropertiesUtil.setValue("Custom_Size_Y", "720");
+            PropertiesUtil.setValue("Custom_Size_Y", "730");
             PropertiesUtil.setValue("Init_Border_X", "1280");
-            PropertiesUtil.setValue("Init_Border_Y", "720");
+            PropertiesUtil.setValue("Init_Border_Y", "730");
         }
 
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();

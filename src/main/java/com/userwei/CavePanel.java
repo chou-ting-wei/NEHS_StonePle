@@ -1064,14 +1064,14 @@ public class CavePanel extends JPanel implements KeyListener{
             Start = false;
             PausePanel.Start = true;
             pauseScreen.setVisible(true);
-            fieldScreen.setVisible(false);
+            caveScreen.setVisible(false);
         }
         if(e.getKeyCode() == KeyEvent.VK_Q){
             GamePanel.switchState(7);
             Start = false;
             BackpackPanel.Start = true;
             backpackScreen.setVisible(true);
-            mainFrame.setVisible(false);
+            caveScreen.setVisible(false);
         }
         /*
         if(e.getKeyCode() == KeyEvent.VK_SHIFT){

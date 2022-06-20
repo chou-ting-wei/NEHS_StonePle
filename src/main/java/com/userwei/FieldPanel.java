@@ -1040,7 +1040,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             Start = false;
             BackpackPanel.Start = true;
             backpackScreen.setVisible(true);
-            mainFrame.setVisible(false);
+            fieldScreen.setVisible(false);
         }
         /*
         if(e.getKeyCode() == KeyEvent.VK_SHIFT){
