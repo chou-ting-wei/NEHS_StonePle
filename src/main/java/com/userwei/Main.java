@@ -40,7 +40,7 @@ public class Main{
         int size_x = 1280, size_y = 720;
         
         String osName = System.getProperty("os.name");
-        // System.out.println(osName);
+        //System.out.println(osName);
         if(PropertiesUtil.getValue("Custom_Size").startsWith("On")){
             String csx = PropertiesUtil.getValue("Custom_Size_X");
             String csy = PropertiesUtil.getValue("Custom_Size_Y");
