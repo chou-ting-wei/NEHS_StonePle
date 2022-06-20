@@ -55,13 +55,21 @@ public class Main{
         else if(osName.startsWith("Mac OS")){
             size_x = 1280;
             size_y = 748;
+            PropertiesUtil.setValue("Custom_Size_X", "1280");
+            PropertiesUtil.setValue("Custom_Size_Y", "748");
         }
         else if(osName.startsWith("Windows")){
-            size_x = 1280;
-            size_y = 748;
+            size_x = 1300;
+            size_y = 770;
+            PropertiesUtil.setValue("Custom_Size_X", "1300");
+            PropertiesUtil.setValue("Custom_Size_Y", "770");
         }
         else{
             // unix or linux
+            size_x = 1280;
+            size_y = 720;
+            PropertiesUtil.setValue("Custom_Size_X", "1280");
+            PropertiesUtil.setValue("Custom_Size_Y", "720");
         }
 
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -379,6 +387,10 @@ public class Main{
                     music.playOnce();
                 }catch(Exception e1){
                     e1.printStackTrace();
+                }
+                if(SettingPanel.addx != SettingPanel.lastaddx || SettingPanel.addy != SettingPanel.lastaddy){
+                    SettingPanel.addx = SettingPanel.lastaddx;
+                    SettingPanel.addy = SettingPanel.lastaddy;
                 }
                 if(GamePanel.lastState == 0){
                     startScreen.setVisible(true);
