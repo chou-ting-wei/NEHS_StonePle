@@ -40,7 +40,7 @@ public class Main{
         int size_x = 1280, size_y = 720;
         
         String osName = System.getProperty("os.name");
-        //System.out.println(osName);
+        // System.out.println(osName);
         if(PropertiesUtil.getValue("Custom_Size").startsWith("On")){
             String csx = PropertiesUtil.getValue("Custom_Size_X");
             String csy = PropertiesUtil.getValue("Custom_Size_Y");
@@ -57,12 +57,16 @@ public class Main{
             size_y = 748;
             PropertiesUtil.setValue("Custom_Size_X", "1280");
             PropertiesUtil.setValue("Custom_Size_Y", "748");
+            PropertiesUtil.setValue("Init_Border_X", "1280");
+            PropertiesUtil.setValue("Init_Border_Y", "748");
         }
         else if(osName.startsWith("Windows")){
             size_x = 1300;
             size_y = 770;
             PropertiesUtil.setValue("Custom_Size_X", "1300");
             PropertiesUtil.setValue("Custom_Size_Y", "770");
+            PropertiesUtil.setValue("Init_Border_X", "1300");
+            PropertiesUtil.setValue("Init_Border_Y", "770");
         }
         else{
             // unix or linux
@@ -70,6 +74,8 @@ public class Main{
             size_y = 720;
             PropertiesUtil.setValue("Custom_Size_X", "1280");
             PropertiesUtil.setValue("Custom_Size_Y", "720");
+            PropertiesUtil.setValue("Init_Border_X", "1280");
+            PropertiesUtil.setValue("Init_Border_Y", "720");
         }
 
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();

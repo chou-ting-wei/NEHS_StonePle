@@ -17,8 +17,8 @@ public class SettingPanel extends JPanel implements KeyListener{
 
     static int addx = 0, addy = 0;
     static int lastaddx = 0, lastaddy = 0;
-    int initborderx = Integer.parseInt(PropertiesUtil.getValue("Custom_Size_X"));
-    int initbordery = Integer.parseInt(PropertiesUtil.getValue("Custom_Size_Y"));
+    int initborderx = Integer.parseInt(PropertiesUtil.getValue("Init_Border_X"));
+    int initbordery = Integer.parseInt(PropertiesUtil.getValue("Init_Border_Y"));
     static boolean Start;
 
     public void init(){

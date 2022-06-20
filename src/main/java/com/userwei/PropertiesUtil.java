@@ -29,6 +29,8 @@ public class PropertiesUtil {
         String cay = getValue("Custom_Add_Y");
         String clax = getValue("Custom_Last_Add_X");
         String clay = getValue("Custom_Last_Add_Y");
+        String ibx = getValue("Init_Border_X");
+        String iby = getValue("Init_Border_Y");
         
         try(FileOutputStream fos = new FileOutputStream("config.properties")){
             prop.setProperty("Custom_Size", cs);
@@ -39,6 +41,8 @@ public class PropertiesUtil {
             prop.setProperty("Custom_Add_Y", cay);
             prop.setProperty("Custom_Last_Add_X", clax);
             prop.setProperty("Custom_Last_Add_Y", clay);
+            prop.setProperty("Init_Border_X", ibx);
+            prop.setProperty("Init_Border_Y", iby);
 
             prop.setProperty(key, value);
             prop.store(fos, null);
@@ -59,6 +63,8 @@ public class PropertiesUtil {
             prop.setProperty("Custom_Add_Y", "0");
             prop.setProperty("Custom_Last_Add_X", "0");
             prop.setProperty("Custom_Last_Add_Y", "0");
+            prop.setProperty("Init_Border_X", "1280");
+            prop.setProperty("Init_Border_Y", "720");
             prop.store(fos, null);
         }catch(Exception e){
             e.printStackTrace();
