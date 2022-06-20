@@ -7,9 +7,8 @@ import java.awt.event.*;
 import java.awt.Graphics;
 
 public class PausePanel extends JPanel implements KeyListener{
-
     Animate animate1;
-    JFrame pauseScreen;
+    JFrame pauseScreen, settingScreen;
     static boolean Start;
 
     public void init(){
@@ -68,13 +67,18 @@ public class PausePanel extends JPanel implements KeyListener{
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
+                Start = false;
+                SettingPanel.Start = true;
+                settingScreen.setVisible(true);
+                pauseScreen.setVisible(false);
             }
         });
         add(pauseButton2);
     }
 
-    PausePanel(JFrame pauseScreen){
+    PausePanel(JFrame pauseScreen, JFrame settingScreen){
         this.pauseScreen = pauseScreen;
+        this.settingScreen = settingScreen;
 
         init();
 
@@ -93,6 +97,7 @@ public class PausePanel extends JPanel implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
+        /*
         if(e.getKeyCode() == KeyEvent.VK_SHIFT){
             System.out.println("-");
             System.out.println("Game State:");
@@ -107,7 +112,7 @@ public class PausePanel extends JPanel implements KeyListener{
             System.out.println("Start State:");
             System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);
         }
-
+        */
         if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
             PausePanel.Start = false;
             if(GamePanel.lastState == 1){
@@ -126,6 +131,7 @@ public class PausePanel extends JPanel implements KeyListener{
             pauseScreen.setVisible(false);
         }
 
+        /*
         // Sudo
         // Start Panel
         if(e.getKeyCode() == KeyEvent.VK_0 && Start){
@@ -167,6 +173,7 @@ public class PausePanel extends JPanel implements KeyListener{
             nowFrame.setVisible(true);
             pauseScreen.setVisible(false);
         }
+        */
     }
 
     @Override

@@ -1042,6 +1042,7 @@ public class FieldPanel extends JPanel implements KeyListener{
             backpackScreen.setVisible(true);
             mainFrame.setVisible(false);
         }
+        /*
         if(e.getKeyCode() == KeyEvent.VK_SHIFT){
             System.out.println("-");
             System.out.println("Game State:");
@@ -1059,6 +1060,8 @@ public class FieldPanel extends JPanel implements KeyListener{
             System.out.println("Character Coordinate:");
             System.out.println(character1.x + " " + character1.y);
         }
+        */
+        
         // move
         // character Front : 0 up, 1 left, 2 down, 3 right
         if(e.getKeyCode() == KeyEvent.VK_W){

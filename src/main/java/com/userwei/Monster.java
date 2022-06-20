@@ -70,7 +70,7 @@ public class Monster extends Rectangle{
             atk[2][2] = 12;
         }
         else if(monsterIdx == 4){
-            maxlif = 100;
+            maxlif = 300;
             nowlif = maxlif;
             // 全
             atk[0][1] = 8;

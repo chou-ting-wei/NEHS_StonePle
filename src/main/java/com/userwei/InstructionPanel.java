@@ -42,6 +42,7 @@ public class InstructionPanel extends JPanel implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
+        /*
         if(e.getKeyCode() == KeyEvent.VK_SHIFT){
             System.out.println("-");
             System.out.println("Game State:");
@@ -56,6 +57,7 @@ public class InstructionPanel extends JPanel implements KeyListener{
             System.out.println("Start State:");
             System.out.println(StartPanel.Start + " " + GamePanel.Start + " " + PausePanel.Start + " " + FieldPanel.Start + " " + CavePanel.Start + " " + InstructionPanel.Start + " " + UpgradePanel.Start);
         }
+        */
     }
 
     @Override

@@ -82,7 +82,7 @@ public class GamePanel extends JPanel implements KeyListener{
         background3 = new Background(80, 160, 400, 240, "diner_table.png");
 
         background4 = new Background(0, 480, 160, 80, "brown_shelf1.png");
-        background5 = new Background(80, 640, 80, 80, "plant1.png");
+        background5 = new Background(80, 640, 80, 80, "plant2.png");
         icon1 = new Icon(10, 570, 60, 60, "exclamation.png");
 
         background6 = new Background(1040, 240, 240, 160, "sofa1.png");
@@ -91,7 +91,7 @@ public class GamePanel extends JPanel implements KeyListener{
         background9 = new Background(880, 160, 280, 80, "black_shelf2.png");
         
         icon2 = new Icon(1210, 10, 60, 60, "sword.png");
-        background10 = new Background(1120, 0, 80, 80, "plant1.png");
+        background10 = new Background(1120, 0, 80, 80, "plant3.png");
 
         icon3 = new Icon(1210, 650, 60, 60, "arrow_up.png");
         background11 = new Background(1120, 640, 80, 80, "plant1.png");
@@ -140,9 +140,9 @@ public class GamePanel extends JPanel implements KeyListener{
                 e.printStackTrace();
             }
             
+            playMusic();
+            
             while(true){
-                playMusic();
-
                 update();
                 try{
                     Thread.sleep(10);
@@ -174,9 +174,9 @@ public class GamePanel extends JPanel implements KeyListener{
         hpbar.draw(g, this);
         expbar1.draw(g, this);
         expbar2.draw(g, this);
-        inventory.draw(g, this);
-        herb.draw(g, this);
-        herbcount.draw(g, this);
+        // inventory.draw(g, this);
+        // herb.draw(g, this);
+        // herbcount.draw(g, this);
     }
 
     // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 Cave Panel; 5 Instruction Panel; 6 Upgrade Panel; 7 Backpack Panel
@@ -234,25 +234,23 @@ public class GamePanel extends JPanel implements KeyListener{
 
     // Music
     static public void playMusic(){
-        Music nowMusic = music.get(nowState);
         String nowMusicName = musicName.get(nowState);
 
         if(nowMusicName != "null"){
             if(musicSwitched[nowState]){
-                nowMusic.resetAudioStream();
+                music.get(nowState).resetAudioStream();
                 musicSwitched[nowState] = false;
             }
-            nowMusic.play();
+            music.get(nowState).play();
         }
     }
 
     static public void switchState(int state){
         if(sudo){
             sudo = false;
-            Music nowMusic = music.get(lastState);
             String nowMusicName = musicName.get(lastState);
             if(nowMusicName != "null"){
-                nowMusic.stop();
+                music.get(lastState).stop();
                 musicSwitched[lastState] = true;
             }
 
@@ -273,10 +271,9 @@ public class GamePanel extends JPanel implements KeyListener{
             return;
         }
 
-        Music nowMusic = music.get(nowState);
         String nowMusicName = musicName.get(nowState);
         if(nowMusicName != "null"){
-            nowMusic.stop();
+            music.get(nowState).stop();
             musicSwitched[nowState] = true;
         }
         
@@ -341,7 +338,7 @@ public class GamePanel extends JPanel implements KeyListener{
             backpackScreen.setVisible(true);
             mainFrame.setVisible(false);
         }
-
+        /*
         if(e.getKeyCode() == KeyEvent.VK_SHIFT){
             System.out.println("-");
             System.out.println("Game State:");
@@ -359,6 +356,7 @@ public class GamePanel extends JPanel implements KeyListener{
             System.out.println("Character Coordinate:");
             System.out.println(character1.x + " " + character1.y);
         }
+        */
         if(e.getKeyCode() == KeyEvent.VK_W){
             if(character1.y >= character1.movY){
                 if(moveJudge(character1.x, character1.y - character1.movY)){
@@ -387,6 +385,7 @@ public class GamePanel extends JPanel implements KeyListener{
                 }
             }
         }
+        /*
         if(e.getKeyCode() == KeyEvent.VK_C){
             if(BackpackPanel.getMaterialAmount("herb") > 0){
                 BackpackPanel.addMaterialAmount("herb", -1);
@@ -401,13 +400,7 @@ public class GamePanel extends JPanel implements KeyListener{
                 }
             }
         }
-        if(e.getKeyCode() == KeyEvent.VK_M){
-            ValueCalculate.characterLife -= 5;
-            ValueCalculate.characterLifeChange = true;
-        }
-        if(e.getKeyCode() == KeyEvent.VK_L){
-            BackpackPanel.addMaterialAmount("herb", 5);
-        }
+        */
     }
 
     @Override

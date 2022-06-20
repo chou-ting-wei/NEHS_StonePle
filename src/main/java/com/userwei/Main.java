@@ -12,16 +12,17 @@ public class Main{
     static boolean loading;
     public static void main(String[] args){
         // 0 Start Panel; 1 Main Panel; 2 Pause Panel; 3 Field Panel; 4 CavePanel; 5 Instruction Panel; 6 Upgrade Panel; 7 Backpack Panel
-        JFrame blankFrame = new JFrame("StonePle version 0.5(beta)");
+        JFrame blankFrame = new JFrame("StonePle");
 
-        JFrame mainFrame = new JFrame("StonePle version 0.5(beta)");
-        JFrame startScreen = new JFrame("StonePle version 0.5(beta)");
-        JFrame pauseScreen = new JFrame("StonePle version 0.5(beta)");
-        JFrame fieldScreen = new JFrame("StonePle version 0.5(beta)");
-        JFrame caveScreen = new JFrame("StonePle version 0.5(beta)");
-        JFrame instructionScreen = new JFrame("StonePle version 0.5(beta)");
-        JFrame upgradeScreen = new JFrame("StonePle version 0.5(beta)");
-        JFrame backpackScreen = new JFrame("StonePle version 0.5(beta)");
+        JFrame mainFrame = new JFrame("StonePle");
+        JFrame startScreen = new JFrame("StonePle");
+        JFrame pauseScreen = new JFrame("StonePle");
+        JFrame fieldScreen = new JFrame("StonePle");
+        JFrame caveScreen = new JFrame("StonePle");
+        JFrame instructionScreen = new JFrame("StonePle");
+        JFrame upgradeScreen = new JFrame("StonePle");
+        JFrame backpackScreen = new JFrame("StonePle");
+        JFrame settingScreen = new JFrame("StonePle");
 
         ValueCalculate vc = new ValueCalculate();
         vc.start();
@@ -30,12 +31,39 @@ public class Main{
         UpgradePanel upgradePanel = new UpgradePanel(mainFrame, upgradeScreen);
         GamePanel gamePanel = new GamePanel(startScreen, mainFrame, pauseScreen, fieldScreen, caveScreen, instructionScreen, upgradeScreen, backpackScreen);
         StartPanel startPanel = new StartPanel(mainFrame, startScreen);
-        PausePanel pausePanel = new PausePanel(pauseScreen);
+        PausePanel pausePanel = new PausePanel(pauseScreen, settingScreen);
         FieldPanel fieldPanel = new FieldPanel(mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen);
         CavePanel cavePanel = new CavePanel(mainFrame, pauseScreen, fieldScreen, caveScreen,backpackScreen);
         InstructionPanel instructionPanel = new InstructionPanel(mainFrame, instructionScreen);
+        SettingPanel settingPanel = new SettingPanel(settingScreen, pauseScreen);
 
-        int size_x = 1280, size_y = 748;
+        int size_x = 1280, size_y = 720;
+        
+        String osName = System.getProperty("os.name");
+        // System.out.println(osName);
+        if(PropertiesUtil.getValue("Custom_Size").startsWith("On")){
+            String csx = PropertiesUtil.getValue("Custom_Size_X");
+            String csy = PropertiesUtil.getValue("Custom_Size_Y");
+            try{
+                size_x = Integer.parseInt(csx);
+                size_y = Integer.parseInt(csy);
+            }
+            catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        else if(osName.startsWith("Mac OS")){
+            size_x = 1280;
+            size_y = 748;
+        }
+        else if(osName.startsWith("Windows")){
+            size_x = 1280;
+            size_y = 748;
+        }
+        else{
+            // unix or linux
+        }
+
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
         int loc_x = (int) screensize.getWidth() / 2 - size_x / 2;
         int loc_y = (int) screensize.getHeight() / 2 - size_y / 2;
@@ -67,7 +95,6 @@ public class Main{
 
         JButton pauseButton1 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/undo.png")));
         pauseButton1.setBounds(0, 0, 80, 80);
-    ;
         pauseButton1.setBorderPainted(false);
         pauseButton1.setBorder(null);
         pausePanel.setLayout(null);
@@ -331,12 +358,69 @@ public class Main{
             }
         });
 
+        settingScreen.getContentPane().add(settingPanel);
+        settingScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        settingScreen.setResizable(false);
+        settingScreen.setLocation(loc_x, loc_y);
+        settingScreen.setSize(size_x, size_y);
+        settingScreen.setVisible(false);
+
+        JButton settingButton1 = new JButton(new ImageIcon(Main.class.getResource("Image/icon/undo_white.png")));
+        settingButton1.setBounds(0, 0, 80, 80);
+        settingButton1.setFocusPainted(false);
+        settingButton1.setBorderPainted(false);
+        settingButton1.setBorder(null);
+        settingPanel.setLayout(null);
+        settingButton1.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try{
+                    Music music = new Music("Select.wav");
+                    music.playOnce();
+                }catch(Exception e1){
+                    e1.printStackTrace();
+                }
+                if(GamePanel.lastState == 0){
+                    startScreen.setVisible(true);
+                    settingScreen.setVisible(false);
+                    StartPanel.Start = true;
+                    SettingPanel.Start = false;
+                }
+                else{
+                    SettingPanel.Start = false;
+                    PausePanel.Start = true;
+                    pauseScreen.setVisible(true);
+                    settingScreen.setVisible(false);
+                }
+            }
+        });
+        settingPanel.add(settingButton1);
+
+        settingScreen.addComponentListener(new ComponentListener(){
+            @Override
+            public void componentHidden(ComponentEvent e) {
+                
+            }
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                settingScreen.setLocation(loc_x, loc_y);
+            }
+            @Override
+            public void componentResized(ComponentEvent e) {
+                
+            }
+            @Override
+            public void componentShown(ComponentEvent e) {
+                
+            }
+        });
+
         // For Cover Loaded Panel
         blankFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         blankFrame.setSize(size_x, size_y);
         blankFrame.setResizable(false);
         blankFrame.setLocation(loc_x, loc_y);
-        blankFrame.setVisible(true);
+        blankFrame.setVisible(false);
         blankFrame.addComponentListener(new ComponentListener(){
             @Override
             public void componentHidden(ComponentEvent e) {
@@ -362,6 +446,7 @@ public class Main{
         instructionScreen.setVisible(true);
         upgradeScreen.setVisible(true);
         backpackScreen.setVisible(true);
+        blankFrame.setVisible(true);
 
         startScreen.getContentPane().add(startPanel);
         startScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -387,6 +472,13 @@ public class Main{
                 
             }
         });
+
+        if(PropertiesUtil.getValue("Config_Mode").startsWith("On")){
+            settingScreen.setVisible(true);
+            startScreen.setVisible(false);
+            StartPanel.Start = false;
+            SettingPanel.Start = true;
+        }
 
         // Close Loaded Panel
         try{

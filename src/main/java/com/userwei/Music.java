@@ -20,8 +20,8 @@ public class Music{
     }
 
     public void play(){
+        clip.start();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
-        clip.start();  
     }
 
     public void playOnce(){
