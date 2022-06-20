@@ -23,7 +23,8 @@ public class CavePanel extends JPanel implements KeyListener{
 
     boolean allMapMoveJudge[][][][];
 
-    static int mapState_i = 2, mapState_j = 5;
+    // static int mapState_i = 2, mapState_j = 5;
+    static int mapState_i = 2, mapState_j = 0; // test
     int mapSizeX = 5, mapSizeY = 6;
 
     // character Front : 0 up, 1 left, 2 down, 3 right
@@ -468,6 +469,17 @@ public class CavePanel extends JPanel implements KeyListener{
                                 // nowMonster.nowlif -= ValueCalculate.characterAttackDamage();
                             }
                         }
+                        else if(nowMonster.monsterIdx == 4){
+                            if(i == addx + 80 && j == addy){
+                                nowMonster.nowlif -= ValueCalculate.additionCharacterAttackDamage();
+                            }
+                            if(i == addx && j == addy + 80){
+                                nowMonster.nowlif -= ValueCalculate.additionCharacterAttackDamage();
+                            }
+                            if(i == addx + 80 && j == addy + 80){
+                                nowMonster.nowlif -= ValueCalculate.additionCharacterAttackDamage();
+                            }
+                        }
                     }
                 }
             }
@@ -553,17 +565,6 @@ public class CavePanel extends JPanel implements KeyListener{
             }
         }
         MonsterAttackChange = true;
-    }
-
-    public void BOSS(Monster nowMonster){
-        int cx = character1.x, cy = character1.y;
-        /* 
-        if(){
-
-        }
-        else{
-
-        }*/
     }
 
     public void monsterMove(){
@@ -653,8 +654,233 @@ public class CavePanel extends JPanel implements KeyListener{
                         nowMonster.y = nowMonster.initY;
                     }
                 }
+                repaint();
             }
         }
+    }
+
+    public void BOSSAttack(Monster nowMonster, int lastcx, int lastcy, int lastmx, int lastmy){
+        int relatx = (lastcx - (lastmx - 80)), relaty = (lastcy - (lastmy - 80));
+        if(!nowMonster.destroyed && Start){
+            int dmg = nowMonster.atk[relatx / 80][relaty / 80];
+            if(dmg > 0){
+                if(lastcx == character1.x && lastcy == character1.y && lastmx == nowMonster.x && lastmy == nowMonster.y){
+                    for(int i = lastmx - 80; i <= lastmx + 160; i += 80){
+                        for(int j = lastmy - 80; j <= lastmy + 160; j += 80){
+                            if(i == lastmx && j == lastmy){
+                                continue;
+                            }
+                            if(i == lastmx + 80 && j == lastmy){
+                                continue;
+                            }
+                            if(i == lastmx && j == lastmy + 80){
+                                continue;
+                            }
+                            if(i == lastmx + 80 && j == lastmy + 80){
+                                continue;
+                            }
+                            if(AttackJudge(i, j) && monsterJudge(i / 80, j / 80)){
+                                if(i == lastmx - 80 && j == lastmy - 80){
+                                    Background nowBackground = new Background(i, j, 80, 80, "monster_addition_attack.png");
+                                    MonsterAttackBackground[i / 80][j / 80] = nowBackground;
+                                    ChkMonsterAttackBackground[i / 80][j / 80] = true;
+                                }
+                                else if(i == lastmx - 80 && j == lastmy + 160){
+                                    Background nowBackground = new Background(i, j, 80, 80, "monster_addition_attack.png");
+                                    MonsterAttackBackground[i / 80][j / 80] = nowBackground;
+                                    ChkMonsterAttackBackground[i / 80][j / 80] = true;
+                                }
+                                else if(i == lastmx + 160 && j == lastmy - 80){
+                                    Background nowBackground = new Background(i, j, 80, 80, "monster_addition_attack.png");
+                                    MonsterAttackBackground[i / 80][j / 80] = nowBackground;
+                                    ChkMonsterAttackBackground[i / 80][j / 80] = true;
+                                }
+                                else if(i == lastmx + 160 && j == lastmy + 160){
+                                    Background nowBackground = new Background(i, j, 80, 80, "monster_addition_attack.png");
+                                    MonsterAttackBackground[i / 80][j / 80] = nowBackground;
+                                    ChkMonsterAttackBackground[i / 80][j / 80] = true;
+                                }
+                                else{
+                                    Background nowBackground = new Background(i, j, 80, 80, "monster_attack.png");
+                                    MonsterAttackBackground[i / 80][j / 80] = nowBackground;
+                                    ChkMonsterAttackBackground[i / 80][j / 80] = true;
+                                }
+                            }
+                        }
+                    }
+                    // ValueCalculate.characterLife -= dmg;
+                    // ValueCalculate.characterLifeChange = true;
+                    repaint();
+                }
+            }
+        }
+        MonsterAttackChange = true;
+    }
+
+    public void BOSS(Monster nowMonster){
+        int cx = character1.x, cy = character1.y, mx = nowMonster.x, my = nowMonster.y;
+        if(cx < mx && cy < my){
+            int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
+            if(distx == 1 && disty == 1){
+                BOSSAttack(nowMonster, cx, cy, mx, my);
+            }
+            else if(Math.max(distx, disty) <= 4){
+                int rand = randomNumber(1, 100);
+                if(rand % 2 == 0){
+                    if(moveJudge(mx - nowMonster.movX, my, "boss")){
+                        nowMonster.x -= nowMonster.movX;
+                    }
+                }
+                else{
+                    if(moveJudge(my - nowMonster.movY, my, "boss")){
+                        nowMonster.y -= nowMonster.movY;
+                    }
+                }
+            }
+            else{
+                nowMonster.nowlif = nowMonster.maxlif;
+                nowMonster.x = nowMonster.initX;
+                nowMonster.y = nowMonster.initY;
+            }
+        }
+        else if(cx < mx && cy <= my + 80){
+            int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
+            if(distx == 1 && disty == 0 || distx == 1 && disty == 1){
+                BOSSAttack(nowMonster, cx, cy, mx, my);
+            }
+            else if(distx <= 4){
+                if(moveJudge(mx - nowMonster.movX, my, "boss")){
+                    nowMonster.x -= nowMonster.movX;
+                }
+            }
+            else{
+                nowMonster.nowlif = nowMonster.maxlif;
+                nowMonster.x = nowMonster.initX;
+                nowMonster.y = nowMonster.initY;
+            }
+        }
+        else if(cx <= mx + 80 && cy < my){
+            int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
+            if(distx == 0 && disty == 1 || distx == 1 && disty == 1){
+                BOSSAttack(nowMonster, cx, cy, mx, my);
+            }
+            else if(disty <= 4){
+                if(moveJudge(my - nowMonster.movY, my, "boss")){
+                    nowMonster.y -= nowMonster.movY;
+                }
+            }
+            else{
+                nowMonster.nowlif = nowMonster.maxlif;
+                nowMonster.x = nowMonster.initX;
+                nowMonster.y = nowMonster.initY;
+            }
+        }
+        else if(cx < mx && cy > my + 80){
+            int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
+            if(distx == 1 && disty == 2){
+                BOSSAttack(nowMonster, cx, cy, mx, my);
+            }
+            else if(Math.max(distx, disty - 1) <= 4){
+                int rand = randomNumber(1, 100);
+                if(rand % 2 == 0){
+                    if(moveJudge(mx - nowMonster.movX, my, "boss")){
+                        nowMonster.x -= nowMonster.movX;
+                    }
+                }
+                else{
+                    if(moveJudge(my + nowMonster.movY, my, "boss")){
+                        nowMonster.y += nowMonster.movY;
+                    }
+                }
+            }
+            else{
+                nowMonster.nowlif = nowMonster.maxlif;
+                nowMonster.x = nowMonster.initX;
+                nowMonster.y = nowMonster.initY;
+            }
+        }
+        else if(cx > mx + 80 && cy < my){
+            int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
+            
+            if(distx == 2 && disty == 1){
+                BOSSAttack(nowMonster, cx, cy, mx, my);
+            }
+            else if(Math.max(distx - 1, disty) <= 4){
+                int rand = randomNumber(1, 100);
+                if(rand % 2 == 0){
+                    if(moveJudge(mx + nowMonster.movX, my, "boss")){
+                        nowMonster.x += nowMonster.movX;
+                    }
+                }
+                else{
+                    if(moveJudge(my - nowMonster.movY, my, "boss")){
+                        nowMonster.y -= nowMonster.movY;
+                    }
+                }
+            }
+            else{
+                nowMonster.nowlif = nowMonster.maxlif;
+                nowMonster.x = nowMonster.initX;
+                nowMonster.y = nowMonster.initY;
+            }
+        }
+        else if(cx <= mx + 80 && cy > my + 80){
+            int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
+            if(distx == 0 && disty == 2 || distx == 1 && disty == 2){
+                BOSSAttack(nowMonster, cx, cy, mx, my);
+            }
+            else if((disty - 2) <= 4){
+                if(moveJudge(my + nowMonster.movY, my, "boss")){
+                    nowMonster.y += nowMonster.movY;
+                }
+            }
+            else{
+                nowMonster.nowlif = nowMonster.maxlif;
+                nowMonster.x = nowMonster.initX;
+                nowMonster.y = nowMonster.initY;
+            }
+        }
+        else if(cx > mx + 80 && cy <= my + 80){
+            int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
+            if(distx == 2 && disty == 0 || distx == 2 && disty == 1){
+                BOSSAttack(nowMonster, cx, cy, mx, my);
+            }
+            else if((distx - 2) <= 4){
+                if(moveJudge(mx + nowMonster.movX, my, "boss")){
+                    nowMonster.x += nowMonster.movX;
+                }
+            }
+            else{
+                nowMonster.nowlif = nowMonster.maxlif;
+                nowMonster.x = nowMonster.initX;
+                nowMonster.y = nowMonster.initY;
+            }
+        }
+        else if(cx > mx + 80 && cy > my + 80){
+            int distx = Math.abs(mx - cx) / 80, disty = Math.abs(my - cy) / 80;
+            if(distx == 2 && disty == 2){
+                BOSSAttack(nowMonster, cx, cy, mx, my);
+            }
+            else if(Math.max(distx - 1, disty - 1) <= 4){
+                int rand = randomNumber(1, 100);
+                if(rand % 2 == 0){
+                    if(moveJudge(mx + nowMonster.movX, my, "boss")){
+                        nowMonster.x += nowMonster.movX;
+                    }
+                }
+                else{
+                    if(moveJudge(my + nowMonster.movY, my, "boss")){
+                        nowMonster.y += nowMonster.movY;
+                    }
+                }
+            }
+            else{
+                nowMonster.nowlif = nowMonster.maxlif;
+                nowMonster.x = nowMonster.initX;
+                nowMonster.y = nowMonster.initY;
+            }
+        }
+        repaint();
     }
 
     static public void monsterReset(){
@@ -675,6 +901,17 @@ public class CavePanel extends JPanel implements KeyListener{
             Monster nowMonster = allMonster[mapState_i][mapState_j][i];
             if(x == (nowMonster.x / 80) && y == (nowMonster.y / 80) && !nowMonster.destroyed){
                 return false;
+            }
+            if(nowMonster.monsterIdx == 4){
+                if(x == (nowMonster.x / 80) + 1 && y == (nowMonster.y / 80) && !nowMonster.destroyed){
+                    return false;
+                }
+                if(x == (nowMonster.x / 80) && y == (nowMonster.y / 80) + 1 && !nowMonster.destroyed){
+                    return false;
+                }
+                if(x == (nowMonster.x / 80) + 1 && y == (nowMonster.y / 80) + 1 && !nowMonster.destroyed){
+                    return false;
+                }
             }
         }
         return true;
@@ -808,6 +1045,9 @@ public class CavePanel extends JPanel implements KeyListener{
                 repaint();
                 BackpackPanel.addMaterialAmount("iron", 20);
             }
+        }
+        if(s == "boss"){
+            return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80];
         }
         return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80] && monsterJudge(x / 80, y / 80);
     }
