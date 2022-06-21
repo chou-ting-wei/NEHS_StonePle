@@ -24,7 +24,7 @@ public class PausePanel extends JPanel implements KeyListener{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -63,7 +63,7 @@ public class PausePanel extends JPanel implements KeyListener{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -162,7 +162,7 @@ public class PausePanel extends JPanel implements KeyListener{
             GamePanel.switchState(3);
             nowFrame.setVisible(true);
             pauseScreen.setVisible(false);
-        }
+        }*/
         // Cave Panel
         if(e.getKeyCode() == KeyEvent.VK_4 && Start){
             GamePanel.sudo = true;
@@ -173,7 +173,7 @@ public class PausePanel extends JPanel implements KeyListener{
             nowFrame.setVisible(true);
             pauseScreen.setVisible(false);
         }
-        */
+        
     }
 
     @Override

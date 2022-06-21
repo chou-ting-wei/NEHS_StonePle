@@ -41,6 +41,22 @@ public class Character extends Rectangle{
 
     public void update(){
         if(ValueCalculate.characterLife <= 0 && GamePanel.nowState != 1){
+            ValueCalculate.characterLife = ValueCalculate.characterValue[2][ValueCalculate.characterLevel] / 3;
+            ValueCalculate.characterLifeChange = true;
+            
+            if(GamePanel.nowState == 3){
+                FieldPanel.Start = false;
+            }
+            else if(GamePanel.nowState == 4){
+                CavePanel.Start = false;
+            }
+            JFrame nowFrame = GamePanel.frame[GamePanel.nowState];
+            JFrame preFrame = GamePanel.frame[1];
+            GamePanel.Start = true;
+            GamePanel.switchState(1);
+            preFrame.setVisible(true);
+            nowFrame.setVisible(false);
+
             FieldPanel.monsterReset();
             FieldPanel.mapState_i = 1;
             FieldPanel.mapState_j = 5;
@@ -54,21 +70,6 @@ public class Character extends Rectangle{
             CavePanel.characterInitX = 640;
             CavePanel.characterInitY = 640;
             CavePanel.reset();
-
-            ValueCalculate.characterLife = ValueCalculate.characterValue[2][ValueCalculate.characterLevel] / 3;
-            ValueCalculate.characterLifeChange = true;
-            if(GamePanel.nowState == 3){
-                FieldPanel.Start = false;
-            }
-            else if(GamePanel.nowState == 4){
-                CavePanel.Start = false;
-            }
-            JFrame nowFrame = GamePanel.frame[GamePanel.nowState];
-            JFrame preFrame = GamePanel.frame[1];
-            GamePanel.Start = true;
-            GamePanel.switchState(1);
-            preFrame.setVisible(true);
-            nowFrame.setVisible(false);
         }
     }
 

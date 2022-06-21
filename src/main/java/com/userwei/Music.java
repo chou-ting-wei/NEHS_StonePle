@@ -24,14 +24,26 @@ public class Music{
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    public void playOnce(){
+    public void playOnce(int time){
         clip.start();
         try {
-            Thread.sleep(350);
+            Thread.sleep(time);
         } catch (Exception e) {
             e.printStackTrace();
         }
         clip.close();
+
+        if(time == 4000){
+            String nowMusicName = GamePanel.musicName.get(GamePanel.nowState);
+
+            if(nowMusicName != "null"){
+                if(GamePanel.musicSwitched[GamePanel.nowState]){
+                    GamePanel.music.get(GamePanel.nowState).resetAudioStream();
+                    GamePanel.musicSwitched[GamePanel.nowState] = false;
+                }
+                GamePanel.music.get(GamePanel.nowState).play();
+            }
+        }
     }
 
     public void stop(){

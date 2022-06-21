@@ -16,15 +16,15 @@ public class CavePanel extends JPanel implements KeyListener{
     static Map allMap[][];
 
     Background allMapBackground[][][];
-    int allMapBackgroundCount[][];
+    static int allMapBackgroundCount[][];
 
     static Monster allMonster[][][];
     static int allMonsterCount[][];
 
-    boolean allMapMoveJudge[][][][];
+    static boolean allMapMoveJudge[][][][];
 
-    static int mapState_i = 2, mapState_j = 5;
-    // static int mapState_i = 2, mapState_j = 0; // test
+    // static int mapState_i = 2, mapState_j = 5;
+    static int mapState_i = 2, mapState_j = 0; // test
     int mapSizeX = 5, mapSizeY = 6;
 
     // character Front : 0 up, 1 left, 2 down, 3 right
@@ -46,7 +46,15 @@ public class CavePanel extends JPanel implements KeyListener{
     static boolean CharacterAttackChange;
     boolean MonsterAttackChange;
 
-    JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen;
+    static Music bossMusic = null;
+    static boolean bossMusicPlayed = false;
+    static boolean bossWallClosed = false;
+    static boolean bossDied = false;
+    static boolean BossFight = false;
+    static boolean bossDiedFeature = false;
+    Font bossFont1, bossFont2;
+
+    JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen, gameFinishScreen;
     static boolean Start;
     Thread thread, monsterThread, CharacterAttackThread, MonsterAttackThread;
 
@@ -109,6 +117,8 @@ public class CavePanel extends JPanel implements KeyListener{
         herbcount = new Font(1173, 690, 60, 15, BackpackPanel.getMaterialAmount("herb") + ".png" );
         expbar1 = new Font(1135, 0, 40, 20, "level" + ValueCalculate.characterLevel+ ".png" );
         expbar2 = new Font(1175, 0, 105, 20, "lv" + ValueCalculate.characterExpPercent + ".png" );
+        bossFont1 = new Font(0, 640, 400, 80, "boss_font1.png");
+        bossFont2 = new Font(0, 640, 400, 80, "boss_font2.png");
 
         // 0-3
             // mimic
@@ -216,14 +226,32 @@ public class CavePanel extends JPanel implements KeyListener{
     static public void reset(){
         map = allMap[mapState_i][mapState_j];
         character1 = new Character(characterInitX, characterInitY, 80, 80, 80, 80, "walk.gif");
+
+        if(BossFight){
+            if(bossMusicPlayed){
+                bossMusic.stop();
+                bossMusicPlayed = false;
+            }
+            if(bossWallClosed){
+                for(int i = 6; i <= 9; i ++){
+                    for(int j = 8; j <= 8; j ++){
+                        allMapMoveJudge[2][0][i][j] = false;
+                    }
+                }
+                allMapBackgroundCount[2][0] = 0;
+                bossWallClosed = false;
+            }
+            BossFight = false;
+        }
     }
 
-    CavePanel(JFrame mainFrame, JFrame pauseScreen, JFrame fieldScreen, JFrame caveScreen, JFrame backpackScreen){
+    CavePanel(JFrame mainFrame, JFrame pauseScreen, JFrame fieldScreen, JFrame caveScreen, JFrame backpackScreen, JFrame gameFinishScreen){
         this.fieldScreen = fieldScreen;
         this.pauseScreen = pauseScreen;
         this.mainFrame = mainFrame;
         this.caveScreen = caveScreen;
         this.backpackScreen = backpackScreen;
+        this.gameFinishScreen = gameFinishScreen;
 
         addKeyListener(this);
         setFocusable(true);
@@ -332,6 +360,59 @@ public class CavePanel extends JPanel implements KeyListener{
         }
         expbar1 = new Font(1135, 0, 40, 20, "level" + ValueCalculate.characterLevel+ ".png" );
         expbar2 = new Font(1175, 0, 105, 20, "lv" + ValueCalculate.characterExpPercent + ".png" );
+
+        if(mapState_i == 2 && mapState_j == 0 && !bossMusicPlayed && Start && !bossDied){
+            SettingPanel.resetMusic("BOSS");
+            try{
+                bossMusic = new Music("the_Fight_Begins.wav");
+                bossMusic.play();
+                bossMusicPlayed = true;
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        if(mapState_i == 2 && mapState_j == 0 && character1.y < 640 && !bossWallClosed && Start && !bossDied){
+            BossFight = true;
+            bossWallClosed = true;
+            for(int i = 6; i <= 9; i ++){
+                addBackground(2, 0, 80 * i, 640, 80, 80, "cave_wall.png");
+            }
+            addMoveJudge(2, 0, 6, 9, 8, 8);
+
+            repaint();
+        }
+        
+        if(bossDied && !bossDiedFeature){
+            bossDiedFeature = true;
+            BossFight = false;
+            if(bossMusicPlayed){
+                bossMusic.stop();
+                bossMusicPlayed = false;
+            }
+            if(bossWallClosed){
+                for(int i = 6; i <= 9; i ++){
+                    for(int j = 8; j <= 8; j ++){
+                        allMapMoveJudge[2][0][i][j] = false;
+                    }
+                }
+                allMapBackgroundCount[2][0] = 0;
+                repaint();
+                bossWallClosed = false;
+            }
+            
+            Start = false;
+            GameFinishPanel.Start = true;
+            gameFinishScreen.setVisible(true);
+            caveScreen.setVisible(false);
+
+            try{
+                Music nowMusic = new Music("Potai.wav");
+                nowMusic.playOnce(4000);
+            }catch(Exception e1){
+                e1.printStackTrace();
+            }
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -367,6 +448,13 @@ public class CavePanel extends JPanel implements KeyListener{
         herbcount.draw(g, this);
         expbar1.draw(g, this);
         expbar2.draw(g, this);
+
+        if(bossMusicPlayed && !BossFight && !bossDied){
+            bossFont1.draw(g, this);
+        }
+        if(BossFight){
+            bossFont2.draw(g, this);
+        }
     }
 
     public int randomNumber(int srt, int end){
@@ -572,7 +660,7 @@ public class CavePanel extends JPanel implements KeyListener{
         for(int i = 0; i < nowMonsterCount; i ++){
             Monster nowMonster = allMonster[mapState_i][mapState_j][i];
             if(!nowMonster.destroyed && Start){
-                if(nowMonster.monsterIdx == 4){
+                if(nowMonster.monsterIdx == 4 && BossFight){
                     BOSS(nowMonster);
                 }
                 else{
@@ -708,8 +796,8 @@ public class CavePanel extends JPanel implements KeyListener{
                             }
                         }
                     }
-                    ValueCalculate.characterLife -= dmg;
-                    ValueCalculate.characterLifeChange = true;
+                    // ValueCalculate.characterLife -= dmg;
+                    // ValueCalculate.characterLifeChange = true;
                     repaint();
                 }
             }
@@ -945,6 +1033,15 @@ public class CavePanel extends JPanel implements KeyListener{
     // chest pos : [0][4] 7-4, [1][3] 1-1, [2][4] 7-4, [3][1] 11-4, [4][2] 7-4, [4][2] 8-4
     public boolean moveJudge(int x, int y, String s){
         String nowMap = mapName[mapState_i][mapState_j].substring(5, 9);
+        if(BossFight){
+            if(x == 0 || y == 0 || x == 1200 || y == 640){
+                return false;
+            }
+            if(s == "boss"){
+                return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80];
+            }
+            return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80] && monsterJudge(x / 80, y / 80);
+        }
         // ULDR
         boolean mapOpen[] = {false, false, false, false};
         for(int i = 0; i < 4; i ++){
@@ -1046,9 +1143,6 @@ public class CavePanel extends JPanel implements KeyListener{
                 BackpackPanel.addMaterialAmount("iron", 20);
             }
         }
-        if(s == "boss"){
-            return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80];
-        }
         return !allMapMoveJudge[mapState_i][mapState_j][x / 80][y / 80] && monsterJudge(x / 80, y / 80);
     }
 
@@ -1059,14 +1153,14 @@ public class CavePanel extends JPanel implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE && !BossFight){
             GamePanel.switchState(2);
             Start = false;
             PausePanel.Start = true;
             pauseScreen.setVisible(true);
             caveScreen.setVisible(false);
         }
-        if(e.getKeyCode() == KeyEvent.VK_Q){
+        if(e.getKeyCode() == KeyEvent.VK_Q && !BossFight){
             GamePanel.switchState(7);
             Start = false;
             BackpackPanel.Start = true;

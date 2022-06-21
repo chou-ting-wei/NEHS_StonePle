@@ -242,7 +242,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                     change(idx);      
                     selectedWeapon = s;
                     description = new Description(650, 115, 500, 480, s + ".png");
@@ -301,7 +301,7 @@ public class UpgradePanel extends JPanel implements KeyListener{
                         upgrade();
                         change(weaponNumber); 
                         Music music = new Music("Select.wav");
-                        music.playOnce();
+                        music.playOnce(350);
                         repaint();
                     }catch(Exception e1){
                         e1.printStackTrace();

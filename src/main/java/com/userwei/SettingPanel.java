@@ -49,27 +49,12 @@ public class SettingPanel extends JPanel implements KeyListener{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
                                 
-                for(int nowState = 0; nowState <= 7; nowState ++){
-                    String nowMusicName = GamePanel.musicName.get(nowState);
-                    if(nowMusicName != "null"){
-                        GamePanel.music.get(nowState).stop();
-                        GamePanel.musicSwitched[nowState] = true;
-                    }
-                }
-
-                String nowMusicName = GamePanel.musicName.get(GamePanel.lastState);
-                if(nowMusicName != "null"){
-                    if(GamePanel.musicSwitched[GamePanel.lastState]){
-                        GamePanel.music.get(GamePanel.lastState).resetAudioStream();
-                        GamePanel.musicSwitched[GamePanel.lastState] = false;
-                    }
-                    GamePanel.music.get(GamePanel.lastState).play();
-                }
+                resetMusic("Setting");
             }
         });
         add(settingButton1);
@@ -84,7 +69,7 @@ public class SettingPanel extends JPanel implements KeyListener{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -113,7 +98,7 @@ public class SettingPanel extends JPanel implements KeyListener{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -132,7 +117,7 @@ public class SettingPanel extends JPanel implements KeyListener{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -151,7 +136,7 @@ public class SettingPanel extends JPanel implements KeyListener{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -170,7 +155,7 @@ public class SettingPanel extends JPanel implements KeyListener{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -189,7 +174,7 @@ public class SettingPanel extends JPanel implements KeyListener{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -217,7 +202,7 @@ public class SettingPanel extends JPanel implements KeyListener{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -327,6 +312,27 @@ public class SettingPanel extends JPanel implements KeyListener{
         font7.draw(g, this);
         font8.draw(g, this);
         font9.draw(g, this);
+    }
+
+    static public void resetMusic(String s){
+        for(int nowState = 0; nowState <= 7; nowState ++){
+            String nowMusicName = GamePanel.musicName.get(nowState);
+            if(nowMusicName != "null"){
+                GamePanel.music.get(nowState).stop();
+                GamePanel.musicSwitched[nowState] = true;
+            }
+        }
+
+        if(s == "Setting"){
+            String nowMusicName = GamePanel.musicName.get(GamePanel.lastState);
+            if(nowMusicName != "null"){
+                if(GamePanel.musicSwitched[GamePanel.lastState]){
+                    GamePanel.music.get(GamePanel.lastState).resetAudioStream();
+                    GamePanel.musicSwitched[GamePanel.lastState] = false;
+                }
+                GamePanel.music.get(GamePanel.lastState).play();
+            }
+        }
     }
 
     @Override

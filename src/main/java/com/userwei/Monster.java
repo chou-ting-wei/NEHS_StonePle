@@ -154,6 +154,7 @@ public class Monster extends Rectangle{
                 else if(monsterIdx == 4){
                     ValueCalculate.characterExp += 50;
                     ValueCalculate.characterExpChange = true;
+                    CavePanel.bossDied = true;
                 }
             }
         }

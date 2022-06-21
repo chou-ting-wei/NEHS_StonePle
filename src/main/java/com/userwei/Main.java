@@ -23,6 +23,7 @@ public class Main{
         JFrame upgradeScreen = new JFrame("StonePle");
         JFrame backpackScreen = new JFrame("StonePle");
         JFrame settingScreen = new JFrame("StonePle");
+        JFrame gameFinishScreen = new JFrame("StonePle");
 
         ValueCalculate vc = new ValueCalculate();
         vc.start();
@@ -33,9 +34,10 @@ public class Main{
         StartPanel startPanel = new StartPanel(mainFrame, startScreen);
         PausePanel pausePanel = new PausePanel(pauseScreen, settingScreen);
         FieldPanel fieldPanel = new FieldPanel(mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen);
-        CavePanel cavePanel = new CavePanel(mainFrame, pauseScreen, fieldScreen, caveScreen,backpackScreen);
+        CavePanel cavePanel = new CavePanel(mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen, gameFinishScreen);
         InstructionPanel instructionPanel = new InstructionPanel(mainFrame, instructionScreen);
         SettingPanel settingPanel = new SettingPanel(settingScreen, pauseScreen);
+        GameFinishPanel gameFinishPanel = new GameFinishPanel(gameFinishScreen, caveScreen);
 
         int size_x = 1280, size_y = 720;
         
@@ -117,7 +119,7 @@ public class Main{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -226,7 +228,7 @@ public class Main{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -275,7 +277,7 @@ public class Main{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -324,7 +326,7 @@ public class Main{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -390,7 +392,7 @@ public class Main{
             public void actionPerformed(ActionEvent e){
                 try{
                     Music music = new Music("Select.wav");
-                    music.playOnce();
+                    music.playOnce(350);
                 }catch(Exception e1){
                     e1.printStackTrace();
                 }
@@ -422,6 +424,31 @@ public class Main{
             @Override
             public void componentMoved(ComponentEvent e) {
                 settingScreen.setLocation(loc_x, loc_y);
+            }
+            @Override
+            public void componentResized(ComponentEvent e) {
+                
+            }
+            @Override
+            public void componentShown(ComponentEvent e) {
+                
+            }
+        });
+
+        gameFinishScreen.getContentPane().add(gameFinishPanel);
+        gameFinishScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameFinishScreen.setResizable(false);
+        gameFinishScreen.setLocation(loc_x, loc_y);
+        gameFinishScreen.setSize(size_x, size_y);
+        gameFinishScreen.setVisible(false);
+        gameFinishScreen.addComponentListener(new ComponentListener(){
+            @Override
+            public void componentHidden(ComponentEvent e) {
+                
+            }
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                gameFinishScreen.setLocation(loc_x, loc_y);
             }
             @Override
             public void componentResized(ComponentEvent e) {

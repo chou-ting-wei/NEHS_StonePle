@@ -1,18 +1,30 @@
 package com.userwei;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
 
-public class PropertiesUtil {
-       
-    public static String getValue(String key){
-        Properties prop = new Properties();
-        String value = null;
+import org.apache.commons.configuration.PropertiesConfiguration;
 
-        try(FileInputStream fis = new FileInputStream("config.properties")){
-            prop.load(fis);
-            value = prop.getProperty(key, null); 
+
+public class PropertiesUtil {
+
+    public static String getValue(String key){
+        String value = null;
+        try{
+            /*
+            InputStream input = PropertiesUtil.class.getResourceAsStream("config.properties");
+            Properties props = new Properties();
+            props.load(input);
+            value = props.getProperty(key, null); 
+            */
+            InputStream input = PropertiesUtil.class.getResourceAsStream("config.properties");
+            PropertiesConfiguration config = new PropertiesConfiguration();
+            config.load(input);
+            value = config.getString(key);
+
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -20,6 +32,41 @@ public class PropertiesUtil {
     }
 
     public static void setValue(String key, String value){
+        try{
+            InputStream input = PropertiesUtil.class.getResourceAsStream("config.properties");
+            PropertiesConfiguration config = new PropertiesConfiguration();
+            config.load(input);
+            value = config.getString(key);
+
+            String cs = config.getString("Custom_Size");
+            String csx = config.getString("Custom_Size_X");
+            String csy = config.getString("Custom_Size_Y");
+            String cm = config.getString("Config_Mode");
+            String cax = config.getString("Custom_Add_X");
+            String cay = config.getString("Custom_Add_Y");
+            String clax = config.getString("Custom_Last_Add_X");
+            String clay = config.getString("Custom_Last_Add_Y");
+            String ibx = config.getString("Init_Border_X");
+            String iby = config.getString("Init_Border_Y");
+            
+            config.setProperty("Custom_Size", cs);
+            config.setProperty("Custom_Size_X", csx);
+            config.setProperty("Custom_Size_Y", csy);
+            config.setProperty("Config_Mode", cm);
+            config.setProperty("Custom_Add_X", cax);
+            config.setProperty("Custom_Add_Y", cay);
+            config.setProperty("Custom_Last_Add_X", clax);
+            config.setProperty("Custom_Last_Add_Y", clay);
+            config.setProperty("Init_Border_X", ibx);
+            config.setProperty("Init_Border_Y", iby);
+
+            config.setProperty(key, value);
+            config.save();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        /*
         Properties prop = new Properties();
         String cs = getValue("Custom_Size");
         String csx = getValue("Custom_Size_X");
@@ -32,7 +79,7 @@ public class PropertiesUtil {
         String ibx = getValue("Init_Border_X");
         String iby = getValue("Init_Border_Y");
         
-        try(FileOutputStream fos = new FileOutputStream("config.properties")){
+        try{
             prop.setProperty("Custom_Size", cs);
             prop.setProperty("Custom_Size_X", csx);
             prop.setProperty("Custom_Size_Y", csy);
@@ -45,16 +92,46 @@ public class PropertiesUtil {
             prop.setProperty("Init_Border_Y", iby);
 
             prop.setProperty(key, value);
-            prop.store(fos, null);
+            // prop.store(fos, null);
         }catch(Exception e){
             e.printStackTrace();
         }
+        */
     }
 
     public static void resetValue(){
+        try{
+            InputStream input = PropertiesUtil.class.getResourceAsStream("config.properties");
+            PropertiesConfiguration config = new PropertiesConfiguration();
+            config.load(input);
+
+            config.setProperty("Custom_Size", "Off");
+            config.setProperty("Custom_Size_X", "1280");
+            config.setProperty("Custom_Size_Y", "720");
+            config.setProperty("Config_Mode", "Off");
+            config.setProperty("Custom_Add_X", "0");
+            config.setProperty("Custom_Add_Y", "0");
+            config.setProperty("Custom_Last_Add_X", "0");
+            config.setProperty("Custom_Last_Add_Y", "0");
+            config.setProperty("Init_Border_X", "1280");
+            config.setProperty("Init_Border_Y", "720");
+
+            config.save();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        /*
+        File jarPath = new File(PropertiesUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        String propertiesPath = null;
+        try{
+            propertiesPath = jarPath.getParentFile().getCanonicalPath();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
         Properties prop = new Properties();
 
-        try(FileOutputStream fos = new FileOutputStream("config.properties")){
+        try(FileOutputStream fos = new FileOutputStream(propertiesPath + "/classes/com/userwei/config.properties")){
             prop.setProperty("Custom_Size", "Off");
             prop.setProperty("Custom_Size_X", "1280");
             prop.setProperty("Custom_Size_Y", "720");
@@ -65,10 +142,13 @@ public class PropertiesUtil {
             prop.setProperty("Custom_Last_Add_Y", "0");
             prop.setProperty("Init_Border_X", "1280");
             prop.setProperty("Init_Border_Y", "720");
-            prop.store(fos, null);
+            OutputStream os = null;
+
+            prop.store(os, null);
         }catch(Exception e){
             e.printStackTrace();
         }
+        */
     }
 
 }
