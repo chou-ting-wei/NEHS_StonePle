@@ -26,13 +26,14 @@ public class Music{
 
     public void playOnce(int time){
         clip.start();
+        /*
         try {
             Thread.sleep(time);
         } catch (Exception e) {
             e.printStackTrace();
         }
         clip.close();
-
+        */
         if(time == 4000){
             String nowMusicName = GamePanel.musicName.get(GamePanel.nowState);
 

@@ -1243,6 +1243,12 @@ public class CavePanel extends JPanel implements KeyListener{
         }
         // attack
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            try{
+                Music nowMusic = new Music("attack.wav");
+                nowMusic.playOnce(1000);
+            }catch(Exception e1){
+                e1.printStackTrace();
+            }
             characterAttack();
         }
         // props
