@@ -162,7 +162,7 @@ public class PausePanel extends JPanel implements KeyListener{
             GamePanel.switchState(3);
             nowFrame.setVisible(true);
             pauseScreen.setVisible(false);
-        }*/
+        }
         // Cave Panel
         if(e.getKeyCode() == KeyEvent.VK_4 && Start){
             GamePanel.sudo = true;
@@ -173,7 +173,7 @@ public class PausePanel extends JPanel implements KeyListener{
             nowFrame.setVisible(true);
             pauseScreen.setVisible(false);
         }
-        
+        */
     }
 
     @Override

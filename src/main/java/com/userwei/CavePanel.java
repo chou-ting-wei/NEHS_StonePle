@@ -23,8 +23,8 @@ public class CavePanel extends JPanel implements KeyListener{
 
     static boolean allMapMoveJudge[][][][];
 
-    // static int mapState_i = 2, mapState_j = 5;
-    static int mapState_i = 2, mapState_j = 0; // test
+    static int mapState_i = 2, mapState_j = 5;
+    // static int mapState_i = 2, mapState_j = 0; // test
     int mapSizeX = 5, mapSizeY = 6;
 
     // character Front : 0 up, 1 left, 2 down, 3 right
@@ -400,7 +400,7 @@ public class CavePanel extends JPanel implements KeyListener{
                 repaint();
                 bossWallClosed = false;
             }
-            
+
             Start = false;
             GameFinishPanel.Start = true;
             gameFinishScreen.setVisible(true);
@@ -796,8 +796,8 @@ public class CavePanel extends JPanel implements KeyListener{
                             }
                         }
                     }
-                    // ValueCalculate.characterLife -= dmg;
-                    // ValueCalculate.characterLifeChange = true;
+                    ValueCalculate.characterLife -= dmg;
+                    ValueCalculate.characterLifeChange = true;
                     repaint();
                 }
             }
