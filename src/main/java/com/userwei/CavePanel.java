@@ -52,6 +52,7 @@ public class CavePanel extends JPanel implements KeyListener{
     static boolean bossDied = false;
     static boolean BossFight = false;
     static boolean bossDiedFeature = false;
+    static boolean inBossRoom = false;
     Font bossFont1, bossFont2;
 
     JFrame mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen, gameFinishScreen;
@@ -242,6 +243,7 @@ public class CavePanel extends JPanel implements KeyListener{
                 bossWallClosed = false;
             }
             BossFight = false;
+            inBossRoom = false;
         }
     }
 
@@ -363,6 +365,7 @@ public class CavePanel extends JPanel implements KeyListener{
 
         if(mapState_i == 2 && mapState_j == 0 && !bossMusicPlayed && Start && !bossDied){
             SettingPanel.resetMusic("BOSS");
+            inBossRoom = true;
             try{
                 bossMusic = new Music("the_Fight_Begins.wav");
                 bossMusic.play();
@@ -381,6 +384,31 @@ public class CavePanel extends JPanel implements KeyListener{
             addMoveJudge(2, 0, 6, 9, 8, 8);
 
             repaint();
+        }
+
+        if(!(mapState_i == 2 && mapState_j == 0) && inBossRoom && !bossDied){
+            inBossRoom = false;
+            if(bossMusicPlayed){
+                bossMusic.stop();
+                bossMusicPlayed = false;
+            }
+            if(bossWallClosed){
+                for(int i = 6; i <= 9; i ++){
+                    for(int j = 8; j <= 8; j ++){
+                        allMapMoveJudge[2][0][i][j] = false;
+                    }
+                }
+                allMapBackgroundCount[2][0] = 0;
+                bossWallClosed = false;
+            }
+            String nowMusicName = GamePanel.musicName.get(GamePanel.nowState);
+                if(nowMusicName != "null"){
+                    if(GamePanel.musicSwitched[GamePanel.nowState]){
+                        GamePanel.music.get(GamePanel.nowState).resetAudioStream();
+                        GamePanel.musicSwitched[GamePanel.nowState] = false;
+                    }
+                GamePanel.music.get(GamePanel.nowState).play();
+            }
         }
         
         if(bossDied && !bossDiedFeature){
@@ -409,6 +437,15 @@ public class CavePanel extends JPanel implements KeyListener{
             try{
                 Music nowMusic = new Music("Potai.wav");
                 nowMusic.playOnce(4000);
+
+                String nowMusicName = GamePanel.musicName.get(GamePanel.nowState);
+                if(nowMusicName != "null"){
+                    if(GamePanel.musicSwitched[GamePanel.nowState]){
+                        GamePanel.music.get(GamePanel.nowState).resetAudioStream();
+                        GamePanel.musicSwitched[GamePanel.nowState] = false;
+                    }
+                    GamePanel.music.get(GamePanel.nowState).play();
+                }
             }catch(Exception e1){
                 e1.printStackTrace();
             }
@@ -449,10 +486,10 @@ public class CavePanel extends JPanel implements KeyListener{
         expbar1.draw(g, this);
         expbar2.draw(g, this);
 
-        if(bossMusicPlayed && !BossFight && !bossDied){
+        if(bossMusicPlayed && !BossFight && !bossDied && inBossRoom){
             bossFont1.draw(g, this);
         }
-        if(BossFight){
+        if(BossFight && inBossRoom){
             bossFont2.draw(g, this);
         }
     }

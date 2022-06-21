@@ -34,17 +34,6 @@ public class Music{
         }
         clip.close();
         */
-        if(time == 4000){
-            String nowMusicName = GamePanel.musicName.get(GamePanel.nowState);
-
-            if(nowMusicName != "null"){
-                if(GamePanel.musicSwitched[GamePanel.nowState]){
-                    GamePanel.music.get(GamePanel.nowState).resetAudioStream();
-                    GamePanel.musicSwitched[GamePanel.nowState] = false;
-                }
-                GamePanel.music.get(GamePanel.nowState).play();
-            }
-        }
     }
 
     public void stop(){
