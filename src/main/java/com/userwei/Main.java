@@ -25,20 +25,6 @@ public class Main{
         JFrame settingScreen = new JFrame("StonePle");
         JFrame gameFinishScreen = new JFrame("StonePle");
 
-        ValueCalculate vc = new ValueCalculate();
-        vc.start();
-
-        BackpackPanel backpackPanel = new BackpackPanel(mainFrame, backpackScreen);
-        UpgradePanel upgradePanel = new UpgradePanel(mainFrame, upgradeScreen);
-        GamePanel gamePanel = new GamePanel(startScreen, mainFrame, pauseScreen, fieldScreen, caveScreen, instructionScreen, upgradeScreen, backpackScreen);
-        StartPanel startPanel = new StartPanel(mainFrame, startScreen);
-        PausePanel pausePanel = new PausePanel(pauseScreen, settingScreen);
-        FieldPanel fieldPanel = new FieldPanel(mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen);
-        CavePanel cavePanel = new CavePanel(mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen, gameFinishScreen);
-        InstructionPanel instructionPanel = new InstructionPanel(mainFrame, instructionScreen);
-        SettingPanel settingPanel = new SettingPanel(settingScreen, pauseScreen);
-        GameFinishPanel gameFinishPanel = new GameFinishPanel(gameFinishScreen, caveScreen);
-
         int size_x = 1280, size_y = 720;
         
         String osName = System.getProperty("os.name");
@@ -83,6 +69,20 @@ public class Main{
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
         int loc_x = (int) screensize.getWidth() / 2 - size_x / 2;
         int loc_y = (int) screensize.getHeight() / 2 - size_y / 2;
+
+        ValueCalculate vc = new ValueCalculate();
+        vc.start();
+
+        BackpackPanel backpackPanel = new BackpackPanel(mainFrame, backpackScreen);
+        UpgradePanel upgradePanel = new UpgradePanel(mainFrame, upgradeScreen);
+        GamePanel gamePanel = new GamePanel(startScreen, mainFrame, pauseScreen, fieldScreen, caveScreen, instructionScreen, upgradeScreen, backpackScreen);
+        StartPanel startPanel = new StartPanel(mainFrame, startScreen);
+        PausePanel pausePanel = new PausePanel(pauseScreen, settingScreen);
+        FieldPanel fieldPanel = new FieldPanel(mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen);
+        CavePanel cavePanel = new CavePanel(mainFrame, pauseScreen, fieldScreen, caveScreen, backpackScreen, gameFinishScreen);
+        InstructionPanel instructionPanel = new InstructionPanel(mainFrame, instructionScreen);
+        SettingPanel settingPanel = new SettingPanel(settingScreen, pauseScreen);
+        GameFinishPanel gameFinishPanel = new GameFinishPanel(gameFinishScreen, caveScreen);
         
         mainFrame.getContentPane().add(gamePanel);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
