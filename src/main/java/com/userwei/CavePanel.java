@@ -1245,7 +1245,7 @@ public class CavePanel extends JPanel implements KeyListener{
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
             try{
                 Music nowMusic = new Music("attack.wav");
-                nowMusic.playOnce(1000);
+                nowMusic.playOnce(500);
             }catch(Exception e1){
                 e1.printStackTrace();
             }

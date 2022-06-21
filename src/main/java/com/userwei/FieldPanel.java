@@ -1119,8 +1119,8 @@ public class FieldPanel extends JPanel implements KeyListener{
         // attack
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
             try{
-                Music nowMusic = new Music("Potai.wav");
-                nowMusic.playOnce(3000);
+                Music nowMusic = new Music("attack.wav");
+                nowMusic.playOnce(500);
             }catch(Exception e1){
                 e1.printStackTrace();
             }
