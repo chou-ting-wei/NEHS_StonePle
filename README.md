@@ -38,9 +38,9 @@
 4. 暫停介面
 <img width="1392" alt="pause" src="https://user-images.githubusercontent.com/70355885/174972694-627088e5-4c0c-4553-bd89-6da75b14795a.png">
 5. 設定介面
-<img width="1348" alt="setting" src="https://user-images.githubusercontent.com/70355885/174972721-a0b32de0-1710-4795-8a6d-3628223ee71d.png">
+<img width="1392" alt="setting" src="https://user-images.githubusercontent.com/70355885/175004607-d5f5cd29-1144-4242-a914-370b6e44941f.png">
 6. 背包介面
-<img width="1348" alt="backpack" src="https://user-images.githubusercontent.com/70355885/174972737-2de6f772-1be3-464c-ac6e-a0b16c127102.png">
+<img width="1392" alt="backpack" src="https://user-images.githubusercontent.com/70355885/175004574-8cbaf2e1-8ef6-4f6b-baa6-95c998f3c9a0.png">
 7. 武器升級介面
 <img width="1392" alt="upgrade" src="https://user-images.githubusercontent.com/70355885/174973096-d1e85ff1-b33a-4c92-a36e-e9db378b7c7c.png">
 8. 地圖介面（草原）<img width="1392" alt="field" src="https://user-images.githubusercontent.com/70355885/174972795-ee4602f7-4950-49d0-88aa-197de904da88.png">
