@@ -6,7 +6,7 @@
 ## 簡介
 西元前1856年，你，一顆再平凡不過的俗投，成岩了  
 世間大亂，令堂「起馱石」消失  
-你在世間徘徊，尋找她的蹤影...
+你在世間徘徊，尋找她的蹤影⋯⋯
 
 ## 說明
 1. 操作說明
@@ -45,7 +45,3 @@
 <img width="1392" alt="upgrade" src="https://user-images.githubusercontent.com/70355885/174973096-d1e85ff1-b33a-4c92-a36e-e9db378b7c7c.png">
 8. 地圖介面（草原）<img width="1392" alt="field" src="https://user-images.githubusercontent.com/70355885/174972795-ee4602f7-4950-49d0-88aa-197de904da88.png">
 9. 地圖介面（洞穴）<img width="1392" alt="cave" src="https://user-images.githubusercontent.com/70355885/174974401-e0e48d64-cfd8-4770-918d-1f0ead3617b4.png">
-
-## 其他
-- [ ] 我會OOP
-- [x] 我只會OOPS
